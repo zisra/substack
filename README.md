@@ -12,3 +12,4 @@ To-do
 - [x] Enter button
 - [x] Footnotes
 - [ ] Offline indicator
+- [ ] iOS Shortcut
