@@ -1,5 +1,3 @@
-import { type DBSchema } from 'idb';
-
 export type Article = {
 	url: string;
 	title: string;

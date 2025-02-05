@@ -1,10 +1,10 @@
 import ReactDOM from 'react-dom/client';
-import { Routes, Route, HashRouter, BrowserRouter } from 'react-router';
+import { Routes, Route, BrowserRouter } from 'react-router';
 import { Index } from '@/routes/index.tsx';
 import { Article } from '@/routes/article.tsx';
 
 import './index.css';
-import './style.css'
+import './style.css';
 
 const root = document.getElementById('root')!;
 

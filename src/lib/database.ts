@@ -15,7 +15,7 @@ export interface DatabaseType extends DBSchema {
 	};
 }
 
-async function saveUrl(db: IDBPDatabase<DatabaseType>, url: string) {
+/* async function saveUrl(db: IDBPDatabase<DatabaseType>, url: string) {
 	const imageTx = db.transaction('images', 'readwrite');
 	const imageStore = imageTx.objectStore('images');
 
@@ -24,7 +24,7 @@ async function saveUrl(db: IDBPDatabase<DatabaseType>, url: string) {
 	);
 	const imageBlob = await imageResponse.blob();
 	await imageStore.put({ url: url, blob: imageBlob });
-}
+} */
 
 export class Database {
 	db?: IDBPDatabase<Database>;
