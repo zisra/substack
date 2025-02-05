@@ -1,13 +1,10 @@
 import OfflineArticleSaver from '@/components/OfflineArticleSaver';
 
-function App() {
+export function Index() {
 	return (
 		<>
-			<div>
-				<OfflineArticleSaver />
-			</div>
+			<OfflineArticleSaver />
 		</>
 	);
 }
 
-export default App;

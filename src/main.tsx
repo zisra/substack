@@ -1,10 +1,18 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
+import ReactDOM from 'react-dom/client';
+import { Routes, Route, HashRouter, BrowserRouter } from 'react-router';
+import { Index } from '@/routes/index.tsx';
+import { Article } from '@/routes/article.tsx';
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
+import './index.css';
+import './style.css'
+
+const root = document.getElementById('root')!;
+
+ReactDOM.createRoot(root).render(
+	<BrowserRouter>
+		<Routes>
+			<Route path="/" element={<Index />} />
+			<Route path="/article" element={<Article />} />
+		</Routes>
+	</BrowserRouter>
+);
