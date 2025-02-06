@@ -5,7 +5,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function checkUrlValid() {
+export function checkUrlValid(url: string) {
   try {
     new URL(url);
     return false;

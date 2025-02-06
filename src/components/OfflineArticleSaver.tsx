@@ -90,7 +90,10 @@ export default function OfflineArticleSaver() {
 								}
 							}}
 						/>
-						<Button onClick={handleSave} disabled={isSaving || checkUrlValid()}>
+						<Button
+							onClick={handleSave}
+							disabled={isSaving || checkUrlValid(url)}
+						>
 							{isSaving ? (
 								<>
 									<Loader2 className="mr-2 h-4 w-4 animate-spin" />
