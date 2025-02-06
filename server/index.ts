@@ -142,7 +142,8 @@ app.get('/image-proxy', async (req, res) => {
 	}
 });
 
-const port = parseInt(process.env.PORT ?? '3000');
+const port = parseInt(process.env.PORT || '3000', 10);
+
 
 app.listen({ port: port }, (err) => {
 	if (err) throw err;
