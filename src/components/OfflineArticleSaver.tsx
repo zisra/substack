@@ -13,6 +13,7 @@ import {
 import { Loader2 } from 'lucide-react';
 import type { Article } from '@/lib/types';
 import { Database } from '@/lib/database';
+import { checkUrlValid } from '@/lib/utils';
 
 export default function OfflineArticleSaver() {
 	const [url, setUrl] = useState('');
@@ -64,20 +65,11 @@ export default function OfflineArticleSaver() {
 		loadArticles();
 	}, []);
 
-	function checkUrlValid() {
-		try {
-			new URL(url);
-			return false;
-		} catch (e) {
-			return true;
-		}
-	}
-
 	return (
 		<div className="container mx-auto p-4 max-w-3xl">
 			<Card className="mb-8">
 				<CardHeader>
-					<CardTitle>Save Article Offline</CardTitle>
+					<CardTitle>Save Substack Articles Offline</CardTitle>
 					<CardDescription>
 						Enter a URL to save an article for offline reading
 					</CardDescription>

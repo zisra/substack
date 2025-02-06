@@ -16,6 +16,14 @@ export const theme = {
 		},
 	},
 	extend: {
+		typography: {
+			DEFAULT: {
+				css: {
+					'blockquote p:first-of-type::before': null,
+					'blockquote p:last-of-type::after': null,
+				},
+			},
+		},
 		colors: {
 			border: 'hsl(var(--border))',
 			input: 'hsl(var(--input))',

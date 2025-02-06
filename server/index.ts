@@ -1,5 +1,5 @@
 import Fastify from 'fastify';
-import { NodeHtmlMarkdown, PostProcessResult } from 'node-html-markdown';
+import { NodeHtmlMarkdown } from 'node-html-markdown';
 import fastifyStatic from '@fastify/static';
 import { load, type CheerioAPI } from 'cheerio';
 import parseSrcset from 'parse-srcset';
@@ -85,6 +85,9 @@ app.get('/download-article', async (req, res) => {
 		dom('[data-component-name="AudioEmbedPlayer"]').remove();
 		dom('[data-component-name="SubscribeWidget"]').remove();
 		dom('[data-component-name="DigestPostEmbed"]').remove();
+		dom(
+			'[data-component-name="EmbeddedPublicationToDOMWithSubscribe"]'
+		).remove();
 		dom('.embedded-post-wrap').remove();
 		dom('.image-link-expand').remove();
 		dom('audio').remove();
@@ -96,21 +99,6 @@ app.get('/download-article', async (req, res) => {
 
 		const article = dom.html(dom('.available-content'));
 		const markdown = nhm.translate(article);
-
-		const srcSet = dom('.post-header .pencraft img').first().attr('srcset');
-		let authorImg = '';
-
-		if (!srcSet) {
-			console.error('Failed to find srcset');
-
-			authorImg = '';
-		} else {
-			const parsed = parseSrcset(srcSet);
-			if (!parsed) {
-				throw new Error('Failed to parse srcset');
-			}
-			authorImg = parsed[2].url;
-		}
 
 		res.send({
 			url: getOGTag('url', dom),

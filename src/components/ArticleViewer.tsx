@@ -7,7 +7,8 @@ import { useEffect, useState } from 'react';
 import { type Article } from '@/lib/types';
 import { Parser, HtmlRenderer } from 'commonmark';
 import { Button } from './ui/button';
-import { ExternalLink, Link } from 'lucide-react';
+import { ExternalLink, Link, Printer } from 'lucide-react';
+import { Helmet } from 'react-helmet';
 
 async function saveArticle(db: Database, url: string) {
 	const response = await fetch(
@@ -27,6 +28,7 @@ async function saveArticle(db: Database, url: string) {
 export default function Article() {
 	let [searchParams] = useSearchParams();
 	const [article, setArticle] = useState<Article | null>(null);
+	const [title, setTitle] = useState<string>('');
 	const [markdown, setMarkdown] = useState<string>('');
 
 	const url = searchParams.get('url');
@@ -61,35 +63,38 @@ export default function Article() {
 		const result = writer.render(parsed);
 		setMarkdown(result);
 		if (article?.title) {
-			document.title = article.title;
+			setTitle(article.title);
 		}
 	}, [article]);
 
-	console.log(markdown);
-
 	if (!article) {
 		return (
-			<div className="max-w-3xl mx-auto px-4 py-8">
-				<header className="mb-4">
-					<Skeleton className="h-10 w-3/4 mb-2" />
-					<Skeleton className="h-6 w-1/2 mb-4" />
-					<div className="flex items-center space-x-2">
-						<Skeleton className="h-6 w-6 rounded-full" />
-						<Skeleton className="h-6 w-1/4" />
-					</div>
-				</header>
-				<hr className="my-6" />
-				<article className="space-y-4">
-					<Skeleton className="h-6 w-full" />
-					<Skeleton className="h-6 w-full" />
-					<Skeleton className="h-6 w-3/4" />
-				</article>
-			</div>
+			<>
+				<div className="max-w-3xl mx-auto px-4 py-8">
+					<header className="mb-4">
+						<Skeleton className="h-10 w-3/4 mb-2" />
+						<Skeleton className="h-6 w-1/2 mb-4" />
+						<div className="flex items-center space-x-2">
+							<Skeleton className="h-6 w-6 rounded-full" />
+							<Skeleton className="h-6 w-1/4" />
+						</div>
+					</header>
+					<hr className="my-6" />
+					<article className="space-y-4">
+						<Skeleton className="h-6 w-full" />
+						<Skeleton className="h-6 w-full" />
+						<Skeleton className="h-6 w-3/4" />
+					</article>
+				</div>
+			</>
 		);
 	}
 
 	return (
 		<div className="max-w-3xl mx-auto px-4 py-8">
+			<Helmet>
+				<title>{title}</title>
+			</Helmet>
 			<header className="mb-4">
 				<h1 className="text-4xl font-bold mb-2">{article?.title}</h1>
 				<p className="text-xl text-muted-foreground mb-4">
@@ -105,26 +110,37 @@ export default function Article() {
 						</p>
 					</div>
 				</div>
-				<hr className="my-6" />
-				<div className="flex items-center space-x-4">
-					<Button
-						variant="outline"
-						size="icon"
-						onClick={() => {
-							navigator.clipboard.writeText(article.url);
-						}}
-					>
-						<Link />
-					</Button>
-					<a href={article.url} target="_blank" rel="noopener noreferrer">
-						<Button variant="outline" size="icon">
-							<ExternalLink />
+				<div className="no-print">
+					<hr className="my-6" />
+					<div className="flex items-center space-x-4">
+						<Button
+							variant="outline"
+							size="icon"
+							onClick={() => {
+								navigator.clipboard.writeText(article.url);
+							}}
+						>
+							<Link />
 						</Button>
-					</a>
+						<a href={article.url} target="_blank" rel="noopener noreferrer">
+							<Button variant="outline" size="icon">
+								<ExternalLink />
+							</Button>
+						</a>
+						<Button
+							variant="outline"
+							size="icon"
+							onClick={() => {
+								window.print();
+							}}
+						>
+							<Printer />
+						</Button>
+					</div>
 				</div>
 			</header>
 			<hr className="my-6" />
-			<article className="prose prose-neutral lg:prose-lg space-y-4 prose-img:mx-auto prose-figcaption:text-center dark:prose-invert prose-figcaption:mt-[-18px]">
+			<article className="prose prose-neutral lg:prose-lg space-y-4 prose-img:mx-auto prose-figcaption:text-center dark:prose-invert prose-figcaption:mt-[-18px] prose-blockquote:font-normal prose-blockquote:not-italic">
 				<div
 					dangerouslySetInnerHTML={{
 						__html: markdown,
