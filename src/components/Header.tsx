@@ -4,12 +4,11 @@ import {
 	DropdownMenuTrigger,
 	DropdownMenuContent,
 	DropdownMenuItem,
-} from '@radix-ui/react-dropdown-menu';
+} from '@/components/ui/dropdown-menu';
 import { Button } from './ui/button';
 import { Link } from 'react-router';
 import { ToggleMode } from './ToggleMode';
 
-// border-b border-border p-2 dark:bg-background/90 dark:backdrop-blur bg-primary-foreground
 export function Header() {
 	return (
 		<header className="sticky top-0 z-50 w-full border-b border-border bg-white p-2 dark:bg-zinc-950 bg-primary-foreground no-print">

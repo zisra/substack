@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { type Article } from '@/lib/types';
 import { Parser, HtmlRenderer } from 'commonmark';
 import { Button } from './ui/button';
-import { ExternalLink, Link, Printer } from 'lucide-react';
+import { ExternalLink, LinkIcon, PrinterIcon } from 'lucide-react';
 import { Helmet } from 'react-helmet';
 
 async function saveArticle(db: Database, url: string) {
@@ -56,6 +56,10 @@ export default function Article() {
 	}, [url]);
 
 	useEffect(() => {
+		if (!window.location.hash) {
+			window.scrollTo({ top: 0 });
+		}
+
 		const reader = new Parser();
 		const writer = new HtmlRenderer();
 		var parsed = reader.parse(article?.markdown ?? '');
@@ -120,7 +124,7 @@ export default function Article() {
 								navigator.clipboard.writeText(article.url);
 							}}
 						>
-							<Link />
+							<LinkIcon />
 						</Button>
 						<a href={article.url} target="_blank" rel="noopener noreferrer">
 							<Button variant="outline" size="icon">
@@ -134,7 +138,7 @@ export default function Article() {
 								window.print();
 							}}
 						>
-							<Printer />
+							<PrinterIcon />
 						</Button>
 					</div>
 				</div>

@@ -4,13 +4,14 @@ To-do
 
 - [ ] Download images offline
 - [ ] Improve scraping
-- [ ] Turn into offline PWA
-- [ ] Deletion / sorting of articles
-- [ ] Offline indicator
 - [ ] Download all / upload all
 - [ ] iOS Shortcut
+- [ ] Smooth scrolling for footnotes
+- [x] Deletion / ~~sorting~~ of articles
+- [x] Fix dropdown menu
 - [x] Fix title switching
-- [ ] Fix dropdown menu
+- [x] Turn into offline PWA
+- [x] Offline indicator
 - [x] Home button
 - [x] Dark mode
 - [x] Menu

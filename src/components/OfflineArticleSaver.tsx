@@ -14,11 +14,13 @@ import { Loader2 } from 'lucide-react';
 import type { Article } from '@/lib/types';
 import { Database } from '@/lib/database';
 import { checkUrlValid } from '@/lib/utils';
+import { OfflineIndicator } from './OfflineIndicator';
 
 export default function OfflineArticleSaver() {
 	const [url, setUrl] = useState('');
 	const [articles, setArticles] = useState<Article[]>([]);
 	const [isSaving, setIsSaving] = useState(false);
+	const [isOffline, setIsOffline] = useState(!navigator.onLine);
 
 	const db = new Database();
 
@@ -65,51 +67,79 @@ export default function OfflineArticleSaver() {
 		loadArticles();
 	}, []);
 
+	useEffect(() => {
+		const handleOffline = () => {
+			setIsOffline(!navigator.onLine);
+		};
+
+		window.addEventListener('offline', handleOffline);
+		window.addEventListener('online', handleOffline);
+
+		return () => {
+			window.removeEventListener('offline', handleOffline);
+			window.removeEventListener('online', handleOffline);
+		};
+	}, []);
+
 	return (
 		<div className="container mx-auto p-4 max-w-3xl">
-			<Card className="mb-8">
-				<CardHeader>
-					<CardTitle>Save Substack Articles Offline</CardTitle>
-					<CardDescription>
-						Enter a URL to save an article for offline reading
-					</CardDescription>
-				</CardHeader>
-				<CardContent>
-					<div className="flex space-x-2">
-						<Input
-							type="url"
-							placeholder="Enter article URL"
-							value={url}
-							onChange={(e) => setUrl(e.target.value)}
-							className="flex-grow"
-							disabled={isSaving}
-							onKeyUp={(e) => {
-								if (e.key === 'Enter') {
-									e.preventDefault();
-									handleSave();
-								}
-							}}
-						/>
-						<Button
-							onClick={handleSave}
-							disabled={isSaving || checkUrlValid(url)}
-						>
-							{isSaving ? (
-								<>
-									<Loader2 className="mr-2 h-4 w-4 animate-spin" />
-									Saving...
-								</>
-							) : (
-								'Save Offline'
-							)}
-						</Button>
-					</div>
-				</CardContent>
-			</Card>
+			{isOffline ? null : (
+				<Card className="mb-8">
+					<CardHeader>
+						<CardTitle>Save Substack Articles Offline</CardTitle>
+						<CardDescription>
+							Enter a URL to save an article for offline reading
+						</CardDescription>
+					</CardHeader>
+					<CardContent>
+						<div className="flex space-x-2">
+							<Input
+								type="url"
+								placeholder="Enter article URL"
+								value={url}
+								onChange={(e) => setUrl(e.target.value)}
+								className="flex-grow"
+								disabled={isSaving}
+								onKeyUp={(e) => {
+									if (e.key === 'Enter') {
+										e.preventDefault();
+										handleSave();
+									}
+								}}
+							/>
+							<Button
+								onClick={handleSave}
+								disabled={isSaving || checkUrlValid(url)}
+							>
+								{isSaving ? (
+									<>
+										<Loader2 className="mr-2 h-4 w-4 animate-spin" />
+										Saving...
+									</>
+								) : (
+									'Save Offline'
+								)}
+							</Button>
+						</div>
+					</CardContent>
+				</Card>
+			)}
+
+			{isOffline ? <OfflineIndicator /> : null}
 
 			<h2 className="text-2xl font-bold mb-4">Saved Articles</h2>
 			<div className="grid gap-4">
-				<ArticleList articles={articles} />
+				<ArticleList
+					articles={articles}
+					onCopyLink={(url) => {
+						navigator.clipboard.writeText(url);
+					}}
+					onDelete={async (url) => {
+						await db.open();
+						await db.deleteArticle(url);
+						setArticles(articles.filter((i) => i.url !== url));
+					}}
+				/>
 			</div>
 		</div>
 	);
