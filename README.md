@@ -8,8 +8,10 @@ To-do
 - [ ] iOS Shortcut
 - [ ] Smooth scrolling for footnotes
 - [ ] About button
-- [ ] Show complete viewport when printing
 - [ ] Move dropdown menu of each article to better place
+- [x] Show complete viewport when printing
+- [x] Don't make mobile sticky
+- [x] Fix background color for mobile
 - [x] Delete button on article page as well
 - [x] Fix railway deployment
 - [x] Fix background color being wrong color

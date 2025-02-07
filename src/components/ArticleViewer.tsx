@@ -79,29 +79,27 @@ export default function Article() {
 
 	if (!article) {
 		return (
-			<>
-				<div className="max-w-3xl mx-auto px-4 py-8">
-					<header className="mb-4">
-						<Skeleton className="h-10 w-3/4 mb-2" />
-						<Skeleton className="h-6 w-1/2 mb-4" />
-						<div className="flex items-center space-x-2">
-							<Skeleton className="h-6 w-6 rounded-full" />
-							<Skeleton className="h-6 w-1/4" />
-						</div>
-					</header>
-					<hr className="my-6" />
-					<article className="space-y-4">
-						<Skeleton className="h-6 w-full" />
-						<Skeleton className="h-6 w-full" />
-						<Skeleton className="h-6 w-3/4" />
-					</article>
-				</div>
-			</>
+			<div className="max-w-3xl mx-auto px-4 py-8">
+				<header className="mb-4">
+					<Skeleton className="h-10 w-3/4 mb-2" />
+					<Skeleton className="h-6 w-1/2 mb-4" />
+					<div className="flex items-center space-x-2">
+						<Skeleton className="h-6 w-6 rounded-full" />
+						<Skeleton className="h-6 w-1/4" />
+					</div>
+				</header>
+				<hr className="my-6" />
+				<article className="space-y-4">
+					<Skeleton className="h-6 w-full" />
+					<Skeleton className="h-6 w-full" />
+					<Skeleton className="h-6 w-3/4" />
+				</article>
+			</div>
 		);
 	}
 
 	return (
-		<div className="max-w-3xl mx-auto px-4 py-8">
+		<div className="max-w-3xl mx-auto px-4 py-8 print:m-0">
 			<Helmet>
 				<title>{title}</title>
 			</Helmet>
@@ -163,7 +161,7 @@ export default function Article() {
 				</div>
 			</header>
 			<hr className="my-6" />
-			<article className="prose prose-neutral lg:prose-lg space-y-4 prose-img:mx-auto prose-figcaption:text-center dark:prose-invert prose-figcaption:mt-[-18px] prose-blockquote:font-normal prose-blockquote:not-italic">
+			<article className="prose prose-neutral lg:prose-lg space-y-4 prose-img:mx-auto prose-figcaption:text-center dark:prose-invert prose-figcaption:mt-[-18px] prose-blockquote:font-normal prose-blockquote:not-italic max-w-none">
 				<div
 					dangerouslySetInnerHTML={{
 						__html: markdown,

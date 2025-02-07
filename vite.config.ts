@@ -13,7 +13,7 @@ export default defineConfig({
 				name: 'Substack Offline Viewer',
 				short_name: 'substack-offline',
 				description: 'Download substack articles for offline use',
-				theme_color: '#020817',
+				theme_color: '#0A0A0A',
 			},
 		}),
 	],

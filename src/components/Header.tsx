@@ -11,7 +11,7 @@ import { ToggleMode } from './ToggleMode';
 
 export function Header() {
 	return (
-		<header className="sticky top-0 z-50 w-full border-b border-border bg-white p-2 dark:bg-neutral-950 bg-primary-foreground print:hidden">
+		<header className="md:sticky top-0 z-50 w-full border-b border-border bg-white p-2 dark:bg-neutral-950 bg-primary-foreground print:hidden">
 			<div className="flex justify-between">
 				<div className="flex gap-4">
 					<Link to="/">
