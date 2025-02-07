@@ -1,6 +1,18 @@
-.footnote-number {
-}
-
 .footnote-content {
 	margin-top: -15px;
+}
+
+// printer query
+@media print {
+	.footnote-content {
+		margin-top: -5px;
+	}
+}
+
+.footnote-number {
+	scroll-margin-top: 60px;
+}
+
+.footnote-link {
+	scroll-margin-top: 60px;
 }

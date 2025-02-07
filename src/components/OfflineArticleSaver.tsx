@@ -16,7 +16,7 @@ import { Database } from '@/lib/database';
 import { checkUrlValid } from '@/lib/utils';
 import { OfflineIndicator } from './OfflineIndicator';
 
-export default function OfflineArticleSaver() {
+export function OfflineArticleSaver() {
 	const [url, setUrl] = useState('');
 	const [articles, setArticles] = useState<Article[]>([]);
 	const [isSaving, setIsSaving] = useState(false);

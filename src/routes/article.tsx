@@ -1,4 +1,4 @@
-import ArticleViewer from '@/components/ArticleViewer';
+import { ArticleViewer } from '@/components/ArticleViewer';
 import { Header } from '@/components/Header';
 
 export function Article() {

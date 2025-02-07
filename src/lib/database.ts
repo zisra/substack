@@ -27,12 +27,10 @@ export interface DatabaseType extends DBSchema {
 } */
 
 export class Database {
-	db?: IDBPDatabase<Database>;
-
-	constructor() {}
+	db?: IDBPDatabase<DatabaseType>;
 
 	async open() {
-		this.db = await openDB<Database>('Articles', 1, {
+		this.db = await openDB<DatabaseType>('Articles', 1, {
 			upgrade(db) {
 				db.createObjectStore('articles', {
 					keyPath: 'url',
@@ -45,13 +43,12 @@ export class Database {
 	}
 
 	async saveArticle(article: Article) {
-		if (!this.db) await this.open(); // Ensure db is open
+		if (!this.db) await this.open();
 
 		if (!this.db) return;
 		const tx = this.db.transaction('articles', 'readwrite');
 		const store = tx.objectStore('articles');
 
-		// Set the timestamp when saving the article
 		const dbArticle = {
 			...article,
 			timestamp: Date.now(),
@@ -63,16 +60,14 @@ export class Database {
 			await store.put(dbArticle);
 		} else {
 			await store.add(dbArticle);
-
-			/* // Save images within the same transaction context
-			const imagePromises = [
-				saveUrl(this.db, article.authorImg),
-				saveUrl(this.db, article.image),
-			];
-
-			// Wait for all image saving to complete
-			await Promise.all(imagePromises); */
 		}
+
+		/* const imagePromises = [
+			saveUrl(this.db, article.authorImg),
+			saveUrl(this.db, article.image),
+		];
+
+		await Promise.all(imagePromises); */
 
 		await tx.done;
 	}
@@ -83,7 +78,6 @@ export class Database {
 		const store = tx.objectStore('articles');
 		const articles = await store.getAll();
 
-		// Sort articles by timestamp in descending order
 		return articles.sort((a, b) => b.timestamp - a.timestamp);
 	}
 

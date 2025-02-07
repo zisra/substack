@@ -1,56 +1,50 @@
 import Fastify from 'fastify';
-import { NodeHtmlMarkdown } from 'node-html-markdown';
 import fastifyStatic from '@fastify/static';
 import { load, type CheerioAPI } from 'cheerio';
+import TurndownService from 'turndown';
 
 const app = Fastify();
+const turndownService = new TurndownService({
+	headingStyle: 'atx',
+	codeBlockStyle: 'fenced',
+});
 
-const nhm = new NodeHtmlMarkdown(
-	{
-		codeBlockStyle: 'fenced',
+// Display figcaption as HTML
+turndownService.addRule('figcaption', {
+	filter(node) {
+		return (
+			node.nodeName === 'FIGCAPTION' || node.classList.contains('image-caption')
+		);
 	},
-	{
-		figcaption: {
-			postprocess: (ctx) => {
-				const content = ctx.content;
-				return `<figcaption>\n\n${content}\n\n</figcaption>`;
-			},
+	replacement: (_content, node) => {
+		const captionContent = (node as HTMLElement).innerHTML;
+		return `<figcaption>\n\n${captionContent}\n\n</figcaption>`;
+	},
+});
 
-			recurse: true,
-			noEscape: true,
-		},
-		div: {
-			postprocess: (ctx) => {
-				if (ctx.node.classList.contains('footnote')) {
-					const number =
-						ctx.node.querySelector('.footnote-number')?.textContent;
-					const content =
-						ctx.node.querySelector('.footnote-content')?.innerHTML;
+// Display footnote links correctly
+turndownService.addRule('footnoteAnchor', {
+	filter(node) {
+		return node.nodeName === 'A' && node.classList.contains('footnote-anchor');
+	},
+	replacement: (_content, node) => {
+		const number = node.textContent;
+		return `<sup><a class="footnote-link" id="footnote-reference-${number}" href="#footnote-${number}">${number}</a></sup>`;
+	},
+});
 
-					return `<div><b class="footnote-number" id="footnote-${number}">${number}</b><p class="footnote-content">${content}</p></div>`;
-				} else {
-					return ctx.content;
-				}
-			},
+// Display footnotes correctly
+turndownService.addRule('footnoteDiv', {
+	filter(node) {
+		return node.nodeName === 'DIV' && node.classList.contains('footnote');
+	},
+	replacement: (_content, node) => {
+		const number = node.querySelector('.footnote-number')?.textContent;
+		const footnoteContent = node.querySelector('.footnote-content')?.innerHTML;
 
-			recurse: true,
-			noEscape: true,
-		},
-		a: {
-			postprocess: (ctx) => {
-				if (ctx.node.classList.contains('footnote-anchor')) {
-					const number = ctx.node.textContent;
-					return `<sup><a href="#footnote-${number}">${number}</a></sup>`;
-				} else {
-					return ctx.node.outerHTML;
-				}
-			},
-
-			recurse: true,
-			noEscape: true,
-		},
-	}
-);
+		return `<div><a href="#footnote-reference-${number}" class="footnote-number" id="footnote-${number}">${number}</a><p class="footnote-content">${footnoteContent}</p></div>`;
+	},
+});
 
 function getOGTag(tag: string, cheerioDOM: CheerioAPI) {
 	return cheerioDOM(`meta[property="og:${tag}"]`).attr('content');
@@ -61,7 +55,7 @@ app.register(fastifyStatic, {
 	index: 'index.html',
 });
 
-app.setNotFoundHandler((request, reply) => {
+app.setNotFoundHandler((_request, reply) => {
 	reply.sendFile('index.html');
 });
 
@@ -96,8 +90,14 @@ app.get('/download-article', async (req, res) => {
 			dom(element).removeAttr('href');
 		});
 
+		dom('.image-link').each((_index, element) => {
+			// replace .image-link with it's child
+			const child = dom(element).children().first();
+			dom(element).replaceWith(child);
+		});
+
 		const article = dom.html(dom('.available-content'));
-		const markdown = nhm.translate(article);
+		const markdown = turndownService.turndown(article);
 
 		res.send({
 			url: getOGTag('url', dom),

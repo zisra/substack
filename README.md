@@ -1,14 +1,17 @@
 # Substack downloader
 
-To-do
+### To-do
 
 - [ ] Download images offline
 - [ ] Improve scraping
 - [ ] Export all / import all
 - [ ] iOS Shortcut
-- [ ] Smooth scrolling for footnotes
-- [ ] About button
+- [ ] Footnotes scroll to right place
+- [ ] About modal
 - [ ] Move dropdown menu of each article to better place
+- [x] Handle 404
+- [x] Make footnotes go both ways
+- [x] Use turndown
 - [x] Show complete viewport when printing
 - [x] Don't make mobile sticky
 - [x] Fix background color for mobile

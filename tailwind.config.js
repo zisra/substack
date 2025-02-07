@@ -93,6 +93,6 @@ export const theme = {
 	},
 };
 export const plugins = [
-	import('tailwindcss-animate'),
+	require('tailwindcss-animate'),
 	require('@tailwindcss/typography'),
 ];
