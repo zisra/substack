@@ -1,4 +1,4 @@
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardDescription } from '@/components/ui/card';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -24,13 +24,13 @@ export function ArticleList({
 	if (articles.length === 0) {
 		return (
 			<Card className="p-8 text-center">
-				<BookOpenText className="mx-auto h-12 w-12 text-gray-400" />
-				<h3 className="mt-2 text-sm font-semibold text-gray-900">
+				<BookOpenText className="mx-auto h-12 w-12 text-neutral-400 dark:" />
+				<h3 className="mt-2 text-sm font-semibold text-neutral-900 dark:text-neutral-400">
 					No articles
 				</h3>
-				<p className="mt-1 text-sm text-gray-500">
+				<CardDescription className="mt-3">
 					Get started by saving your first article.
-				</p>
+				</CardDescription>
 			</Card>
 		);
 	}
@@ -60,7 +60,7 @@ export function ArticleList({
 										</span>
 									</div>
 									<h3 className="font-bold text-lg mb-2">{article.title}</h3>
-									<p className="text-sm text-gray-600">{article.subtitle}</p>
+									<p className="text-sm text-neutral-600">{article.subtitle}</p>
 								</div>
 								<div className="flex-shrink-0">
 									<img

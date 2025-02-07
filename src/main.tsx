@@ -11,13 +11,11 @@ const root = document.getElementById('root')!;
 
 ReactDOM.createRoot(root).render(
 	<ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-		<div className="dark:bg-zinc-950">
-			<BrowserRouter>
-				<Routes>
-					<Route path="/" element={<Index />} />
-					<Route path="/article" element={<Article />} />
-				</Routes>
-			</BrowserRouter>
-		</div>
+		<BrowserRouter>
+			<Routes>
+				<Route path="/" element={<Index />} />
+				<Route path="/article" element={<Article />} />
+			</Routes>
+		</BrowserRouter>
 	</ThemeProvider>
 );
