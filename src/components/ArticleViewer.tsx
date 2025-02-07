@@ -1,13 +1,13 @@
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Skeleton } from '@/components/ui/skeleton';
 
-import { useSearchParams, Navigate } from 'react-router';
+import { useSearchParams, useNavigate } from 'react-router';
 import { Database } from '@/lib/database';
 import { useEffect, useState } from 'react';
 import { type Article } from '@/lib/types';
 import { Parser, HtmlRenderer } from 'commonmark';
 import { Button } from './ui/button';
-import { ExternalLink, LinkIcon, PrinterIcon } from 'lucide-react';
+import { ExternalLink, LinkIcon, PrinterIcon, TrashIcon } from 'lucide-react';
 import { Helmet } from 'react-helmet';
 
 async function saveArticle(db: Database, url: string) {
@@ -30,26 +30,32 @@ export default function Article() {
 	const [article, setArticle] = useState<Article | null>(null);
 	const [title, setTitle] = useState<string>('');
 	const [markdown, setMarkdown] = useState<string>('');
+	const navigate = useNavigate();
 
 	const url = searchParams.get('url');
 
 	const db = new Database();
 
 	if (!url) {
-		return <Navigate replace to="/" />;
+		return navigate('/');
 	}
 
 	useEffect(() => {
 		const loadArticles = async () => {
 			await db.open();
 
-			db.getArticle(url).then(async (article) => {
-				setArticle(article);
-				if (!article) {
-					const article = await saveArticle(db, url);
+			db.getArticle(url)
+				.then(async (article) => {
 					setArticle(article);
-				}
-			});
+					if (!article) {
+						const article = await saveArticle(db, url);
+						setArticle(article);
+					}
+				})
+				.catch((err) => {
+					navigate('/');
+					console.error(err);
+				});
 		};
 
 		loadArticles();
@@ -114,7 +120,7 @@ export default function Article() {
 						</p>
 					</div>
 				</div>
-				<div className="no-print">
+				<div className="print:hidden">
 					<hr className="my-6" />
 					<div className="flex items-center space-x-4">
 						<Button
@@ -139,6 +145,19 @@ export default function Article() {
 							}}
 						>
 							<PrinterIcon />
+						</Button>
+						<Button
+							variant="outline"
+							size="icon"
+							onClick={async () => {
+								navigate('/');
+								const db = new Database();
+								await db.open();
+
+								db.deleteArticle(article.url);
+							}}
+						>
+							<TrashIcon />
 						</Button>
 					</div>
 				</div>

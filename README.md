@@ -6,10 +6,12 @@ To-do
 - [ ] Improve scraping
 - [ ] Export all / import all
 - [ ] iOS Shortcut
-- [ ] Fix raycast deployment
 - [ ] Smooth scrolling for footnotes
 - [ ] About button
 - [ ] Show complete viewport when printing
+- [ ] Move dropdown menu of each article to better place
+- [x] Delete button on article page as well
+- [x] Fix railway deployment
 - [x] Fix background color being wrong color
 - [x] Deletion / ~~sorting~~ of articles
 - [x] Fix dropdown menu

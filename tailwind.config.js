@@ -16,6 +16,10 @@ export const theme = {
 		},
 	},
 	extend: {
+		screens: {
+			print: { raw: 'print' },
+			screen: { raw: 'screen' },
+		},
 		typography: {
 			DEFAULT: {
 				css: {

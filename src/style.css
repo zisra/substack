@@ -4,9 +4,3 @@
 .footnote-content {
 	margin-top: -15px;
 }
-
-@media print {
-	.no-print {
-		display: none !important;
-	}
-}

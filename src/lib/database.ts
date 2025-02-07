@@ -95,12 +95,9 @@ export class Database {
 	}
 
 	async deleteArticle(url: string) {
-		console.log(url, this.db);
 		if (!this.db) return;
 		const tx = this.db.transaction('articles', 'readwrite');
 		const store = tx.objectStore('articles');
-		await store.delete(url);
-		await tx.done;
-		return;
+		return store.delete(url);
 	}
 }
