@@ -35,7 +35,11 @@ export function Header() {
 							</DropdownMenuItem>
 							<DropdownMenuItem>
 								<GithubIcon className="mr-2 w-4 h-4" />
-								<a href="https://github.com" target="_blank" className="w-full">
+								<a
+									href="https://github.com/zisra/substack"
+									target="_blank"
+									className="w-full"
+								>
 									GitHub
 								</a>
 							</DropdownMenuItem>

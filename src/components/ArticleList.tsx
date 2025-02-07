@@ -60,7 +60,9 @@ export function ArticleList({
 										</span>
 									</div>
 									<h3 className="font-bold text-lg mb-2">{article.title}</h3>
-									<p className="text-sm text-neutral-600">{article.subtitle}</p>
+									<p className="text-sm text-muted-foreground">
+										{article.subtitle}
+									</p>
 								</div>
 								<div className="flex-shrink-0">
 									<img
