@@ -6,6 +6,7 @@ To-do
 - [ ] Improve scraping
 - [ ] Export all / import all
 - [ ] iOS Shortcut
+- [ ] Fix raycast deployment
 - [ ] Smooth scrolling for footnotes
 - [ ] About button
 - [ ] Show complete viewport when printing

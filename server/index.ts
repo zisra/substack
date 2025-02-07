@@ -2,7 +2,6 @@ import Fastify from 'fastify';
 import { NodeHtmlMarkdown } from 'node-html-markdown';
 import fastifyStatic from '@fastify/static';
 import { load, type CheerioAPI } from 'cheerio';
-import parseSrcset from 'parse-srcset';
 
 const app = Fastify();
 
@@ -146,6 +145,6 @@ const port = parseInt(process.env.PORT || '3000', 10);
 
 console.log('Listening on port', port);
 
-app.listen({ port: port }, (err) => {
+app.listen({ port: port, host: '0.0.0.0' }, (err) => {
 	if (err) throw err;
 });
