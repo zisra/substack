@@ -23,14 +23,14 @@ export function ArticleList({
 }: ArticleListProps) {
 	if (articles.length === 0) {
 		return (
-			<Card className="p-8 text-center">
-				<BookOpenText className="mx-auto h-12 w-12 text-neutral-400 dark:" />
-				<h3 className="mt-2 text-sm font-semibold text-neutral-900 dark:text-neutral-400">
-					No articles
-				</h3>
-				<CardDescription className="mt-3">
-					Get started by saving your first article.
-				</CardDescription>
+			<Card className="mb-8">
+				<CardContent className="flex flex-col items-center space-y-4 p-6">
+					<BookOpenText className="h-16 w-16" aria-hidden="true" />
+					<h3 className="text-md">No articles saved</h3>
+					<p className="text-center text-muted-foreground">
+						Get started by saving your first article.
+					</p>
+				</CardContent>
 			</Card>
 		);
 	}
