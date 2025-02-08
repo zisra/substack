@@ -66,8 +66,11 @@ app.get('/download-article', async (req, res) => {
 		return res.status(400).send('URL parameter is required');
 	}
 
+	const urlObj = new URL(url);
+	urlObj.search = '';
+
 	try {
-		const response = await fetch(url);
+		const response = await fetch(urlObj.toString());
 		const html = await response.text();
 
 		const dom = load(html);

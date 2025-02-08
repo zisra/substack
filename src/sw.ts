@@ -1,25 +1,16 @@
 import { cleanupOutdatedCaches, precacheAndRoute } from 'workbox-precaching';
-import { NavigationRoute, registerRoute } from 'workbox-routing';
-import { NetworkFirst } from 'workbox-strategies';
+import { registerRoute } from 'workbox-routing';
+import { clientsClaim } from 'workbox-core';
 import { Database } from './lib/database';
 
 declare let self: ServiceWorkerGlobalScope;
 
 cleanupOutdatedCaches();
-
 precacheAndRoute(self.__WB_MANIFEST);
-
 self.skipWaiting();
+clientsClaim();
 
-// cache web app
-registerRoute(
-	new NavigationRoute(
-		new NetworkFirst({
-			cacheName: 'start-url',
-		})
-	)
-);
-
+// Open database
 const db = new Database();
 db.open();
 
