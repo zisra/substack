@@ -86,6 +86,7 @@ app.get('/download-article', async (req, res) => {
 		).remove();
 		dom('.embedded-post-wrap').remove();
 		dom('.image-link-expand').remove();
+		dom('.poll-embed').remove();
 		dom('audio').remove();
 
 		// Remove links from images
@@ -102,12 +103,12 @@ app.get('/download-article', async (req, res) => {
 		dom('img').each((_index, element) => {
 			const title = dom(element).attr('title');
 			const alt = dom(element).attr('alt');
-			
+
 			if (title) {
 				dom(element).attr('title', title.replace(/"/g, '\\"'));
 			}
 			if (alt) {
-				dom(element).attr('alt', alt.replace(/"/g, '\\"')); 
+				dom(element).attr('alt', alt.replace(/"/g, '\\"'));
 			}
 		});
 
