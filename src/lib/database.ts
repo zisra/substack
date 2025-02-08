@@ -39,10 +39,23 @@ export class Database {
 		const tx = this.db.transaction('articles', 'readwrite');
 		const store = tx.objectStore('articles');
 
+		const reader = new Parser();
+		const writer = new HtmlRenderer();
+		var parsed = reader.parse(article?.markdown ?? '');
+
+		const result = writer.render(parsed);
+		const parser = new DOMParser();
+		const doc = parser.parseFromString(result, 'text/html');
+		const images = doc.querySelectorAll('img');
+
 		const dbArticle = {
 			...article,
 			timestamp: Date.now(),
-			imagesSaved: [article.authorImg, article.image],
+			imagesSaved: [
+				article.authorImg,
+				article.image,
+				...[...images].map((img) => img.src),
+			],
 		};
 
 		const existingArticle = await store.get(article.url);
@@ -66,15 +79,6 @@ export class Database {
 					type: 'CACHE_IMAGE',
 					url: dbArticle.authorImg,
 				});
-
-				const reader = new Parser();
-				const writer = new HtmlRenderer();
-				var parsed = reader.parse(article?.markdown ?? '');
-
-				const result = writer.render(parsed);
-				const parser = new DOMParser();
-				const doc = parser.parseFromString(result, 'text/html');
-				const images = doc.querySelectorAll('img');
 
 				for (const image of images) {
 					registration.active?.postMessage({
