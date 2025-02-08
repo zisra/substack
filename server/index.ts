@@ -99,6 +99,18 @@ app.get('/download-article', async (req, res) => {
 			dom(element).replaceWith(child);
 		});
 
+		dom('img').each((_index, element) => {
+			const title = dom(element).attr('title');
+			const alt = dom(element).attr('alt');
+			
+			if (title) {
+				dom(element).attr('title', title.replace(/"/g, '\\"'));
+			}
+			if (alt) {
+				dom(element).attr('alt', alt.replace(/"/g, '\\"')); 
+			}
+		});
+
 		dom('li').each((_index, element) => {
 			// Remove the p child of li and put it as li's child
 			const p = dom(element).find('p').first();
