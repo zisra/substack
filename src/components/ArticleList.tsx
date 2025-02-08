@@ -6,7 +6,12 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import type { Article } from '@/lib/types';
-import { BookOpenText, MoreVertical, Trash, LinkIcon } from 'lucide-react';
+import {
+	LinkIcon,
+	TrashIcon,
+	MoreVerticalIcon,
+	BookOpenTextIcon,
+} from 'lucide-react';
 import { Link } from 'react-router';
 import { Button } from '@/components/ui/button';
 
@@ -25,7 +30,7 @@ export function ArticleList({
 		return (
 			<Card className="mb-8">
 				<CardContent className="flex flex-col items-center space-y-4 p-6">
-					<BookOpenText className="h-16 w-16" aria-hidden="true" />
+					<BookOpenTextIcon className="h-16 w-16" aria-hidden="true" />
 					<h3 className="text-md">No articles saved</h3>
 					<p className="text-center text-muted-foreground">
 						Get started by saving your first article.
@@ -75,19 +80,28 @@ export function ArticleList({
 						</Link>
 						<DropdownMenu>
 							<DropdownMenuTrigger asChild>
-								<Button variant="ghost" className="h-8 w-8 p-0">
+								<Button
+									variant="ghost"
+									className="h-8 w-8 p-0 hover:bg-background"
+								>
 									<span className="sr-only">Open menu</span>
-									<MoreVertical className="h-4 w-4" />
+									<MoreVerticalIcon className="h-4 w-4 text-muted-foreground" />
 								</Button>
 							</DropdownMenuTrigger>
-							<DropdownMenuContent align="end">
-								<DropdownMenuItem onClick={() => onCopyLink(article.url)}>
+							<DropdownMenuContent align="end" className="w-40">
+								<DropdownMenuItem
+									onClick={() => onCopyLink(article.url)}
+									className="cursor-pointer"
+								>
 									<LinkIcon className="mr-2 h-4 w-4" />
-									<button>Copy link</button>
+									<span>Copy link</span>
 								</DropdownMenuItem>
-								<DropdownMenuItem onClick={() => onDelete(article.url)}>
-									<Trash className="mr-2 h-4 w-4" />
-									<button>Delete</button>
+								<DropdownMenuItem
+									onClick={() => onDelete(article.url)}
+									className="cursor-pointer text-red-600"
+								>
+									<TrashIcon className="mr-2 h-4 w-4" />
+									<span>Delete</span>
 								</DropdownMenuItem>
 							</DropdownMenuContent>
 						</DropdownMenu>

@@ -1,4 +1,4 @@
-import { Moon, Sun } from 'lucide-react';
+import { MoonIcon, SunIcon } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@/components/ThemeProvider';
@@ -15,9 +15,9 @@ export function ToggleMode() {
 			size="icon"
 		>
 			{theme === 'dark' ? (
-				<Sun onClick={() => setTheme('light')} />
+				<SunIcon onClick={() => setTheme('light')} />
 			) : (
-				<Moon onClick={() => setTheme('dark')} />
+				<MoonIcon onClick={() => setTheme('dark')} />
 			)}
 		</Button>
 	);

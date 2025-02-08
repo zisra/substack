@@ -157,6 +157,7 @@ export function ArticleViewer() {
 
 									db.deleteArticle(article.url);
 								}}
+								className="text-red-600 hover:text-red-700 hover:bg-red-50 border-red-100"
 							>
 								<TrashIcon />
 							</Button>

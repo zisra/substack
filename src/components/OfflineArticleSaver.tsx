@@ -10,7 +10,7 @@ import {
 	CardTitle,
 	CardDescription,
 } from '@/components/ui/card';
-import { Loader2 } from 'lucide-react';
+import { Loader2Icon } from 'lucide-react';
 import type { Article } from '@/lib/types';
 import { Database } from '@/lib/database';
 import { checkUrlValid } from '@/lib/utils';
@@ -113,7 +113,7 @@ export function OfflineArticleSaver() {
 							>
 								{isSaving ? (
 									<>
-										<Loader2 className="mr-2 h-4 w-4 animate-spin" />
+										<Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
 										Saving...
 									</>
 								) : (
