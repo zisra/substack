@@ -65,6 +65,18 @@ importers:
       turndown:
         specifier: ^7.2.0
         version: 7.2.0
+      workbox-background-sync:
+        specifier: ^7.3.0
+        version: 7.3.0
+      workbox-precaching:
+        specifier: ^7.3.0
+        version: 7.3.0
+      workbox-routing:
+        specifier: ^7.3.0
+        version: 7.3.0
+      workbox-strategies:
+        specifier: ^7.3.0
+        version: 7.3.0
     devDependencies:
       '@tailwindcss/typography':
         specifier: ^0.5.16

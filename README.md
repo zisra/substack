@@ -2,13 +2,13 @@
 
 ### To-do
 
-- [ ] Download images offline
 - [ ] Improve scraping
 - [ ] Export all / import all
 - [ ] iOS Shortcut
 - [ ] Footnotes scroll to right place
 - [ ] About modal
 - [ ] Move dropdown menu of each article to better place
+- [x] Cache images with service worker
 - [x] Handle 404
 - [x] Make footnotes go both ways
 - [x] Use turndown
