@@ -123,6 +123,11 @@ app.get('/image-proxy', async (req, res) => {
 		return res.status(400).send('URL parameter is required');
 	}
 
+	const urlObj = new URL(url);
+	if (urlObj.hostname !== 'substackcdn.com') {
+		return res.status(400).send('Only images from Substack are allowed');
+	}
+
 	try {
 		const response = await fetch(url);
 		const buffer = Buffer.from(await response.arrayBuffer());

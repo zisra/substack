@@ -8,6 +8,7 @@
 - [ ] Footnotes scroll to right place
 - [ ] About modal
 - [ ] Move dropdown menu of each article to better place
+- [x] Restrict proxy to Substack CDN
 - [x] Cache images with service worker
 - [x] Handle 404
 - [x] Make footnotes go both ways

@@ -100,12 +100,14 @@ export function ArticleViewer() {
 		);
 	} else {
 		return (
-			<div className="max-w-3xl mx-auto px-4 py-8 print:m-0">
+			<div className="max-w-3xl mx-auto px-4 py-8 ">
 				<Helmet>
 					<title>{title}</title>
 				</Helmet>
 				<header className="mb-4">
-					<h1 className="text-4xl font-bold mb-2">{article?.title}</h1>
+					<h1 className="text-4xl font-bold mb-2 print:tracking-tighter">
+						{article?.title}
+					</h1>
 					<p className="text-xl text-muted-foreground mb-4">
 						{article?.subtitle}
 					</p>
