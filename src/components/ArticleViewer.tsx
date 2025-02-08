@@ -164,7 +164,7 @@ export function ArticleViewer() {
 					</div>
 				</header>
 				<hr className="my-6" />
-				<article className="prose print:prose-sm prose-neutral lg:prose-lg space-y-4 prose-img:mx-auto prose-figcaption:text-center dark:prose-invert prose-figcaption:mt-[-18px] prose-blockquote:font-normal prose-blockquote:not-italic max-w-none">
+				<article className="prose print:prose-sm prose-neutral lg:prose-lg space-y-4 prose-img:mx-auto prose-figcaption:text-center dark:prose-invert prose-figcaption:mt-[-18px] prose-blockquote:font-normal prose-blockquote:not-italic max-w-none break-words">
 					<div
 						dangerouslySetInnerHTML={{
 							__html: markdown,

@@ -99,6 +99,14 @@ app.get('/download-article', async (req, res) => {
 			dom(element).replaceWith(child);
 		});
 
+		dom('li').each((_index, element) => {
+			// Remove the p child of li and put it as li's child
+			const p = dom(element).find('p').first();
+
+			const pContent = p.contents();
+			p.replaceWith(pContent);
+		});
+
 		const article = dom.html(dom('.available-content'));
 		const markdown = turndownService.turndown(article);
 
