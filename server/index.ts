@@ -148,7 +148,10 @@ app.get('/image-proxy', async (req, res) => {
 	}
 
 	const urlObj = new URL(url);
-	if (urlObj.hostname !== 'substackcdn.com') {
+	if (
+		urlObj.hostname !== 'substackcdn.com' &&
+		urlObj.hostname !== 'images.unsplash.com'
+	) {
 		return res.status(400).send('Only images from Substack are allowed');
 	}
 

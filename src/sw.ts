@@ -1,4 +1,8 @@
-import { cleanupOutdatedCaches, createHandlerBoundToURL, precacheAndRoute } from 'workbox-precaching';
+import {
+	cleanupOutdatedCaches,
+	createHandlerBoundToURL,
+	precacheAndRoute,
+} from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { clientsClaim } from 'workbox-core';
 import { Database } from './lib/database';
@@ -31,10 +35,7 @@ registerRoute(
 );
 
 const handler = createHandlerBoundToURL('/index.html');
-registerRoute(
-	({ request }) => request.mode === 'navigate',
-	handler
-);
+registerRoute(({ request }) => request.mode === 'navigate', handler);
 
 self.addEventListener('message', async (event) => {
 	if (event.data && event.data.type === 'CACHE_IMAGE') {
