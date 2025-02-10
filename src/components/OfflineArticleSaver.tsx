@@ -10,15 +10,16 @@ import {
 	CardTitle,
 	CardDescription,
 } from '@/components/ui/card';
-import { Loader2Icon } from 'lucide-react';
-import type { Article } from '@/lib/types';
+import { ChevronRightIcon, Loader2Icon } from 'lucide-react';
+import type { Article, ArticleSaved } from '@/lib/types';
 import { Database } from '@/lib/database';
 import { checkUrlValid } from '@/lib/utils';
 import { OfflineIndicator } from './OfflineIndicator';
+import { Link } from 'react-router';
 
 export function OfflineArticleSaver() {
 	const [url, setUrl] = useState('');
-	const [articles, setArticles] = useState<Article[]>([]);
+	const [articles, setArticles] = useState<ArticleSaved[]>([]);
 	const [isSaving, setIsSaving] = useState(false);
 	const [isOffline, setIsOffline] = useState(!navigator.onLine);
 
@@ -38,11 +39,15 @@ export function OfflineArticleSaver() {
 				throw new Error('Failed to download article');
 			}
 
+			await db.open();
+
 			const data: Article = await response.json();
 			await db.saveArticle(data);
 			const articles = await db.getArticles();
 
-			setArticles(articles);
+			if (articles) {
+				setArticles(articles);
+			}
 
 			setUrl('');
 		} catch (error) {
@@ -128,6 +133,13 @@ export function OfflineArticleSaver() {
 			{isOffline ? <OfflineIndicator /> : null}
 
 			<h2 className="text-2xl font-bold mb-4">Saved Articles</h2>
+			<Card className="mb-6 p-0 py-0">
+				<Link to="/archived" className="flex justify-between items-center p-4">
+					<span>View Archived Articles</span>
+					<ChevronRightIcon className="h-4 w-4" />
+				</Link>
+			</Card>
+
 			<div className="grid gap-4">
 				<ArticleList
 					articles={articles}
@@ -137,6 +149,11 @@ export function OfflineArticleSaver() {
 					onDelete={async (url) => {
 						await db.open();
 						await db.deleteArticle(url);
+						setArticles(articles.filter((i) => i.url !== url));
+					}}
+					onArchive={async (url) => {
+						await db.open();
+						await db.archiveArticle(url);
 						setArticles(articles.filter((i) => i.url !== url));
 					}}
 				/>

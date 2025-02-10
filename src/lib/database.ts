@@ -1,11 +1,11 @@
 import { openDB, type IDBPDatabase, type DBSchema } from 'idb';
-import { Article } from '@/lib/types';
+import { Article, ArticleSaved } from '@/lib/types';
 import { Parser, HtmlRenderer } from 'commonmark';
 
 export interface DatabaseType extends DBSchema {
 	articles: {
 		key: string;
-		value: Article & { timestamp: number; imagesSaved: string[] };
+		value: ArticleSaved;
 	};
 	images: {
 		key: string;
@@ -33,8 +33,6 @@ export class Database {
 	}
 
 	async saveArticle(article: Article) {
-		if (!this.db) await this.open();
-
 		if (!this.db) return;
 		const tx = this.db.transaction('articles', 'readwrite');
 		const store = tx.objectStore('articles');
@@ -56,6 +54,7 @@ export class Database {
 				article.image,
 				...[...images].map((img) => img.src),
 			],
+			archived: false,
 		};
 
 		const existingArticle = await store.get(article.url);
@@ -65,8 +64,6 @@ export class Database {
 		} else {
 			await store.add(dbArticle);
 		}
-
-		await tx.done;
 
 		if ('serviceWorker' in navigator) {
 			navigator.serviceWorker.ready.then((registration) => {
@@ -88,15 +85,30 @@ export class Database {
 				}
 			});
 		}
+
+		return dbArticle;
 	}
 
 	async getArticles() {
-		if (!this.db) return [];
+		if (!this.db) return;
 		const tx = this.db.transaction('articles', 'readonly');
 		const store = tx.objectStore('articles');
 		const articles = await store.getAll();
 
-		return articles.sort((a, b) => b.timestamp - a.timestamp);
+		return articles
+			.sort((a, b) => b.timestamp - a.timestamp)
+			.filter((article) => !article.archived);
+	}
+
+	async getArchivedArticles() {
+		if (!this.db) return;
+		const tx = this.db.transaction('articles', 'readonly');
+		const store = tx.objectStore('articles');
+		const articles = await store.getAll();
+
+		console.log(articles);
+
+		return articles.filter((article) => article.archived);
 	}
 
 	async getArticle(url: string) {
@@ -104,6 +116,34 @@ export class Database {
 		const tx = this.db.transaction('articles', 'readonly');
 		const store = tx.objectStore('articles');
 		return store.get(url);
+	}
+
+	async archiveArticle(url: string) {
+		if (!this.db) return;
+		const tx = this.db.transaction('articles', 'readwrite');
+		const store = tx.objectStore('articles');
+		const article = await store.get(url);
+
+		if (article) {
+			article.archived = true;
+			await store.put(article);
+		}
+
+		return tx.done;
+	}
+
+	async unArchiveArticle(url: string) {
+		if (!this.db) return;
+		const tx = this.db.transaction('articles', 'readwrite');
+		const store = tx.objectStore('articles');
+		const article = await store.get(url);
+
+		if (article) {
+			article.archived = false;
+			await store.put(article);
+		}
+
+		return tx.done;
 	}
 
 	async deleteArticle(url: string) {

@@ -5,39 +5,61 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import type { Article } from '@/lib/types';
+import type { ArticleSaved } from '@/lib/types';
 import {
 	LinkIcon,
 	TrashIcon,
 	MoreVerticalIcon,
 	BookOpenTextIcon,
+	ArchiveIcon,
+	ArchiveRestoreIcon,
 } from 'lucide-react';
 import { Link } from 'react-router';
 import { Button } from '@/components/ui/button';
 
 interface ArticleListProps {
-	articles: Article[];
+	articles: ArticleSaved[];
 	onDelete: (url: string) => void;
 	onCopyLink: (url: string) => void;
+	onArchive?: (url: string) => void;
+	onUnArchive?: (url: string) => void;
+	archivedView?: boolean;
 }
 
 export function ArticleList({
 	articles,
 	onDelete,
 	onCopyLink,
+	onArchive,
+	onUnArchive,
+	archivedView = false,
 }: ArticleListProps) {
 	if (articles.length === 0) {
-		return (
-			<Card className="mb-8">
-				<CardContent className="flex flex-col items-center space-y-4 p-6">
-					<BookOpenTextIcon className="h-16 w-16" aria-hidden="true" />
-					<h3 className="text-md">No articles saved</h3>
-					<p className="text-center text-muted-foreground">
-						Get started by saving your first article.
-					</p>
-				</CardContent>
-			</Card>
-		);
+		if (archivedView) {
+			return (
+				<Card className="mb-8">
+					<CardContent className="flex flex-col items-center space-y-4 p-6">
+						<ArchiveIcon className="h-16 w-16" aria-hidden="true" />
+						<h3 className="text-md">No archived articles</h3>
+						<p className="text-center text-muted-foreground">
+							Go back and archive some articles that you finished reading.
+						</p>
+					</CardContent>
+				</Card>
+			);
+		} else {
+			return (
+				<Card className="mb-8">
+					<CardContent className="flex flex-col items-center space-y-4 p-6">
+						<BookOpenTextIcon className="h-16 w-16" aria-hidden="true" />
+						<h3 className="text-md">No articles saved</h3>
+						<p className="text-center text-muted-foreground">
+							Get started by saving your first article.
+						</p>
+					</CardContent>
+				</Card>
+			);
+		}
 	}
 
 	return articles.map((article, index) => {
@@ -96,6 +118,27 @@ export function ArticleList({
 									<LinkIcon className="mr-2 h-4 w-4" />
 									<span>Copy link</span>
 								</DropdownMenuItem>
+
+								{archivedView && onUnArchive ? (
+									<DropdownMenuItem
+										onClick={() => onUnArchive(article.url)}
+										className="cursor-pointer"
+									>
+										<ArchiveRestoreIcon className="mr-2 h-4 w-4" />
+										<span>Unarchive</span>
+									</DropdownMenuItem>
+								) : null}
+
+								{!archivedView && onArchive ? (
+									<DropdownMenuItem
+										onClick={() => onArchive(article.url)}
+										className="cursor-pointer"
+									>
+										<ArchiveIcon className="mr-2 h-4 w-4" />
+										<span>Archive</span>
+									</DropdownMenuItem>
+								) : null}
+
 								<DropdownMenuItem
 									onClick={() => onDelete(article.url)}
 									className="cursor-pointer text-red-600"

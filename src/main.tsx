@@ -6,6 +6,7 @@ import { Article } from '@/routes/article.tsx';
 import './index.css';
 import './style.css';
 import { ThemeProvider } from './components/ThemeProvider';
+import { Archived } from './routes/archived';
 
 const root = document.getElementById('root')!;
 
@@ -15,6 +16,7 @@ ReactDOM.createRoot(root).render(
 			<Routes>
 				<Route path="/" element={<Index />} />
 				<Route path="/article" element={<Article />} />
+				<Route path="/archived" element={<Archived />} />
 				<Route path="*" element={<Navigate to="/" replace />} />
 			</Routes>
 		</BrowserRouter>

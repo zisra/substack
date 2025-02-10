@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
-export const darkMode = ['class'];
+export const darkMode = ['variant', '@media not print { .dark & }'];
+
 export const content = [
 	'./pages/**/*.{ts,tsx}',
 	'./components/**/*.{ts,tsx}',
