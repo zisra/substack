@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router';
 import { Button } from '@/components/ui/button';
+import { AlertCard } from './AlertCard';
 
 interface ArticleListProps {
 	articles: ArticleSaved[];
@@ -37,27 +38,21 @@ export function ArticleList({
 	if (articles.length === 0) {
 		if (archivedView) {
 			return (
-				<Card className="mb-8">
-					<CardContent className="flex flex-col items-center space-y-4 p-6">
-						<ArchiveIcon className="h-16 w-16" aria-hidden="true" />
-						<h3 className="text-md">No archived articles</h3>
-						<p className="text-center text-muted-foreground">
-							Go back and archive some articles that you finished reading.
-						</p>
-					</CardContent>
-				</Card>
+				<AlertCard
+					title="No archived articles"
+					icon={<ArchiveIcon className="h-16 w-16" />}
+				>
+					Go back and archive some articles that you finished reading.
+				</AlertCard>
 			);
 		} else {
 			return (
-				<Card className="mb-8">
-					<CardContent className="flex flex-col items-center space-y-4 p-6">
-						<BookOpenTextIcon className="h-16 w-16" aria-hidden="true" />
-						<h3 className="text-md">No articles saved</h3>
-						<p className="text-center text-muted-foreground">
-							Get started by saving your first article.
-						</p>
-					</CardContent>
-				</Card>
+				<AlertCard
+					title="No articles saved"
+					icon={<BookOpenTextIcon className="h-16 w-16" />}
+				>
+					Get started by saving your first article.
+				</AlertCard>
 			);
 		}
 	}

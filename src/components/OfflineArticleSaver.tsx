@@ -10,12 +10,12 @@ import {
 	CardTitle,
 	CardDescription,
 } from '@/components/ui/card';
-import { ChevronRightIcon, Loader2Icon } from 'lucide-react';
+import { ChevronRightIcon, Loader2Icon, WifiOffIcon } from 'lucide-react';
 import type { Article, ArticleSaved } from '@/lib/types';
 import { Database } from '@/lib/database';
 import { checkUrlValid } from '@/lib/utils';
-import { OfflineIndicator } from './OfflineIndicator';
 import { Link } from 'react-router';
+import { AlertCard } from '@/components/AlertCard';
 
 export function OfflineArticleSaver() {
 	const [url, setUrl] = useState('');
@@ -130,7 +130,11 @@ export function OfflineArticleSaver() {
 				</Card>
 			)}
 
-			{isOffline ? <OfflineIndicator /> : null}
+			{isOffline ? (
+				<AlertCard title="Offline" icon={<WifiOffIcon className="h-16 w-16" />}>
+					Please connect to the internet to save articles.
+				</AlertCard>
+			) : null}
 
 			<h2 className="text-2xl font-bold mb-4">Saved Articles</h2>
 			<Card className="mb-6 p-0 py-0">

@@ -25,6 +25,7 @@ import {
 import { Helmet } from 'react-helmet';
 import { Card, CardContent } from './ui/card';
 import { Formatting } from './Formatting';
+import { AlertCard } from './AlertCard';
 
 async function saveArticle(db: Database, url: string) {
 	const response = await fetch(
@@ -261,16 +262,13 @@ export function ArticleViewer() {
 				</header>
 				<hr className="my-6" />
 				{failed ? (
-					<Card className="mb-8">
-						<CardContent className="flex flex-col items-center space-y-4 p-6">
-							<ArchiveIcon className="h-16 w-16" aria-hidden="true" />
-							<h3 className="text-md">Archived article</h3>
-							<p className="text-center text-muted-foreground">
-								This article has been archived and is no longer available
-								without an internet connection.
-							</p>
-						</CardContent>
-					</Card>
+					<AlertCard
+						title="Archived article"
+						icon={<ArchiveIcon className="h-16 w-16" aria-hidden="true" />}
+					>
+						This article has been archived and is no longer available without an
+						internet connection.
+					</AlertCard>
 				) : (
 					<article className="prose print:prose-sm prose-lg space-y-4 prose-img:mx-auto prose-figcaption:text-center dark:prose-invert prose-figcaption:mt-[-18px] prose-blockquote:font-normal prose-blockquote:not-italic max-w-none break-words">
 						<div
