@@ -12,7 +12,6 @@ Fix:
 Add:
 
 - [ ] Save location in article
-- [ ] Synchronize articles between devices
 - [x] Archive finished articles
 - [ ] iOS Shortcut
 - [ ] About > Settings page with:

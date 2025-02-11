@@ -14,7 +14,6 @@ import { ArticleSaved, type Article } from '@/lib/types';
 import { Parser, HtmlRenderer } from 'commonmark';
 import { Button } from '@/components/ui/button';
 import {
-	ALargeSmallIcon,
 	ArchiveIcon,
 	ArchiveRestoreIcon,
 	ExternalLink,
@@ -25,6 +24,7 @@ import {
 } from 'lucide-react';
 import { Helmet } from 'react-helmet';
 import { Card, CardContent } from './ui/card';
+import { Formatting } from './Formatting';
 
 async function saveArticle(db: Database, url: string) {
 	const response = await fetch(
@@ -184,9 +184,7 @@ export function ArticleViewer() {
 										<ExternalLink />
 									</Button>
 								</a>
-								<Button variant="outline" size="icon">
-									<ALargeSmallIcon />
-								</Button>
+								<Formatting />
 							</div>
 
 							<DropdownMenu>
@@ -274,7 +272,7 @@ export function ArticleViewer() {
 						</CardContent>
 					</Card>
 				) : (
-					<article className="prose print:prose-sm prose-neutral lg:prose-lg space-y-4 prose-img:mx-auto prose-figcaption:text-center dark:prose-invert prose-figcaption:mt-[-18px] prose-blockquote:font-normal prose-blockquote:not-italic max-w-none break-words">
+					<article className="prose print:prose-sm prose-lg space-y-4 prose-img:mx-auto prose-figcaption:text-center dark:prose-invert prose-figcaption:mt-[-18px] prose-blockquote:font-normal prose-blockquote:not-italic max-w-none break-words">
 						<div
 							dangerouslySetInnerHTML={{
 								__html: markdown,
