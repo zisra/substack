@@ -7,6 +7,7 @@ Fix:
 - [ ] Scrape profile picture correctly
 - [ ] Move dropdown menu of each article to better place
 - [ ] Disable dark mode when printing
+- [ ] Prompt, are you sure you want to delete all articles?
 
 Add:
 
