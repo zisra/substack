@@ -1,5 +1,5 @@
 import { openDB, type IDBPDatabase, type DBSchema } from 'idb';
-import { Article, ArticleSaved } from '@/lib/types';
+import { Article, ArticleSaved, Settings } from '@/lib/types';
 import { Parser, HtmlRenderer } from 'commonmark';
 
 export interface DatabaseType extends DBSchema {
@@ -14,6 +14,10 @@ export interface DatabaseType extends DBSchema {
 			blob: Blob;
 		};
 	};
+	settings: {
+		key: number;
+		value: Settings;
+	};
 }
 
 export class Database {
@@ -27,6 +31,9 @@ export class Database {
 				});
 				db.createObjectStore('images', {
 					keyPath: 'url',
+				});
+				db.createObjectStore('settings', {
+					keyPath: 'version',
 				});
 			},
 		});
@@ -124,9 +131,9 @@ export class Database {
 		const store = tx.objectStore('articles');
 		const article = await store.get(url);
 
-		// Check settings whether to save archived article content or not
+		const settings = await this.getSettings();
 
-		if (article) {
+		if (article && settings?.saveArchivedContent === false) {
 			article.archived = true;
 			article.markdown = false;
 
@@ -205,5 +212,19 @@ export class Database {
 		const imageStore = imageTx.objectStore('images');
 		await imageStore.put({ url, blob: imageBlob });
 		await imageTx.done;
+	}
+
+	async getSettings() {
+		if (!this.db) return;
+		const tx = this.db.transaction('settings', 'readonly');
+		const store = tx.objectStore('settings');
+		return store.get(1);
+	}
+
+	async saveSettings(settings: Settings) {
+		if (!this.db) return;
+		const tx = this.db.transaction('settings', 'readwrite');
+		const store = tx.objectStore('settings');
+		await store.put(settings);
 	}
 }

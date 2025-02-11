@@ -20,7 +20,7 @@ Add:
   - [ ] Clear all stored data
   - [ ] Update PWA
   - [ ] Save archived articles offline?
-- [ ] Formatting
-  - [ ] Font size
-  - [ ] Font family
-  - [ ] Print images or not
+- [x] Formatting
+  - [x] Font size
+  - [x] Font family
+  - [x] Print images or not

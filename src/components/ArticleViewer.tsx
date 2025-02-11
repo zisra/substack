@@ -1,31 +1,16 @@
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
-import { Skeleton } from '@/components/ui/skeleton';
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-
 import { useSearchParams, useNavigate } from 'react-router';
 import { Database } from '@/lib/database';
 import { useEffect, useState } from 'react';
-import { ArticleSaved, type Article } from '@/lib/types';
+import { ArticleSaved, Settings, type Article } from '@/lib/types';
 import { Parser, HtmlRenderer } from 'commonmark';
-import { Button } from '@/components/ui/button';
-import {
-	ArchiveIcon,
-	ArchiveRestoreIcon,
-	ExternalLink,
-	LinkIcon,
-	MoreVerticalIcon,
-	PrinterIcon,
-	TrashIcon,
-} from 'lucide-react';
+import { ArchiveIcon } from 'lucide-react';
 import { Helmet } from 'react-helmet';
-import { Card, CardContent } from './ui/card';
-import { Formatting } from './Formatting';
+
 import { AlertCard } from './AlertCard';
+import { ArticleSkeleton } from './ArticleSkeleton';
+import { ArticleControls } from './ArticleControls';
+import { twMerge } from 'tailwind-merge';
 
 async function saveArticle(db: Database, url: string) {
 	const response = await fetch(
@@ -42,9 +27,45 @@ async function saveArticle(db: Database, url: string) {
 	return savedArticle;
 }
 
+function ArticleHeader({
+	article,
+	db,
+	setArticle,
+	onSettingsChange,
+}: {
+	article: ArticleSaved;
+	db: Database;
+	setArticle: React.Dispatch<React.SetStateAction<ArticleSaved | null>>;
+	onSettingsChange: (settings: Settings) => void;
+}) {
+	return (
+		<header className="mb-4">
+			<h1 className="text-4xl font-bold mb-2">{article?.title}</h1>
+			<p className="text-xl text-muted-foreground mb-4">{article?.subtitle}</p>
+			<div className="flex items-center space-x-2">
+				<Avatar className="pointer-events-none h-6 w-6">
+					<AvatarImage src={article?.authorImg} alt="Author" />
+				</Avatar>
+				<div>
+					<p className="text-md text-muted-foreground">
+						<a>{article?.author}</a>
+					</p>
+				</div>
+			</div>
+			<ArticleControls
+				onSettingsChange={onSettingsChange}
+				db={db}
+				setArticle={setArticle}
+				article={article}
+			/>
+		</header>
+	);
+}
+
 export function ArticleViewer() {
 	let [searchParams] = useSearchParams();
 	const [article, setArticle] = useState<ArticleSaved | null>(null);
+	const [settings, setSettings] = useState<Settings | null>(null);
 	const [title, setTitle] = useState<string>('');
 	const [markdown, setMarkdown] = useState<string>('');
 	const [failed, setFailed] = useState(false);
@@ -125,141 +146,36 @@ export function ArticleViewer() {
 		fetchData();
 	}, [article, url, navigate]);
 
+	useEffect(() => {
+		const fetchSettings = async () => {
+			await db.open();
+			let settings = await db.getSettings();
+
+			if (settings) {
+				setSettings(settings);
+			}
+		};
+		fetchSettings();
+	}, []);
+
+	const onSettingsChange = async (settings: Settings) => {
+		setSettings(settings);
+	};
+
 	if (!article) {
-		return (
-			<div className="max-w-3xl mx-auto px-4 py-8">
-				<header className="mb-4">
-					<Skeleton className="h-10 w-3/4 mb-2" />
-					<Skeleton className="h-6 w-1/2 mb-4" />
-					<div className="flex items-center space-x-2">
-						<Skeleton className="h-6 w-6 rounded-full" />
-						<Skeleton className="h-6 w-1/4" />
-					</div>
-				</header>
-				<hr className="my-6" />
-				<article className="space-y-4">
-					<Skeleton className="h-6 w-full" />
-					<Skeleton className="h-6 w-full" />
-					<Skeleton className="h-6 w-3/4" />
-				</article>
-			</div>
-		);
+		return <ArticleSkeleton />;
 	} else {
 		return (
 			<div className="max-w-3xl mx-auto px-4 py-8 ">
 				<Helmet>
 					<title>{title}</title>
 				</Helmet>
-				<header className="mb-4">
-					<h1 className="text-4xl font-bold mb-2 print:tracking-tighter">
-						{article?.title}
-					</h1>
-					<p className="text-xl text-muted-foreground mb-4">
-						{article?.subtitle}
-					</p>
-					<div className="flex items-center space-x-2">
-						<Avatar className="pointer-events-none h-6 w-6">
-							<AvatarImage src={article?.authorImg} alt="Author" />
-						</Avatar>
-						<div>
-							<p className="text-md text-muted-foreground">
-								<a>{article?.author}</a>
-							</p>
-						</div>
-					</div>
-					<div className="print:hidden">
-						<hr className="my-6" />
-						<div className="flex items-center justify-between">
-							<div className="flex items-center space-x-4">
-								<Button
-									variant="outline"
-									size="icon"
-									onClick={() => {
-										window.print();
-									}}
-								>
-									<PrinterIcon />
-								</Button>
-								<a href={article.url} target="_blank" rel="noopener noreferrer">
-									<Button variant="outline" size="icon">
-										<ExternalLink />
-									</Button>
-								</a>
-								<Formatting />
-							</div>
-
-							<DropdownMenu>
-								<DropdownMenuTrigger asChild>
-									<Button
-										variant="outline"
-										size="icon"
-										onClick={() => {
-											navigator.clipboard.writeText(article.url);
-										}}
-									>
-										<MoreVerticalIcon />
-									</Button>
-								</DropdownMenuTrigger>
-								<DropdownMenuContent align="end" className="w-40">
-									<DropdownMenuItem
-										onClick={() => {
-											navigator.clipboard.writeText(article.url);
-										}}
-										className="cursor-pointer"
-									>
-										<LinkIcon className="mr-2 h-4 w-4" />
-										<span>Copy link</span>
-									</DropdownMenuItem>
-
-									{article.archived ? (
-										<DropdownMenuItem
-											className="cursor-pointer"
-											onClick={async () => {
-												await db.open();
-												db.unArchiveArticle(article.url);
-												setArticle({
-													...article,
-													archived: false,
-												});
-											}}
-										>
-											<ArchiveRestoreIcon className="mr-2 h-4 w-4" />
-											<span>Unarchive</span>
-										</DropdownMenuItem>
-									) : (
-										<DropdownMenuItem
-											className="cursor-pointer"
-											onClick={async () => {
-												await db.open();
-												db.archiveArticle(article.url);
-												setArticle({
-													...article,
-													archived: true,
-												});
-											}}
-										>
-											<ArchiveIcon className="mr-2 h-4 w-4" />
-											<span>Archive</span>
-										</DropdownMenuItem>
-									)}
-
-									<DropdownMenuItem
-										className="cursor-pointer text-red-600"
-										onClick={async () => {
-											navigate('/');
-
-											await db.open();
-											db.deleteArticle(article.url);
-										}}
-									>
-										<TrashIcon className="mr-2 h-4 w-4" />
-										<span>Delete</span>
-									</DropdownMenuItem>
-								</DropdownMenuContent>
-							</DropdownMenu>
-						</div>
-					</div>
-				</header>
+				<ArticleHeader
+					onSettingsChange={onSettingsChange}
+					article={article}
+					db={db}
+					setArticle={setArticle}
+				/>
 				<hr className="my-6" />
 				{failed ? (
 					<AlertCard
@@ -270,7 +186,25 @@ export function ArticleViewer() {
 						internet connection.
 					</AlertCard>
 				) : (
-					<article className="prose print:prose-sm prose-lg space-y-4 prose-img:mx-auto prose-figcaption:text-center dark:prose-invert prose-figcaption:mt-[-18px] prose-blockquote:font-normal prose-blockquote:not-italic max-w-none break-words">
+					<article
+						className={twMerge(
+							settings?.formatting.fontFamily === 'sans' && 'font-sans',
+							settings?.formatting.fontFamily === 'serif' && 'font-serif',
+							settings?.formatting.fontFamily === 'mono' && 'font-mono',
+							settings?.formatting.fontSize === 'sm' &&
+								'prose-sm print:prose-sm',
+							settings?.formatting.fontSize === 'base' && 'prose-base',
+							settings?.formatting.fontSize === 'dynamic' &&
+								'prose-base lg:prose-lg print:prose-sm',
+							settings?.formatting.fontSize === null &&
+								'prose-base lg:prose-lg print:prose-sm',
+							settings?.formatting.fontSize === 'lg' && 'prose-lg',
+							settings?.formatting.fontSize === 'xl' && 'prose-xl',
+							settings?.formatting.printImages === false &&
+								'print:prose-img:hidden',
+							'prose space-y-4 prose-img:mx-auto prose-figcaption:text-center dark:prose-invert prose-figcaption:mt-[-18px] prose-blockquote:font-normal prose-blockquote:not-italic max-w-none break-words'
+						)}
+					>
 						<div
 							dangerouslySetInnerHTML={{
 								__html: markdown,

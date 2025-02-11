@@ -57,7 +57,7 @@ export function ArchivedPosts() {
 								your archived articles
 							</AlertDialogDescription>
 						</AlertDialogHeader>
-						<AlertDialogFooter>
+						<AlertDialogFooter className="flex flex-col sm:flex-row justify-end gap-y-2 sm:gap-x-0">
 							<AlertDialogCancel>Cancel</AlertDialogCancel>
 							<AlertDialogAction
 								className={buttonVariants({ variant: 'destructive' })}
