@@ -127,11 +127,11 @@ export class Database {
 
 	async archiveArticle(url: string) {
 		if (!this.db) return;
+		const settings = await this.getSettings();
+
 		const tx = this.db.transaction('articles', 'readwrite');
 		const store = tx.objectStore('articles');
 		const article = await store.get(url);
-
-		const settings = await this.getSettings();
 
 		if (article && settings?.saveArchivedContent === false) {
 			article.archived = true;
@@ -145,9 +145,11 @@ export class Database {
 				.forEach((image) => this.deleteImage(image));
 
 			await store.put(article);
+		} else if (article) {
+			article.archived = true;
+			await store.put(article);
+			return tx.done;
 		}
-
-		return tx.done;
 	}
 
 	async unArchiveArticle(url: string) {

@@ -9,6 +9,7 @@ Fix:
 - [ ] Disable dark mode when printing
 - [x] Prompt, are you sure you want to delete all articles?
 - [ ] Clean up code
+- [ ] Re-introduce markdown & images to un-archived articles
 
 Add:
 
