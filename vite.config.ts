@@ -16,7 +16,7 @@ export default defineConfig({
 				swDest: 'dist/sw.js',
 			},
 			manifest: {
-				name: 'Substack Offline Viewer',
+				name: 'Substack Offline',
 				short_name: 'substack-offline',
 				description: 'Download substack articles for offline use',
 				theme_color: '#0A0A0A',

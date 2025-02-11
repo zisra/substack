@@ -6,7 +6,7 @@ export function Archived() {
 	return (
 		<>
 			<Helmet>
-				<title>Substack Offline Viewer - Archived</title>
+				<title>Substack Offline - Archived</title>
 			</Helmet>
 			<Header />
 			<ArchivedPosts />

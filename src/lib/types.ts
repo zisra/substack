@@ -1,15 +1,19 @@
-export type Article = {
+export type BaseArticle = {
 	url: string;
 	title: string;
 	subtitle: string;
 	author: string;
 	authorImg: string;
 	image: string;
+};
+
+export type Article = BaseArticle & {
 	markdown: string;
 };
 
-export type ArticleSaved = Article & {
+export type ArticleSaved = BaseArticle & {
 	timestamp: number;
 	imagesSaved: string[];
 	archived: boolean;
+	markdown: string | boolean;
 };

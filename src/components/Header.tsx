@@ -1,4 +1,4 @@
-import { GithubIcon, HomeIcon, InfoIcon, MenuIcon } from 'lucide-react';
+import { GithubIcon, HomeIcon, MenuIcon, SettingsIcon } from 'lucide-react';
 import {
 	DropdownMenu,
 	DropdownMenuTrigger,
@@ -30,8 +30,8 @@ export function Header() {
 						</DropdownMenuTrigger>
 						<DropdownMenuContent side="bottom" align="end">
 							<DropdownMenuItem>
-								<InfoIcon className="mr-2 w-4 h-4" />
-								<button>About</button>
+								<SettingsIcon className="mr-2 w-4 h-4" />
+								<button>Settings</button>
 							</DropdownMenuItem>
 							<DropdownMenuItem>
 								<GithubIcon className="mr-2 w-4 h-4" />

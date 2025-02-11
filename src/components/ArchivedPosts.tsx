@@ -45,7 +45,7 @@ export function ArchivedPosts() {
 				<h2 className="text-2xl font-bold">Archived Articles</h2>
 				<AlertDialog>
 					<AlertDialogTrigger>
-						<Button size="sm" variant="destructive">
+						<Button size="sm" variant="destructive" disabled={!articles.length}>
 							Delete All Archived
 						</Button>
 					</AlertDialogTrigger>

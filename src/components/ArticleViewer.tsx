@@ -24,6 +24,7 @@ import {
 	TrashIcon,
 } from 'lucide-react';
 import { Helmet } from 'react-helmet';
+import { Card, CardContent } from './ui/card';
 
 async function saveArticle(db: Database, url: string) {
 	const response = await fetch(
@@ -45,6 +46,7 @@ export function ArticleViewer() {
 	const [article, setArticle] = useState<ArticleSaved | null>(null);
 	const [title, setTitle] = useState<string>('');
 	const [markdown, setMarkdown] = useState<string>('');
+	const [failed, setFailed] = useState(false);
 	const navigate = useNavigate();
 
 	const url = searchParams.get('url');
@@ -81,20 +83,46 @@ export function ArticleViewer() {
 	}, [url]);
 
 	useEffect(() => {
-		if (!window.location.hash) {
-			window.scrollTo({ top: 0 });
-		}
+		const fetchData = async () => {
+			const reader = new Parser();
+			const writer = new HtmlRenderer();
 
-		const reader = new Parser();
-		const writer = new HtmlRenderer();
-		var parsed = reader.parse(article?.markdown ?? '');
+			if (typeof article?.markdown === 'string') {
+				var parsed = reader.parse(article.markdown ?? '');
 
-		const result = writer.render(parsed);
-		setMarkdown(result);
-		if (article?.title) {
-			setTitle(article.title);
-		}
-	}, [article]);
+				const result = writer.render(parsed);
+				setMarkdown(result);
+			} else if (url && article?.markdown === false) {
+				try {
+					const response = await fetch(
+						`/download-article?url=${encodeURIComponent(url)}`
+					);
+
+					if (!response.ok) {
+						navigate('/');
+						throw new Error('Failed to download article');
+					}
+
+					const data: Article = await response.json();
+
+					setArticle({
+						...data,
+						archived: false,
+						timestamp: Date.now(),
+						imagesSaved: [],
+					});
+				} catch (error) {
+					setFailed(true);
+				}
+			}
+
+			if (article?.title) {
+				setTitle(article.title);
+			}
+		};
+
+		fetchData();
+	}, [article, url, navigate]);
 
 	if (!article) {
 		return (
@@ -234,13 +262,26 @@ export function ArticleViewer() {
 					</div>
 				</header>
 				<hr className="my-6" />
-				<article className="prose print:prose-sm prose-neutral lg:prose-lg space-y-4 prose-img:mx-auto prose-figcaption:text-center dark:prose-invert prose-figcaption:mt-[-18px] prose-blockquote:font-normal prose-blockquote:not-italic max-w-none break-words">
-					<div
-						dangerouslySetInnerHTML={{
-							__html: markdown,
-						}}
-					></div>
-				</article>
+				{failed ? (
+					<Card className="mb-8">
+						<CardContent className="flex flex-col items-center space-y-4 p-6">
+							<ArchiveIcon className="h-16 w-16" aria-hidden="true" />
+							<h3 className="text-md">Archived article</h3>
+							<p className="text-center text-muted-foreground">
+								This article has been archived and is no longer available
+								without an internet connection.
+							</p>
+						</CardContent>
+					</Card>
+				) : (
+					<article className="prose print:prose-sm prose-neutral lg:prose-lg space-y-4 prose-img:mx-auto prose-figcaption:text-center dark:prose-invert prose-figcaption:mt-[-18px] prose-blockquote:font-normal prose-blockquote:not-italic max-w-none break-words">
+						<div
+							dangerouslySetInnerHTML={{
+								__html: markdown,
+							}}
+						></div>
+					</article>
+				)}
 			</div>
 		);
 	}

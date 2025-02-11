@@ -6,7 +6,7 @@ export function Index() {
 	return (
 		<>
 			<Helmet>
-				<title>Substack Offline Viewer</title>
+				<title>Substack Offline</title>
 			</Helmet>
 			<Header />
 			<OfflineArticleSaver />

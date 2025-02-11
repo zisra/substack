@@ -106,7 +106,9 @@ export class Database {
 		const store = tx.objectStore('articles');
 		const articles = await store.getAll();
 
-		return articles.filter((article) => article.archived);
+		return articles
+			.sort((a, b) => b.timestamp - a.timestamp)
+			.filter((article) => article.archived);
 	}
 
 	async getArticle(url: string) {
@@ -122,8 +124,19 @@ export class Database {
 		const store = tx.objectStore('articles');
 		const article = await store.get(url);
 
+		// Check settings whether to save archived article content or not
+
 		if (article) {
 			article.archived = true;
+			article.markdown = false;
+
+			const image = article.image;
+			const authorImg = article.authorImg;
+
+			article.imagesSaved
+				.filter((i) => i !== image && i !== authorImg)
+				.forEach((image) => this.deleteImage(image));
+
 			await store.put(article);
 		}
 
