@@ -106,8 +106,6 @@ export class Database {
 		const store = tx.objectStore('articles');
 		const articles = await store.getAll();
 
-		console.log(articles);
-
 		return articles.filter((article) => article.archived);
 	}
 

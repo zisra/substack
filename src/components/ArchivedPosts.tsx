@@ -6,7 +6,18 @@ import { ChevronLeftIcon } from 'lucide-react';
 import type { ArticleSaved } from '@/lib/types';
 import { Database } from '@/lib/database';
 import { Link } from 'react-router';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 
 export function ArchivedPosts() {
 	const [articles, setArticles] = useState<ArticleSaved[]>([]);
@@ -17,8 +28,6 @@ export function ArchivedPosts() {
 		const loadArticles = async () => {
 			await db.open();
 			const articles = await db.getArchivedArticles();
-
-			console.log(articles);
 
 			if (articles) {
 				setArticles(articles);
@@ -34,20 +43,37 @@ export function ArchivedPosts() {
 		<div className="container mx-auto p-4 max-w-3xl">
 			<div className="flex justify-between items-center mb-4">
 				<h2 className="text-2xl font-bold">Archived Articles</h2>
-				<Button
-					size="sm"
-					variant="destructive"
-					onClick={async () => {
-						await db.open();
-						await Promise.all(
-							articles.map((article) => db.deleteArticle(article.url))
-						);
-						setArticles([]);
-					}}
-					disabled={articles.length === 0}
-				>
-					Delete All Archived
-				</Button>
+				<AlertDialog>
+					<AlertDialogTrigger>
+						<Button size="sm" variant="destructive">
+							Delete All Archived
+						</Button>
+					</AlertDialogTrigger>
+					<AlertDialogContent>
+						<AlertDialogHeader>
+							<AlertDialogTitle>Are you sure?</AlertDialogTitle>
+							<AlertDialogDescription>
+								This action cannot be undone. This will permanently delete all
+								your archived articles
+							</AlertDialogDescription>
+						</AlertDialogHeader>
+						<AlertDialogFooter>
+							<AlertDialogCancel>Cancel</AlertDialogCancel>
+							<AlertDialogAction
+								className={buttonVariants({ variant: 'destructive' })}
+								onClick={async () => {
+									await db.open();
+									await Promise.all(
+										articles.map((article) => db.deleteArticle(article.url))
+									);
+									setArticles([]);
+								}}
+							>
+								Delete
+							</AlertDialogAction>
+						</AlertDialogFooter>
+					</AlertDialogContent>
+				</AlertDialog>
 			</div>
 			<Card className="mb-6 p-0 py-0">
 				<Link to="/" className="flex items-center p-4 gap-2">
