@@ -8,6 +8,7 @@ Fix:
 - [ ] Move dropdown menu of each article to better place
 - [ ] Disable dark mode when printing
 - [x] Prompt, are you sure you want to delete all articles?
+- [ ] Clean up code
 
 Add:
 
