@@ -132,7 +132,7 @@ export function Formatting({
 								setFontFamily(value as keyof typeof fonts)
 							}
 						>
-							<SelectTrigger className={`font-${fontFamily} max-w-[192px]`}>
+							<SelectTrigger className="max-w-[192px]">
 								{fontFamily ? (
 									<SelectValue placeholder={fonts[fontFamily]} />
 								) : null}
@@ -162,7 +162,7 @@ export function Formatting({
 							>
 								<MinusIcon />
 							</Button>
-							<Card className="w-24 h-10 flex items-center justify-center text-sm text-muted-foreground shadow-none select-none">
+							<Card className="w-24 h-10 flex items-center justify-center text-sm shadow-none select-none">
 								{fontSize ? fontSizes[fontSize] : null}
 							</Card>
 							<Button
