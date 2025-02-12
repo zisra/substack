@@ -11,7 +11,7 @@ import { Archived } from './routes/archived';
 const root = document.getElementById('root')!;
 
 ReactDOM.createRoot(root).render(
-	<ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+	<ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
 		<BrowserRouter>
 			<Routes>
 				<Route path="/" element={<Index />} />
