@@ -123,12 +123,17 @@ app.get('/download-article', async (req, res) => {
 		const article = dom.html(dom('.available-content'));
 		const markdown = turndownService.turndown(article);
 
+		let authorImg = dom('[rel="shortcut icon"]').attr('href');
+		if (authorImg?.endsWith('.ico')) {
+			authorImg = dom('.post-header img').first().attr('src');
+		}
+
 		res.send({
 			url: getOGTag('url', dom),
 			title: getOGTag('title', dom),
 			subtitle: getOGTag('description', dom),
 			author: dom('meta[name="author"]').attr('content'),
-			authorImg: dom('[rel="shortcut icon"]').attr('href'),
+			authorImg,
 			image: getOGTag('image', dom),
 			markdown: markdown,
 		});
