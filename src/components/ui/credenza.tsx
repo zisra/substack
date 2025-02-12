@@ -93,7 +93,7 @@ const CredenzaContent = ({ className, children, ...props }: CredenzaProps) => {
 	const CredenzaContent = isDesktop ? DialogContent : DrawerContent;
 
 	return (
-		<CredenzaContent className={cn('pb-safe', className)} {...props}>
+		<CredenzaContent className={cn('mb-2', className)} {...props}>
 			{children}
 		</CredenzaContent>
 	);

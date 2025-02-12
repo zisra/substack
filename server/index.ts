@@ -123,12 +123,18 @@ app.get('/download-article', async (req, res) => {
 		const article = dom.html(dom('.available-content'));
 		const markdown = turndownService.turndown(article);
 
-		let authorImg = dom('[rel="shortcut icon"]').attr('href');
-		if (authorImg?.endsWith('.ico')) {
-			authorImg = dom('.post-header img').first().attr('src');
+		let authorImg = dom('.post-header img:not(.share-dialog img)')
+			.first()
+			.attr('src');
+
+		if (!authorImg) {
+			authorImg = dom('.navbar-logo').attr('src');
 		}
 		if (!authorImg) {
 			authorImg = dom('.byline-wrapper img').first().attr('src');
+		}
+		if (!authorImg) {
+			authorImg = dom('[rel="shortcut icon"]').attr('href');
 		}
 
 		res.send({
