@@ -41,13 +41,15 @@ function ArticleHeader({
 	return (
 		<header className="mb-4">
 			<h1 className="text-4xl font-bold mb-2">{article?.title}</h1>
-			<p className="text-xl text-muted-foreground mb-4">{article?.subtitle}</p>
+			<p className="text-xl text-neutral-500 dark:text-neutral-400 mb-4">
+				{article?.subtitle}
+			</p>
 			<div className="flex items-center space-x-2">
 				<Avatar className="pointer-events-none h-6 w-6">
 					<AvatarImage src={article?.authorImg} alt="Author" />
 				</Avatar>
 				<div>
-					<p className="text-md text-muted-foreground">
+					<p className="text-md text-neutral-500 dark:text-neutral-400">
 						<a>{article?.author}</a>
 					</p>
 				</div>

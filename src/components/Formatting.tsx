@@ -114,7 +114,7 @@ export function Formatting({
 			<CredenzaContent>
 				<CredenzaHeader>
 					<CredenzaTitle>Customize Formatting</CredenzaTitle>
-					<CredenzaDescription className="text-muted-foreground">
+					<CredenzaDescription className="text-neutral-500 dark:text-neutral-400">
 						Customize the formatting of the article
 					</CredenzaDescription>
 				</CredenzaHeader>
@@ -123,7 +123,7 @@ export function Formatting({
 						<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
 							<div className="grid gap-1.5">
 								<Label>Font Family</Label>
-								<p className="text-sm text-muted-foreground">
+								<p className="text-sm text-neutral-500 dark:text-neutral-400">
 									Change the font family of the article
 								</p>
 							</div>
@@ -151,7 +151,7 @@ export function Formatting({
 						<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
 							<div className="grid gap-1.5">
 								<Label>Font Size</Label>
-								<p className="text-sm text-muted-foreground">
+								<p className="text-sm text-neutral-500 dark:text-neutral-400">
 									Change the font size of the article
 								</p>
 							</div>
@@ -180,7 +180,7 @@ export function Formatting({
 						<div className="flex items-center justify-between gap-4">
 							<div className="grid gap-1.5">
 								<Label>Print Images</Label>
-								<p className="text-sm text-muted-foreground">
+								<p className="text-sm text-neutral-500 dark:text-neutral-400">
 									Whether to include images when printing
 								</p>
 							</div>

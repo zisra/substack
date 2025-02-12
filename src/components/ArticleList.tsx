@@ -77,12 +77,12 @@ export function ArticleList({
 											alt={article.author}
 											className="w-6 h-6 rounded-full mr-2 pointer-events-none"
 										/>
-										<span className="text-sm text-muted-foreground">
+										<span className="text-sm text-neutral-500 dark:text-neutral-400">
 											{article.author}
 										</span>
 									</div>
 									<h3 className="font-bold text-lg mb-2">{article.title}</h3>
-									<p className="text-sm text-muted-foreground">
+									<p className="text-sm text-neutral-500 dark:text-neutral-400">
 										{article.subtitle}
 									</p>
 								</div>
@@ -102,7 +102,7 @@ export function ArticleList({
 									className="h-8 w-8 p-0 hover:bg-background"
 								>
 									<span className="sr-only">Open menu</span>
-									<MoreVerticalIcon className="h-4 w-4 text-muted-foreground" />
+									<MoreVerticalIcon className="h-4 w-4 text-neutral-500 dark:text-neutral-400" />
 								</Button>
 							</DropdownMenuTrigger>
 							<DropdownMenuContent align="end" className="w-40">
