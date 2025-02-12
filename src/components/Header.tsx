@@ -11,7 +11,7 @@ export function Header() {
 			<div className="flex justify-between">
 				<div className="flex gap-4">
 					<Link to="/">
-						<Button variant="outline">
+						<Button variant="outline" size="icon">
 							<HomeIcon className="w-4 h-4" />
 						</Button>
 					</Link>

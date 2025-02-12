@@ -39,7 +39,7 @@ export function About() {
 	return (
 		<Credenza>
 			<CredenzaTrigger>
-				<Button onClick={updateDataStored} variant="outline">
+				<Button onClick={updateDataStored} variant="outline" size="icon">
 					<InfoIcon />
 				</Button>
 			</CredenzaTrigger>
