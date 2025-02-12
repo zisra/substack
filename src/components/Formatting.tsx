@@ -63,7 +63,7 @@ export function Formatting({
 	const increaseFontSize = () => {
 		setFontSize((prev) => {
 			const sizes = Object.keys(fontSizes);
-			const index = sizes.indexOf(prev || 'base');
+			const index = sizes.indexOf(prev || 'dynamic');
 			return sizes[index + 1] as keyof typeof fontSizes;
 		});
 	};
@@ -72,7 +72,7 @@ export function Formatting({
 		const settings = {
 			version: 1,
 			formatting: {
-				fontSize: fontSize || 'base',
+				fontSize: fontSize || 'dynamic',
 				fontFamily: fontFamily || 'sans',
 				printImages: includeImages !== null ? includeImages : true,
 			},
@@ -85,7 +85,7 @@ export function Formatting({
 	};
 
 	const resetSettings = () => {
-		setFontSize('base');
+		setFontSize('dynamic');
 		setFontFamily('sans');
 		setIncludeImages(true);
 	};
