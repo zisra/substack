@@ -24,11 +24,13 @@ export function ArticleControls({
 	setArticle,
 	article,
 	onSettingsChange,
+	failed,
 }: {
 	db: Database;
 	setArticle: React.Dispatch<React.SetStateAction<ArticleSaved | null>>;
 	article: ArticleSaved;
 	onSettingsChange: (settings: Settings) => void;
+	failed: boolean;
 }) {
 	const navigate = useNavigate();
 
@@ -85,6 +87,7 @@ export function ArticleControls({
 									db.unArchiveArticle(article.url);
 									setArticle({ ...article, archived: false });
 								}}
+								disabled={failed}
 							>
 								<ArchiveRestoreIcon className="mr-2 h-4 w-4" />
 								<span>Unarchive</span>

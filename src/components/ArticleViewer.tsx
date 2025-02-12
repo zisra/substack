@@ -32,11 +32,13 @@ function ArticleHeader({
 	db,
 	setArticle,
 	onSettingsChange,
+	failed,
 }: {
 	article: ArticleSaved;
 	db: Database;
 	setArticle: React.Dispatch<React.SetStateAction<ArticleSaved | null>>;
 	onSettingsChange: (settings: Settings) => void;
+	failed: boolean;
 }) {
 	return (
 		<header className="mb-4">
@@ -59,6 +61,7 @@ function ArticleHeader({
 				db={db}
 				setArticle={setArticle}
 				article={article}
+				failed={failed}
 			/>
 		</header>
 	);
@@ -177,6 +180,7 @@ export function ArticleViewer() {
 					article={article}
 					db={db}
 					setArticle={setArticle}
+					failed={failed}
 				/>
 				<hr className="my-6" />
 				{failed ? (
