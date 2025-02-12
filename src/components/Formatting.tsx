@@ -1,12 +1,14 @@
 import {
-	Dialog,
-	DialogContent,
-	DialogFooter,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger,
-	DialogDescription,
-} from '@/components/ui/dialog';
+	Credenza,
+	CredenzaBody,
+	CredenzaClose,
+	CredenzaContent,
+	CredenzaDescription,
+	CredenzaFooter,
+	CredenzaHeader,
+	CredenzaTitle,
+	CredenzaTrigger,
+} from '@/components/ui/credenza';
 import {
 	Select,
 	SelectContent,
@@ -21,7 +23,6 @@ import { ALargeSmallIcon, MinusIcon, PlusIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Database } from '@/lib/database';
-import { DialogClose } from '@radix-ui/react-dialog';
 import { Settings } from '@/lib/types';
 
 export function Formatting({
@@ -104,97 +105,99 @@ export function Formatting({
 	};
 
 	return (
-		<Dialog>
-			<DialogTrigger>
+		<Credenza>
+			<CredenzaTrigger>
 				<Button variant="outline" size="icon">
 					<ALargeSmallIcon />
 				</Button>
-			</DialogTrigger>
-			<DialogContent>
-				<DialogHeader>
-					<DialogTitle>Customize Formatting</DialogTitle>
-					<DialogDescription className="text-muted-foreground">
+			</CredenzaTrigger>
+			<CredenzaContent>
+				<CredenzaHeader>
+					<CredenzaTitle>Customize Formatting</CredenzaTitle>
+					<CredenzaDescription className="text-muted-foreground">
 						Customize the formatting of the article
-					</DialogDescription>
-				</DialogHeader>
-				<div className="space-y-4">
-					<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-						<div className="grid gap-1.5">
-							<Label>Font Family</Label>
-							<p className="text-sm text-muted-foreground">
-								Change the font family of the article
-							</p>
-						</div>
-						<Select
-							value={fontFamily || 'sans'}
-							defaultValue="sans"
-							onValueChange={(value) =>
-								setFontFamily(value as keyof typeof fonts)
-							}
-						>
-							<SelectTrigger className="max-w-[192px]">
-								{fontFamily ? (
-									<SelectValue placeholder={fonts[fontFamily]} />
-								) : null}
-							</SelectTrigger>
-							<SelectContent>
-								{Object.entries(fonts).map(([key, value]) => (
-									<SelectItem key={key} value={key}>
-										{value}
-									</SelectItem>
-								))}
-							</SelectContent>
-						</Select>
-					</div>
-					<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-						<div className="grid gap-1.5">
-							<Label>Font Size</Label>
-							<p className="text-sm text-muted-foreground">
-								Change the font size of the article
-							</p>
-						</div>
-						<div className="flex items-center space-x-2">
-							<Button
-								variant="outline"
-								size="icon"
-								onClick={decreaseFontSize}
-								disabled={fontSize === 'sm'}
+					</CredenzaDescription>
+				</CredenzaHeader>
+				<CredenzaBody>
+					<div className="space-y-4">
+						<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+							<div className="grid gap-1.5">
+								<Label>Font Family</Label>
+								<p className="text-sm text-muted-foreground">
+									Change the font family of the article
+								</p>
+							</div>
+							<Select
+								value={fontFamily || 'sans'}
+								defaultValue="sans"
+								onValueChange={(value) =>
+									setFontFamily(value as keyof typeof fonts)
+								}
 							>
-								<MinusIcon />
-							</Button>
-							<Card className="w-24 h-10 flex items-center justify-center text-sm shadow-none select-none">
-								{fontSize ? fontSizes[fontSize] : null}
-							</Card>
-							<Button
-								variant="outline"
-								size="icon"
-								onClick={increaseFontSize}
-								disabled={fontSize === 'xl'}
-							>
-								<PlusIcon />
-							</Button>
+								<SelectTrigger className="max-w-[192px]">
+									{fontFamily ? (
+										<SelectValue placeholder={fonts[fontFamily]} />
+									) : null}
+								</SelectTrigger>
+								<SelectContent>
+									{Object.entries(fonts).map(([key, value]) => (
+										<SelectItem key={key} value={key}>
+											{value}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+						</div>
+						<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+							<div className="grid gap-1.5">
+								<Label>Font Size</Label>
+								<p className="text-sm text-muted-foreground">
+									Change the font size of the article
+								</p>
+							</div>
+							<div className="flex items-center space-x-2">
+								<Button
+									variant="outline"
+									size="icon"
+									onClick={decreaseFontSize}
+									disabled={fontSize === 'sm'}
+								>
+									<MinusIcon />
+								</Button>
+								<Card className="w-24 h-10 flex items-center justify-center text-sm shadow-none select-none">
+									{fontSize ? fontSizes[fontSize] : null}
+								</Card>
+								<Button
+									variant="outline"
+									size="icon"
+									onClick={increaseFontSize}
+									disabled={fontSize === 'xl'}
+								>
+									<PlusIcon />
+								</Button>
+							</div>
+						</div>
+						<div className="flex items-center justify-between gap-4">
+							<div className="grid gap-1.5">
+								<Label>Print Images</Label>
+								<p className="text-sm text-muted-foreground">
+									Whether to include images when printing
+								</p>
+							</div>
+							{includeImages !== null ? (
+								<Switch
+									checked={includeImages}
+									onCheckedChange={(event) => setIncludeImages(event.valueOf())}
+								/>
+							) : null}
 						</div>
 					</div>
-					<div className="flex items-center justify-between gap-4">
-						<div className="grid gap-1.5">
-							<Label>Print Images</Label>
-							<p className="text-sm text-muted-foreground">
-								Whether to include images when printing
-							</p>
-						</div>
-						{includeImages !== null ? (
-							<Switch
-								checked={includeImages}
-								onCheckedChange={(event) => setIncludeImages(event.valueOf())}
-							/>
-						) : null}
-					</div>
-				</div>
-				<DialogFooter className="flex flex-col sm:flex-row justify-end gap-y-2 sm:gap-x-0">
+				</CredenzaBody>
+				<CredenzaFooter>
 					<Button onClick={resetSettings} variant="secondary">
 						Reset
 					</Button>
-					<DialogClose asChild>
+					<CredenzaClose asChild>
 						<Button
 							onClick={() => {
 								saveSettings();
@@ -203,9 +206,9 @@ export function Formatting({
 						>
 							Save
 						</Button>
-					</DialogClose>
-				</DialogFooter>
-			</DialogContent>
-		</Dialog>
+					</CredenzaClose>
+				</CredenzaFooter>
+			</CredenzaContent>
+		</Credenza>
 	);
 }

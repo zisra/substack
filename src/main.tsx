@@ -11,14 +11,16 @@ import { Archived } from './routes/archived';
 const root = document.getElementById('root')!;
 
 ReactDOM.createRoot(root).render(
-	<ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-		<BrowserRouter>
-			<Routes>
-				<Route path="/" element={<Index />} />
-				<Route path="/article" element={<Article />} />
-				<Route path="/archived" element={<Archived />} />
-				<Route path="*" element={<Navigate to="/" replace />} />
-			</Routes>
-		</BrowserRouter>
-	</ThemeProvider>
+	<div vaul-drawer-wrapper="">
+		<ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+			<BrowserRouter>
+				<Routes>
+					<Route path="/" element={<Index />} />
+					<Route path="/article" element={<Article />} />
+					<Route path="/archived" element={<Archived />} />
+					<Route path="*" element={<Navigate to="/" replace />} />
+				</Routes>
+			</BrowserRouter>
+		</ThemeProvider>
+	</div>
 );

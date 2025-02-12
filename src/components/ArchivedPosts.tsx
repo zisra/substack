@@ -6,18 +6,17 @@ import { ChevronLeftIcon } from 'lucide-react';
 import type { ArticleSaved } from '@/lib/types';
 import { Database } from '@/lib/database';
 import { Link } from 'react-router';
-import { Button, buttonVariants } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import {
-	AlertDialog,
-	AlertDialogAction,
-	AlertDialogCancel,
-	AlertDialogContent,
-	AlertDialogDescription,
-	AlertDialogFooter,
-	AlertDialogHeader,
-	AlertDialogTitle,
-	AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
+	Credenza,
+	CredenzaClose,
+	CredenzaContent,
+	CredenzaDescription,
+	CredenzaFooter,
+	CredenzaHeader,
+	CredenzaTitle,
+	CredenzaTrigger,
+} from '@/components/ui/credenza';
 
 export function ArchivedPosts() {
 	const [articles, setArticles] = useState<ArticleSaved[]>([]);
@@ -43,37 +42,41 @@ export function ArchivedPosts() {
 		<div className="container mx-auto p-4 max-w-3xl">
 			<div className="flex justify-between items-center mb-4">
 				<h2 className="text-2xl font-bold">Archived Articles</h2>
-				<AlertDialog>
-					<AlertDialogTrigger>
+				<Credenza>
+					<CredenzaTrigger>
 						<Button size="sm" variant="destructive" disabled={!articles.length}>
 							Delete All Archived
 						</Button>
-					</AlertDialogTrigger>
-					<AlertDialogContent>
-						<AlertDialogHeader>
-							<AlertDialogTitle>Are you sure?</AlertDialogTitle>
-							<AlertDialogDescription>
+					</CredenzaTrigger>
+					<CredenzaContent>
+						<CredenzaHeader>
+							<CredenzaTitle>Are you sure?</CredenzaTitle>
+							<CredenzaDescription>
 								This action cannot be undone. This will permanently delete all
 								your archived articles
-							</AlertDialogDescription>
-						</AlertDialogHeader>
-						<AlertDialogFooter className="flex flex-col sm:flex-row justify-end gap-y-2 sm:gap-x-0">
-							<AlertDialogCancel>Cancel</AlertDialogCancel>
-							<AlertDialogAction
-								className={buttonVariants({ variant: 'destructive' })}
-								onClick={async () => {
-									await db.open();
-									await Promise.all(
-										articles.map((article) => db.deleteArticle(article.url))
-									);
-									setArticles([]);
-								}}
-							>
-								Delete
-							</AlertDialogAction>
-						</AlertDialogFooter>
-					</AlertDialogContent>
-				</AlertDialog>
+							</CredenzaDescription>
+						</CredenzaHeader>
+						<CredenzaFooter>
+							<CredenzaClose asChild>
+								<Button variant="outline">Cancel</Button>
+							</CredenzaClose>
+							<CredenzaClose asChild>
+								<Button
+									variant="destructive"
+									onClick={async () => {
+										await db.open();
+										await Promise.all(
+											articles.map((article) => db.deleteArticle(article.url))
+										);
+										setArticles([]);
+									}}
+								>
+									Delete
+								</Button>
+							</CredenzaClose>
+						</CredenzaFooter>
+					</CredenzaContent>
+				</Credenza>
 			</div>
 			<Card className="mb-6 p-0 py-0">
 				<Link to="/" className="flex items-center p-4 gap-2">
