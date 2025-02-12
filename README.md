@@ -13,11 +13,10 @@ Fix:
 Add:
 
 - [ ] Save location in article
-- [ ] About > Settings page with:
+- [x]  About > Settings page with:
   - [ ] iOS Shortcut
-  - [ ] About info
-  - [ ] How much data stored?
+  - [x] About info
+  - [x] How much data stored?
   - [ ] Clear all stored data
   - [ ] Update PWA
   - [ ] Save archived articles offline?
-

@@ -25,7 +25,6 @@ registerRoute(
 		const image = await db.getImage(request.url);
 
 		if (image) {
-			console.log(`Image served from cache: ${request.url}`);
 			return new Response(image.blob, {
 				headers: { 'Content-Type': image.blob.type },
 			});
@@ -43,13 +42,11 @@ self.addEventListener('message', async (event) => {
 
 		try {
 			await db.saveImage(url);
-			console.log(`Image cached: ${url}`);
 		} catch (err) {
 			console.error(`Failed to fetch image: ${url}`, err);
 		}
 	} else if (event.data && event.data.type === 'DELETE_IMAGES') {
 		const { url } = event.data;
 		await db.deleteImage(url);
-		console.log(`Image deleted: ${url}`);
 	}
 });
