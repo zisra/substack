@@ -45,7 +45,7 @@ turndownService.addRule('footnoteDiv', {
 		const innerHTML = node.querySelector('.footnote-content')?.innerHTML;
 		const footnoteContent = turndownService.turndown(innerHTML ?? '');
 
-		return `<div><a href="#footnote-reference-${number}" class="footnote-number" id="footnote-${number}">${number}</a><p class="footnote-content">${footnoteContent}</p></div>`;
+		return `<div><a href="#footnote-reference-${number}" class="footnote-number" id="footnote-${number}">${number}</a><p class="footnote-content">\n\n${footnoteContent}\n\n</p></div>`;
 	},
 });
 
