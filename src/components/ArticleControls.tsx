@@ -23,7 +23,7 @@ export function ArticleControls({
 	db,
 	setArticle,
 	article,
-	onSettingsChange
+	onSettingsChange,
 }: {
 	db: Database;
 	setArticle: React.Dispatch<React.SetStateAction<ArticleSaved | null>>;

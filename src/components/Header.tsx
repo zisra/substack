@@ -3,7 +3,7 @@ import { HomeIcon } from 'lucide-react';
 import { Button } from './ui/button';
 import { Link } from 'react-router';
 import { ToggleMode } from '@/components/ToggleMode';
-import { Settings } from '@/components/Settings';
+import { About } from '@/components/About';
 
 export function Header() {
 	return (
@@ -18,7 +18,7 @@ export function Header() {
 				</div>
 				<div className="flex gap-4">
 					<ToggleMode />
-					<Settings />
+					<About />
 				</div>
 			</div>
 		</header>

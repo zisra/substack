@@ -35,6 +35,9 @@ export function Formatting({
 	const [fontSize, setFontSize] = useState<keyof typeof fontSizes | null>(null);
 	const [fontFamily, setFontFamily] = useState<keyof typeof fonts | null>(null);
 	const [includeImages, setIncludeImages] = useState<boolean | null>(null);
+	const [saveArchivedContent, setSaveArchivedContent] = useState<
+		boolean | null
+	>(null);
 
 	useEffect(() => {
 		const fetchSettings = async () => {
@@ -45,6 +48,7 @@ export function Formatting({
 				setFontSize(settings.formatting.fontSize);
 				setFontFamily(settings.formatting.fontFamily);
 				setIncludeImages(settings.formatting.printImages);
+				setSaveArchivedContent(settings.saveArchivedContent);
 			} else {
 				resetSettings();
 			}
@@ -76,7 +80,8 @@ export function Formatting({
 				fontFamily: fontFamily || 'sans',
 				printImages: includeImages !== null ? includeImages : true,
 			},
-			saveArchivedContent: true,
+			saveArchivedContent:
+				saveArchivedContent !== null ? saveArchivedContent : true,
 		};
 
 		onSettingsChange(settings);
@@ -88,6 +93,7 @@ export function Formatting({
 		setFontSize('dynamic');
 		setFontFamily('sans');
 		setIncludeImages(true);
+		setSaveArchivedContent(true);
 	};
 
 	const fonts = {
@@ -188,6 +194,22 @@ export function Formatting({
 								<Switch
 									checked={includeImages}
 									onCheckedChange={(event) => setIncludeImages(event.valueOf())}
+								/>
+							) : null}
+						</div>
+						<div className="flex items-center justify-between gap-4">
+							<div className="grid gap-1.5">
+								<Label>Save Archived Content</Label>
+								<p className="text-sm text-neutral-500 dark:text-neutral-400">
+									Whether to save archived articles offline
+								</p>
+							</div>
+							{saveArchivedContent !== null ? (
+								<Switch
+									checked={saveArchivedContent}
+									onCheckedChange={(event) =>
+										setSaveArchivedContent(event.valueOf())
+									}
 								/>
 							) : null}
 						</div>

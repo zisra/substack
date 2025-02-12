@@ -159,8 +159,21 @@ export class Database {
 		const article = await store.get(url);
 
 		if (article) {
-			article.archived = false;
-			await store.put(article);
+			if (article.markdown === false) {
+				const response = await fetch(
+					`/download-article?url=${encodeURIComponent(url)}`
+				);
+
+				if (!response.ok) {
+					throw new Error('Failed to download article');
+				}
+
+				const data: Article = await response.json();
+				this.saveArticle(data);
+			} else {
+				article.archived = false;
+				await store.put(article);
+			}
 		}
 
 		return tx.done;
@@ -228,5 +241,20 @@ export class Database {
 		const tx = this.db.transaction('settings', 'readwrite');
 		const store = tx.objectStore('settings');
 		await store.put(settings);
+	}
+
+	async clearAll() {
+		if (!this.db) return;
+		const tx = this.db.transaction(
+			['articles', 'images', 'settings'],
+			'readwrite'
+		);
+		const articlesStore = tx.objectStore('articles');
+		const imagesStore = tx.objectStore('images');
+		const settingsStore = tx.objectStore('settings');
+
+		await articlesStore.clear();
+		await imagesStore.clear();
+		await settingsStore.clear();
 	}
 }

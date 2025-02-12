@@ -10,12 +10,11 @@ import {
 	CredenzaTrigger,
 } from '@/components/ui/credenza';
 import { Button } from './ui/button';
-import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
-import { useState } from 'react';
-import { openDB } from 'idb';
-import { SettingsIcon } from 'lucide-react';
+import { InfoIcon } from 'lucide-react';
 import ReloadPrompt from './ReloadPrompt';
+import { Database } from '@/lib/database';
+import { useState } from 'react';
 
 async function getDataStored() {
 	const data = await navigator.storage.estimate();
@@ -28,8 +27,10 @@ async function getDataStored() {
 	return usageInMB.toFixed(2);
 }
 
-export function Settings() {
+export function About() {
 	const [dataStored, setDataStored] = useState<string | null>(null);
+
+	const db = new Database();
 
 	function updateDataStored() {
 		getDataStored().then((data) => setDataStored(data));
@@ -39,32 +40,27 @@ export function Settings() {
 		<Credenza>
 			<CredenzaTrigger>
 				<Button onClick={updateDataStored} variant="outline">
-					<SettingsIcon />
+					<InfoIcon />
 				</Button>
 			</CredenzaTrigger>
 			<CredenzaContent>
 				<CredenzaHeader>
-					<CredenzaTitle>Settings</CredenzaTitle>
+					<CredenzaTitle>Info</CredenzaTitle>
 					<CredenzaDescription className="text-neutral-500 dark:text-neutral-400">
-						Configure your application settings
+						Use this application to save{' '}
+						<a
+							className="underline"
+							href="https://substack.com"
+							target="_blank"
+						>
+							Substack
+						</a>{' '}
+						articles offline.
 					</CredenzaDescription>
 				</CredenzaHeader>
 				<CredenzaBody>
 					<div className="space-y-4">
-						<div className="grid gap-1.5">
-							<Label>About</Label>
-							<p className="text-sm text-neutral-500 dark:text-neutral-400">
-								Use this application to save{' '}
-								<a
-									className="underline"
-									href="https://substack.com"
-									target="_blank"
-								>
-									Substack
-								</a>{' '}
-								articles offline.
-							</p>
-						</div>
+						<div className="grid gap-1.5"></div>
 						<div className="grid gap-1.5">
 							<Label>Install iOS Shortcut</Label>
 							<a href="#" className="text-sm text-blue-500 dark:text-blue-400">
@@ -78,7 +74,6 @@ export function Settings() {
 									Should the app save archived articles offline?
 								</p>
 							</div>
-							<Switch />
 						</div>
 						<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
 							<div className="grid gap-1.5">
@@ -102,13 +97,9 @@ export function Settings() {
 									variant="destructive"
 									size="sm"
 									onClick={async () => {
-										const db = await openDB('Articles', 1);
+										await db.open();
+										await db.clearAll();
 
-										db.deleteObjectStore('articles');
-										db.deleteObjectStore('images');
-										db.deleteObjectStore('settings');
-
-										localStorage.clear();
 										window.location.href = '/';
 									}}
 								>

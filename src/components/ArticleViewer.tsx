@@ -131,9 +131,9 @@ export function ArticleViewer() {
 
 					setArticle({
 						...data,
-						archived: false,
-						timestamp: Date.now(),
-						imagesSaved: [],
+						archived: article.archived,
+						timestamp: article.timestamp,
+						imagesSaved: article.imagesSaved,
 					});
 				} catch (error) {
 					setFailed(true);
