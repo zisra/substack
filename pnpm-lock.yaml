@@ -92,9 +92,6 @@ importers:
       workbox-routing:
         specifier: ^7.3.0
         version: 7.3.0
-      workbox-strategies:
-        specifier: ^7.3.0
-        version: 7.3.0
     devDependencies:
       '@tailwindcss/typography':
         specifier: ^0.5.16
@@ -145,9 +142,6 @@ importers:
         specifier: ^0.21.1
         version: 0.21.1(vite@5.4.14(@types/node@20.17.17)(terser@5.38.0))(workbox-build@7.3.0(@types/babel__core@7.20.5))(workbox-window@7.3.0)
       workbox-core:
-        specifier: ^7.3.0
-        version: 7.3.0
-      workbox-window:
         specifier: ^7.3.0
         version: 7.3.0
 

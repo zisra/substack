@@ -13,7 +13,7 @@ import {
 import { ChevronRightIcon, Loader2Icon, WifiOffIcon } from 'lucide-react';
 import type { Article, ArticleSaved } from '@/lib/types';
 import { Database } from '@/lib/database';
-import { checkUrlValid } from '@/lib/utils';
+import { checkUrlValid, useIsOffline } from '@/lib/utils';
 import { Link } from 'react-router';
 import { AlertCard } from '@/components/AlertCard';
 
@@ -21,7 +21,7 @@ export function OfflineArticleSaver() {
 	const [url, setUrl] = useState('');
 	const [articles, setArticles] = useState<ArticleSaved[]>([]);
 	const [isSaving, setIsSaving] = useState(false);
-	const [isOffline, setIsOffline] = useState(!navigator.onLine);
+	const offline = useIsOffline();
 
 	const db = new Database();
 
@@ -72,23 +72,9 @@ export function OfflineArticleSaver() {
 		loadArticles();
 	}, []);
 
-	useEffect(() => {
-		const handleOffline = () => {
-			setIsOffline(!navigator.onLine);
-		};
-
-		window.addEventListener('offline', handleOffline);
-		window.addEventListener('online', handleOffline);
-
-		return () => {
-			window.removeEventListener('offline', handleOffline);
-			window.removeEventListener('online', handleOffline);
-		};
-	}, []);
-
 	return (
 		<div className="container mx-auto p-4 max-w-3xl">
-			{isOffline ? null : (
+			{offline ? null : (
 				<Card className="mb-8">
 					<CardHeader>
 						<CardTitle>Save Substack Articles Offline</CardTitle>
@@ -130,7 +116,7 @@ export function OfflineArticleSaver() {
 				</Card>
 			)}
 
-			{isOffline ? (
+			{offline ? (
 				<AlertCard title="Offline" icon={<WifiOffIcon className="h-16 w-16" />}>
 					Please connect to the internet to save articles.
 				</AlertCard>

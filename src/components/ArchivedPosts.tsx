@@ -101,9 +101,9 @@ export function ArchivedPosts() {
 						setArticles(articles.filter((i) => i.url !== url));
 					}}
 					onUnArchive={async (url) => {
+						setArticles(articles.filter((i) => i.url !== url));
 						await db.open();
 						await db.unArchiveArticle(url);
-						setArticles(articles.filter((i) => i.url !== url));
 					}}
 					archivedView={true}
 				/>

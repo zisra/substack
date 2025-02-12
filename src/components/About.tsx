@@ -12,7 +12,6 @@ import {
 import { Button } from './ui/button';
 import { Label } from '@/components/ui/label';
 import { InfoIcon } from 'lucide-react';
-import ReloadPrompt from './ReloadPrompt';
 import { Database } from '@/lib/database';
 import { useState } from 'react';
 
@@ -74,16 +73,6 @@ export function About() {
 									Should the app save archived articles offline?
 								</p>
 							</div>
-						</div>
-						<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-							<div className="grid gap-1.5">
-								<Label>Update PWA</Label>
-								<p className="text-sm text-neutral-500 dark:text-neutral-400">
-									Update the PWA to the latest version
-								</p>
-							</div>
-
-							<ReloadPrompt />
 						</div>
 						{dataStored ? (
 							<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">

@@ -17,6 +17,7 @@ import {
 import { Link } from 'react-router';
 import { Button } from '@/components/ui/button';
 import { AlertCard } from './AlertCard';
+import { useIsOffline } from '@/lib/utils';
 
 interface ArticleListProps {
 	articles: ArticleSaved[];
@@ -35,6 +36,8 @@ export function ArticleList({
 	onUnArchive,
 	archivedView = false,
 }: ArticleListProps) {
+	const offline = useIsOffline();
+
 	if (articles.length === 0) {
 		if (archivedView) {
 			return (
@@ -118,6 +121,7 @@ export function ArticleList({
 									<DropdownMenuItem
 										onClick={() => onUnArchive(article.url)}
 										className="cursor-pointer"
+										disabled={offline && article.markdown === false}
 									>
 										<ArchiveRestoreIcon className="mr-2 h-4 w-4" />
 										<span>Unarchive</span>
