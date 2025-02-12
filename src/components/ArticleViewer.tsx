@@ -11,6 +11,7 @@ import { AlertCard } from './AlertCard';
 import { ArticleSkeleton } from './ArticleSkeleton';
 import { ArticleControls } from './ArticleControls';
 import { twMerge } from 'tailwind-merge';
+import { cn } from '@/lib/utils';
 
 async function saveArticle(db: Database, url: string) {
 	const response = await fetch(
@@ -33,17 +34,35 @@ function ArticleHeader({
 	setArticle,
 	onSettingsChange,
 	failed,
+	fontFamily,
 }: {
 	article: ArticleSaved;
 	db: Database;
 	setArticle: React.Dispatch<React.SetStateAction<ArticleSaved | null>>;
 	onSettingsChange: (settings: Settings) => void;
 	failed: boolean;
+	fontFamily?: string;
 }) {
 	return (
 		<header className="mb-4">
-			<h1 className="text-4xl font-bold mb-2">{article?.title}</h1>
-			<p className="text-xl text-neutral-500 dark:text-neutral-400 mb-4">
+			<h1
+				className={cn(
+					fontFamily === 'sans' && 'font-sans',
+					fontFamily === 'serif' && 'font-serif',
+					fontFamily === 'mono' && 'font-mono',
+					'text-4xl font-bold mb-2'
+				)}
+			>
+				{article?.title}
+			</h1>
+			<p
+				className={cn(
+					fontFamily === 'sans' && 'font-sans',
+					fontFamily === 'serif' && 'font-serif',
+					fontFamily === 'mono' && 'font-mono',
+					'text-xl text-neutral-500 dark:text-neutral-400 mb-4'
+				)}
+			>
 				{article?.subtitle}
 			</p>
 			<div className="flex items-center space-x-2">
@@ -51,7 +70,14 @@ function ArticleHeader({
 					<AvatarImage src={article?.authorImg} alt="Author" />
 				</Avatar>
 				<div>
-					<p className="text-md text-neutral-500 dark:text-neutral-400">
+					<p
+						className={cn(
+							fontFamily === 'sans' && 'font-sans',
+							fontFamily === 'serif' && 'font-serif',
+							fontFamily === 'mono' && 'font-mono',
+							'text-md text-neutral-500 dark:text-neutral-400'
+						)}
+					>
 						<a>{article?.author}</a>
 					</p>
 				</div>
@@ -181,6 +207,7 @@ export function ArticleViewer() {
 					db={db}
 					setArticle={setArticle}
 					failed={failed}
+					fontFamily={settings?.formatting.fontFamily}
 				/>
 				<hr className="my-6" />
 				{failed ? (
