@@ -44,7 +44,11 @@ export function ArchivedPosts() {
 				<h2 className="text-2xl font-bold">Archived Articles</h2>
 				<Credenza>
 					<CredenzaTrigger>
-						<Button size="sm" variant="destructive" disabled={!articles.length}>
+						<Button
+							size="sm"
+							variant="destructive"
+							disabled={articles.length === 0}
+						>
 							Delete All Archived
 						</Button>
 					</CredenzaTrigger>
