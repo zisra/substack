@@ -127,6 +127,9 @@ app.get('/download-article', async (req, res) => {
 		if (authorImg?.endsWith('.ico')) {
 			authorImg = dom('.post-header img').first().attr('src');
 		}
+		if (!authorImg) {
+			authorImg = dom('.byline-wrapper img').first().attr('src');
+		}
 
 		res.send({
 			url: getOGTag('url', dom),

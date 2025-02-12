@@ -3,13 +3,10 @@
 ### To-do
 
 Fix:
-
-- [ ] Scrape profile picture correctly
 - [ ] Move dropdown menu of each article to better place
 - [ ] Disable dark mode when printing
-- [x] Prompt, are you sure you want to delete all articles?
-- [ ] Clean up code
 - [ ] Re-introduce markdown & images to un-archived articles
+- [ ] Clean up code
 
 Add:
 
