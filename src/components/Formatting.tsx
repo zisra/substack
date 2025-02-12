@@ -28,7 +28,7 @@ import { Settings } from '@/lib/types';
 export function Formatting({
 	onSettingsChange,
 }: {
-	onSettingsChange: (settings: Settings) => void;
+	onSettingsChange?: (settings: Settings) => void;
 }) {
 	const db = new Database();
 
@@ -84,7 +84,7 @@ export function Formatting({
 				saveArchivedContent !== null ? saveArchivedContent : true,
 		};
 
-		onSettingsChange(settings);
+		if (onSettingsChange) onSettingsChange(settings);
 		await db.open();
 		db.saveSettings(settings);
 	};
