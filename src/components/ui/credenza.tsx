@@ -151,7 +151,7 @@ const CredenzaFooter = ({ className, children, ...props }: CredenzaProps) => {
 	return (
 		<CredenzaFooter
 			className={cn(
-				'flex flex-col sm:flex-row justify-end gap-y-2 sm:gap-x-0',
+				'flex flex-col sm:flex-row justify-end gap-y-2 gap-x-1',
 				className
 			)}
 			{...props}
