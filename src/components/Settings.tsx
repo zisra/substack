@@ -101,13 +101,13 @@ export function Settings() {
 								<Button
 									variant="destructive"
 									size="sm"
-									onClick={() => {
-										const db = openDB('Articles', 1);
-										db.then((db) => {
-											db.deleteObjectStore('articles');
-											db.deleteObjectStore('images');
-											db.deleteObjectStore('settings');
-										});
+									onClick={async () => {
+										const db = await openDB('Articles', 1);
+
+										db.deleteObjectStore('articles');
+										db.deleteObjectStore('images');
+										db.deleteObjectStore('settings');
+
 										localStorage.clear();
 										window.location.href = '/';
 									}}

@@ -17,7 +17,9 @@ turndownService.addRule('figcaption', {
 		);
 	},
 	replacement: (_content, node) => {
-		const captionContent = (node as HTMLElement).innerHTML;
+		const innerHTML = (node as HTMLElement).innerHTML;
+		const captionContent = turndownService.turndown(innerHTML);
+
 		return `<figcaption>\n\n${captionContent}\n\n</figcaption>`;
 	},
 });
@@ -40,7 +42,8 @@ turndownService.addRule('footnoteDiv', {
 	},
 	replacement: (_content, node) => {
 		const number = node.querySelector('.footnote-number')?.textContent;
-		const footnoteContent = node.querySelector('.footnote-content')?.innerHTML;
+		const innerHTML = node.querySelector('.footnote-content')?.innerHTML;
+		const footnoteContent = turndownService.turndown(innerHTML ?? '');
 
 		return `<div><a href="#footnote-reference-${number}" class="footnote-number" id="footnote-${number}">${number}</a><p class="footnote-content">${footnoteContent}</p></div>`;
 	},
