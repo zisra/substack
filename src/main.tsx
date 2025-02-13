@@ -1,3 +1,5 @@
+import { ThemeProvider } from '@/components/ThemeProvider';
+import { Archived } from '@/routes/archived';
 import { Article } from '@/routes/article.tsx';
 import { Index } from '@/routes/index.tsx';
 import ReactDOM from 'react-dom/client';
@@ -5,8 +7,6 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
 
 import './index.css';
 import './style.css';
-import { ThemeProvider } from '@/components/ThemeProvider';
-import { Archived } from '@/routes/archived';
 
 const root = document.getElementById('root');
 if (!root) {

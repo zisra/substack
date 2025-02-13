@@ -43,8 +43,13 @@ export function ArchivedPosts() {
 			<div className="flex justify-between items-center mb-4">
 				<h2 className="text-2xl font-bold">Archived Articles</h2>
 				<Credenza>
-					<CredenzaTrigger>
-						<Button size="sm" variant="destructive" disabled={articles.length === 0}>
+					<CredenzaTrigger asChild>
+						<Button
+							size="sm"
+							variant="destructive"
+							disabled={articles.length === 0}
+							onClick={(e) => e.preventDefault()}
+						>
 							Delete All Archived
 						</Button>
 					</CredenzaTrigger>
@@ -52,8 +57,8 @@ export function ArchivedPosts() {
 						<CredenzaHeader>
 							<CredenzaTitle>Are you sure?</CredenzaTitle>
 							<CredenzaDescription>
-								This action cannot be undone. This will permanently delete all your archived
-								articles
+								This action cannot be undone. This will permanently delete all
+								your archived articles
 							</CredenzaDescription>
 						</CredenzaHeader>
 						<CredenzaFooter>
@@ -65,7 +70,9 @@ export function ArchivedPosts() {
 									variant="destructive"
 									onClick={async () => {
 										await db.open();
-										await Promise.all(articles.map((article) => db.deleteArticle(article.url)));
+										await Promise.all(
+											articles.map((article) => db.deleteArticle(article.url))
+										);
 										setArticles([]);
 									}}
 								>

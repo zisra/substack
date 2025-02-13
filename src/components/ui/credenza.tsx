@@ -1,7 +1,3 @@
-'use client';
-
-import * as React from 'react';
-
 import {
 	Dialog,
 	DialogClose,
@@ -24,6 +20,7 @@ import {
 } from '@/components/ui/drawer';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { cn } from '@/lib/utils';
+import * as React from 'react';
 
 interface BaseProps {
 	children: React.ReactNode;
