@@ -2,10 +2,8 @@ import { Button } from '@/components/ui/button';
 import {
 	Credenza,
 	CredenzaBody,
-	CredenzaClose,
 	CredenzaContent,
 	CredenzaDescription,
-	CredenzaFooter,
 	CredenzaHeader,
 	CredenzaTitle,
 	CredenzaTrigger,
@@ -47,7 +45,12 @@ export function About() {
 					<CredenzaTitle>Info</CredenzaTitle>
 					<CredenzaDescription className="text-neutral-500 dark:text-neutral-400">
 						Use this application to save{' '}
-						<a className="underline" href="https://substack.com" target="_blank" rel="noreferrer">
+						<a
+							className="underline"
+							href="https://substack.com"
+							target="_blank"
+							rel="noreferrer"
+						>
 							Substack
 						</a>{' '}
 						articles offline.
@@ -63,9 +66,14 @@ export function About() {
 						</div>
 						<div className="flex items-center justify-between gap-4">
 							<div className="grid gap-1.5">
-								<Label>Save Archived Articles Offline</Label>
+								<Label>Source Code</Label>
 								<p className="text-sm text-neutral-500 dark:text-neutral-400">
-									Should the app save archived articles offline?
+									<a
+										href="https://github.com/zisra/substack"
+										className="text-sm text-blue-500 dark:text-blue-400"
+									>
+										GitHub
+									</a>
 								</p>
 							</div>
 						</div>
@@ -93,11 +101,6 @@ export function About() {
 						) : null}
 					</div>
 				</CredenzaBody>
-				<CredenzaFooter>
-					<CredenzaClose asChild>
-						<Button type="submit">Done</Button>
-					</CredenzaClose>
-				</CredenzaFooter>
 			</CredenzaContent>
 		</Credenza>
 	);
