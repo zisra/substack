@@ -12,6 +12,7 @@ import { ArticleSkeleton } from './ArticleSkeleton';
 import { ArticleControls } from './ArticleControls';
 import { twMerge } from 'tailwind-merge';
 import { cn } from '@/lib/utils';
+import { Skeleton } from './ui/skeleton';
 
 async function saveArticle(db: Database, url: string) {
 	const response = await fetch(
@@ -98,7 +99,7 @@ export function ArticleViewer() {
 	const [article, setArticle] = useState<ArticleSaved | null>(null);
 	const [settings, setSettings] = useState<Settings | null>(null);
 	const [title, setTitle] = useState<string>('');
-	const [markdown, setMarkdown] = useState<string>('');
+	const [markdown, setMarkdown] = useState<string | null>(null);
 	const [failed, setFailed] = useState(false);
 	const navigate = useNavigate();
 
@@ -238,11 +239,19 @@ export function ArticleViewer() {
 							'prose space-y-4 prose-img:mx-auto prose-figcaption:text-center dark:prose-invert prose-figcaption:mt-[-18px] prose-blockquote:font-normal prose-blockquote:not-italic max-w-none break-words'
 						)}
 					>
-						<div
-							dangerouslySetInnerHTML={{
-								__html: markdown,
-							}}
-						></div>
+						{markdown ? (
+							<div
+								dangerouslySetInnerHTML={{
+									__html: markdown,
+								}}
+							></div>
+						) : (
+							<article className="space-y-4">
+								<Skeleton className="h-6 w-full" />
+								<Skeleton className="h-6 w-full" />
+								<Skeleton className="h-6 w-3/4" />
+							</article>
+						)}
 					</article>
 				)}
 			</div>
