@@ -1,3 +1,5 @@
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 import {
 	Credenza,
 	CredenzaBody,
@@ -8,6 +10,7 @@ import {
 	CredenzaHeader,
 	CredenzaTitle,
 } from '@/components/ui/credenza';
+import { Label } from '@/components/ui/label';
 import {
 	Select,
 	SelectContent,
@@ -16,13 +19,10 @@ import {
 	SelectValue,
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
-import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
+import { Database } from '@/lib/database';
+import type { Settings } from '@/lib/types';
 import { ALargeSmallIcon, MinusIcon, PlusIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Card } from '@/components/ui/card';
-import { Database } from '@/lib/database';
-import { Settings } from '@/lib/types';
 
 export function Formatting({
 	onSettingsChange,
@@ -40,14 +40,12 @@ export function Formatting({
 	const [fontSize, setFontSize] = useState<keyof typeof fontSizes | null>(null);
 	const [fontFamily, setFontFamily] = useState<keyof typeof fonts | null>(null);
 	const [includeImages, setIncludeImages] = useState<boolean | null>(null);
-	const [saveArchivedContent, setSaveArchivedContent] = useState<
-		boolean | null
-	>(null);
+	const [saveArchivedContent, setSaveArchivedContent] = useState<boolean | null>(null);
 
 	useEffect(() => {
 		const fetchSettings = async () => {
 			await db.open();
-			let settings = await db.getSettings();
+			const settings = await db.getSettings();
 
 			if (settings) {
 				setFontSize(settings.formatting.fontSize);
@@ -85,8 +83,7 @@ export function Formatting({
 				fontFamily: fontFamily || 'sans',
 				printImages: includeImages !== null ? includeImages : true,
 			},
-			saveArchivedContent:
-				saveArchivedContent !== null ? saveArchivedContent : true,
+			saveArchivedContent: saveArchivedContent !== null ? saveArchivedContent : true,
 		};
 
 		if (onSettingsChange) onSettingsChange(settings);
@@ -140,14 +137,10 @@ export function Formatting({
 								<Select
 									value={fontFamily || 'sans'}
 									defaultValue="sans"
-									onValueChange={(value) =>
-										setFontFamily(value as keyof typeof fonts)
-									}
+									onValueChange={(value) => setFontFamily(value as keyof typeof fonts)}
 								>
 									<SelectTrigger className="max-w-[192px]">
-										{fontFamily ? (
-											<SelectValue placeholder={fonts[fontFamily]} />
-										) : null}
+										{fontFamily ? <SelectValue placeholder={fonts[fontFamily]} /> : null}
 									</SelectTrigger>
 									<SelectContent>
 										{Object.entries(fonts).map(([key, value]) => (
@@ -197,9 +190,7 @@ export function Formatting({
 								{includeImages !== null ? (
 									<Switch
 										checked={includeImages}
-										onCheckedChange={(event) =>
-											setIncludeImages(event.valueOf())
-										}
+										onCheckedChange={(event) => setIncludeImages(event.valueOf())}
 									/>
 								) : null}
 							</div>
@@ -213,9 +204,7 @@ export function Formatting({
 								{saveArchivedContent !== null ? (
 									<Switch
 										checked={saveArchivedContent}
-										onCheckedChange={(event) =>
-											setSaveArchivedContent(event.valueOf())
-										}
+										onCheckedChange={(event) => setSaveArchivedContent(event.valueOf())}
 									/>
 								) : null}
 							</div>

@@ -1,6 +1,6 @@
-import { openDB, type IDBPDatabase, type DBSchema } from 'idb';
-import { Article, ArticleSaved, Settings } from '@/lib/types';
-import { Parser, HtmlRenderer } from 'commonmark';
+import type { Article, ArticleSaved, Settings } from '@/lib/types';
+import { HtmlRenderer, Parser } from 'commonmark';
+import { type DBSchema, type IDBPDatabase, openDB } from 'idb';
 
 export interface DatabaseType extends DBSchema {
 	articles: {
@@ -46,7 +46,7 @@ export class Database {
 
 		const reader = new Parser();
 		const writer = new HtmlRenderer();
-		var parsed = reader.parse(article?.markdown ?? '');
+		const parsed = reader.parse(article?.markdown ?? '');
 
 		const result = writer.render(parsed);
 		const parser = new DOMParser();
@@ -56,11 +56,7 @@ export class Database {
 		const dbArticle = {
 			...article,
 			timestamp: Date.now(),
-			imagesSaved: [
-				article.authorImg,
-				article.image,
-				...[...images].map((img) => img.src),
-			],
+			imagesSaved: [article.authorImg, article.image, ...[...images].map((img) => img.src)],
 			archived: false,
 		};
 
@@ -113,9 +109,7 @@ export class Database {
 		const store = tx.objectStore('articles');
 		const articles = await store.getAll();
 
-		return articles
-			.sort((a, b) => b.timestamp - a.timestamp)
-			.filter((article) => article.archived);
+		return articles.sort((a, b) => b.timestamp - a.timestamp).filter((article) => article.archived);
 	}
 
 	async getArticle(url: string) {
@@ -160,9 +154,7 @@ export class Database {
 
 		if (article) {
 			if (article.markdown === false) {
-				const response = await fetch(
-					`/download-article?url=${encodeURIComponent(url)}`
-				);
+				const response = await fetch(`/download-article?url=${encodeURIComponent(url)}`);
 
 				if (!response.ok) {
 					throw new Error('Failed to download article');
@@ -218,9 +210,7 @@ export class Database {
 	async saveImage(url: string) {
 		if (!this.db) return;
 
-		const imageResponse = await fetch(
-			`/image-proxy?url=${encodeURIComponent(url)}`
-		);
+		const imageResponse = await fetch(`/image-proxy?url=${encodeURIComponent(url)}`);
 		const imageBlob = await imageResponse.blob();
 
 		const imageTx = this.db.transaction('images', 'readwrite');
@@ -245,10 +235,7 @@ export class Database {
 
 	async clearAll() {
 		if (!this.db) return;
-		const tx = this.db.transaction(
-			['articles', 'images', 'settings'],
-			'readwrite'
-		);
+		const tx = this.db.transaction(['articles', 'images', 'settings'], 'readwrite');
 		const articlesStore = tx.objectStore('articles');
 		const imagesStore = tx.objectStore('images');
 		const settingsStore = tx.objectStore('settings');

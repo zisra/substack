@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button';
 import {
 	Credenza,
 	CredenzaBody,
@@ -9,10 +10,9 @@ import {
 	CredenzaTitle,
 	CredenzaTrigger,
 } from '@/components/ui/credenza';
-import { Button } from './ui/button';
 import { Label } from '@/components/ui/label';
-import { InfoIcon } from 'lucide-react';
 import { Database } from '@/lib/database';
+import { InfoIcon } from 'lucide-react';
 import { useState } from 'react';
 
 async function getDataStored() {
@@ -47,11 +47,7 @@ export function About() {
 					<CredenzaTitle>Info</CredenzaTitle>
 					<CredenzaDescription className="text-neutral-500 dark:text-neutral-400">
 						Use this application to save{' '}
-						<a
-							className="underline"
-							href="https://substack.com"
-							target="_blank"
-						>
+						<a className="underline" href="https://substack.com" target="_blank" rel="noreferrer">
 							Substack
 						</a>{' '}
 						articles offline.
@@ -59,10 +55,9 @@ export function About() {
 				</CredenzaHeader>
 				<CredenzaBody>
 					<div className="space-y-4">
-						<div className="grid gap-1.5"></div>
 						<div className="grid gap-1.5">
 							<Label>Install iOS Shortcut</Label>
-							<a href="#" className="text-sm text-blue-500 dark:text-blue-400">
+							<a href="/" className="text-sm text-blue-500 dark:text-blue-400">
 								Click here to install
 							</a>
 						</div>

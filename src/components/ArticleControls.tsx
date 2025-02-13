@@ -1,3 +1,13 @@
+import { Formatting } from '@/components/Formatting';
+import { Button } from '@/components/ui/button';
+import {
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import type { Database } from '@/lib/database';
+import type { ArticleSaved, Settings } from '@/lib/types';
+import { DropdownMenu } from '@radix-ui/react-dropdown-menu';
 import {
 	ArchiveIcon,
 	ArchiveRestoreIcon,
@@ -7,16 +17,6 @@ import {
 	PrinterIcon,
 	TrashIcon,
 } from 'lucide-react';
-import { Button } from './ui/button';
-import { Formatting } from './Formatting';
-import { DropdownMenu } from '@radix-ui/react-dropdown-menu';
-import {
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Database } from '@/lib/database';
-import { ArticleSaved, Settings } from '@/lib/types';
 import { useNavigate } from 'react-router';
 
 export function ArticleControls({

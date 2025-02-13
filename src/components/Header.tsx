@@ -1,10 +1,10 @@
 import { HomeIcon } from 'lucide-react';
 
-import { Button } from './ui/button';
-import { Link } from 'react-router';
-import { ToggleMode } from '@/components/ToggleMode';
 import { About } from '@/components/About';
 import { Formatting } from '@/components/Formatting';
+import { ToggleMode } from '@/components/ToggleMode';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router';
 import { useLocation } from 'react-router';
 
 export function Header() {

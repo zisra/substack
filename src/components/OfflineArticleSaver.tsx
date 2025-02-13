@@ -1,21 +1,15 @@
 import { useEffect, useState } from 'react';
 
-import { ArticleList } from '@/components/ArticleList';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import {
-	Card,
-	CardContent,
-	CardHeader,
-	CardTitle,
-	CardDescription,
-} from '@/components/ui/card';
-import { ChevronRightIcon, Loader2Icon, WifiOffIcon } from 'lucide-react';
-import type { Article, ArticleSaved } from '@/lib/types';
-import { Database } from '@/lib/database';
-import { checkUrlValid, useIsOffline } from '@/lib/utils';
-import { Link } from 'react-router';
 import { AlertCard } from '@/components/AlertCard';
+import { ArticleList } from '@/components/ArticleList';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Database } from '@/lib/database';
+import type { Article, ArticleSaved } from '@/lib/types';
+import { checkUrlValid, useIsOffline } from '@/lib/utils';
+import { ChevronRightIcon, Loader2Icon, WifiOffIcon } from 'lucide-react';
+import { Link } from 'react-router';
 
 export function OfflineArticleSaver() {
 	const [url, setUrl] = useState('');
@@ -30,9 +24,7 @@ export function OfflineArticleSaver() {
 
 		setIsSaving(true);
 		try {
-			const response = await fetch(
-				`/download-article?url=${encodeURIComponent(url)}`
-			);
+			const response = await fetch(`/download-article?url=${encodeURIComponent(url)}`);
 
 			if (!response.ok) {
 				setUrl('');
@@ -78,9 +70,7 @@ export function OfflineArticleSaver() {
 				<Card className="mb-8">
 					<CardHeader>
 						<CardTitle>Save Substack Articles Offline</CardTitle>
-						<CardDescription>
-							Enter a URL to save an article for offline reading
-						</CardDescription>
+						<CardDescription>Enter a URL to save an article for offline reading</CardDescription>
 					</CardHeader>
 					<CardContent>
 						<div className="flex space-x-2">
@@ -98,10 +88,7 @@ export function OfflineArticleSaver() {
 									}
 								}}
 							/>
-							<Button
-								onClick={handleSave}
-								disabled={isSaving || checkUrlValid(url)}
-							>
+							<Button onClick={handleSave} disabled={isSaving || checkUrlValid(url)}>
 								{isSaving ? (
 									<>
 										<Loader2Icon className="mr-2 h-4 w-4 animate-spin" />

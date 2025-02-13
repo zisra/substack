@@ -1,11 +1,11 @@
+import { Database } from '@/lib/database';
+import { clientsClaim } from 'workbox-core';
 import {
 	cleanupOutdatedCaches,
 	createHandlerBoundToURL,
 	precacheAndRoute,
 } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
-import { clientsClaim } from 'workbox-core';
-import { Database } from './lib/database';
 
 declare let self: ServiceWorkerGlobalScope;
 
@@ -30,7 +30,7 @@ registerRoute(
 			});
 		}
 		return fetch(request);
-	}
+	},
 );
 
 const handler = createHandlerBoundToURL('/index.html');

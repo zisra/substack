@@ -1,12 +1,8 @@
 import { useEffect, useState } from 'react';
 
 import { ArticleList } from '@/components/ArticleList';
-import { Card } from '@/components/ui/card';
-import { ChevronLeftIcon } from 'lucide-react';
-import type { ArticleSaved } from '@/lib/types';
-import { Database } from '@/lib/database';
-import { Link } from 'react-router';
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 import {
 	Credenza,
 	CredenzaClose,
@@ -17,6 +13,10 @@ import {
 	CredenzaTitle,
 	CredenzaTrigger,
 } from '@/components/ui/credenza';
+import { Database } from '@/lib/database';
+import type { ArticleSaved } from '@/lib/types';
+import { ChevronLeftIcon } from 'lucide-react';
+import { Link } from 'react-router';
 
 export function ArchivedPosts() {
 	const [articles, setArticles] = useState<ArticleSaved[]>([]);
@@ -44,11 +44,7 @@ export function ArchivedPosts() {
 				<h2 className="text-2xl font-bold">Archived Articles</h2>
 				<Credenza>
 					<CredenzaTrigger>
-						<Button
-							size="sm"
-							variant="destructive"
-							disabled={articles.length === 0}
-						>
+						<Button size="sm" variant="destructive" disabled={articles.length === 0}>
 							Delete All Archived
 						</Button>
 					</CredenzaTrigger>
@@ -56,8 +52,8 @@ export function ArchivedPosts() {
 						<CredenzaHeader>
 							<CredenzaTitle>Are you sure?</CredenzaTitle>
 							<CredenzaDescription>
-								This action cannot be undone. This will permanently delete all
-								your archived articles
+								This action cannot be undone. This will permanently delete all your archived
+								articles
 							</CredenzaDescription>
 						</CredenzaHeader>
 						<CredenzaFooter>
@@ -69,9 +65,7 @@ export function ArchivedPosts() {
 									variant="destructive"
 									onClick={async () => {
 										await db.open();
-										await Promise.all(
-											articles.map((article) => db.deleteArticle(article.url))
-										);
+										await Promise.all(articles.map((article) => db.deleteArticle(article.url)));
 										setArticles([]);
 									}}
 								>

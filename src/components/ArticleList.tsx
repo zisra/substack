@@ -1,3 +1,5 @@
+import { AlertCard } from '@/components/AlertCard';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import {
 	DropdownMenu,
@@ -6,18 +8,16 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import type { ArticleSaved } from '@/lib/types';
+import { useIsOffline } from '@/lib/utils';
 import {
-	LinkIcon,
-	TrashIcon,
-	MoreVerticalIcon,
-	BookOpenTextIcon,
 	ArchiveIcon,
 	ArchiveRestoreIcon,
+	BookOpenTextIcon,
+	LinkIcon,
+	MoreVerticalIcon,
+	TrashIcon,
 } from 'lucide-react';
 import { Link } from 'react-router';
-import { Button } from '@/components/ui/button';
-import { AlertCard } from './AlertCard';
-import { useIsOffline } from '@/lib/utils';
 
 interface ArticleListProps {
 	articles: ArticleSaved[];
@@ -41,37 +41,27 @@ export function ArticleList({
 	if (articles.length === 0) {
 		if (archivedView) {
 			return (
-				<AlertCard
-					title="No archived articles"
-					icon={<ArchiveIcon className="h-16 w-16" />}
-				>
+				<AlertCard title="No archived articles" icon={<ArchiveIcon className="h-16 w-16" />}>
 					Go back and archive some articles that you finished reading.
 				</AlertCard>
 			);
-		} else {
-			return (
-				<AlertCard
-					title="No articles saved"
-					icon={<BookOpenTextIcon className="h-16 w-16" />}
-				>
-					Get started by saving your first article.
-				</AlertCard>
-			);
 		}
+		return (
+			<AlertCard title="No articles saved" icon={<BookOpenTextIcon className="h-16 w-16" />}>
+				Get started by saving your first article.
+			</AlertCard>
+		);
 	}
 
-	return articles.map((article, index) => {
+	return articles.map((article) => {
 		return (
 			<Card
-				key={index}
+				key={article.url}
 				className="transition-all duration-300 ease-in-out hover:shadow-sm hover:bg-accent/50 cursor-pointer"
 			>
 				<CardContent className="p-4">
 					<div className="flex justify-between items-start">
-						<Link
-							to={`/article/?url=${encodeURIComponent(article.url)}`}
-							className="flex-grow"
-						>
+						<Link to={`/article/?url=${encodeURIComponent(article.url)}`} className="flex-grow">
 							<div className="flex">
 								<div className="flex-grow pr-4">
 									<div className="flex items-center mb-2">
@@ -100,10 +90,7 @@ export function ArticleList({
 						</Link>
 						<DropdownMenu>
 							<DropdownMenuTrigger asChild>
-								<Button
-									variant="ghost"
-									className="h-8 w-8 p-0 hover:bg-background"
-								>
+								<Button variant="ghost" className="h-8 w-8 p-0 hover:bg-background">
 									<span className="sr-only">Open menu</span>
 									<MoreVerticalIcon className="h-4 w-4 text-neutral-500 dark:text-neutral-400" />
 								</Button>

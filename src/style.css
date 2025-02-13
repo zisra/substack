@@ -2,7 +2,6 @@
 	margin-top: -15px;
 }
 
-// printer query
 @media print {
 	.footnote-content {
 		margin-top: -5px;
@@ -17,8 +16,8 @@
 	scroll-margin-top: 60px;
 }
 
-input[type='number']::-webkit-inner-spin-button,
-input[type='number']::-webkit-outer-spin-button {
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
 	-webkit-appearance: none;
 	margin: 0;
 }

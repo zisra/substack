@@ -1,23 +1,21 @@
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
-import { useSearchParams, useNavigate } from 'react-router';
 import { Database } from '@/lib/database';
-import { useEffect, useState } from 'react';
-import { ArticleSaved, Settings, type Article } from '@/lib/types';
-import { Parser, HtmlRenderer } from 'commonmark';
+import type { Article, ArticleSaved, Settings } from '@/lib/types';
+import { HtmlRenderer, Parser } from 'commonmark';
 import { ArchiveIcon } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
+import { useNavigate, useSearchParams } from 'react-router';
 
-import { AlertCard } from './AlertCard';
-import { ArticleSkeleton } from './ArticleSkeleton';
-import { ArticleControls } from './ArticleControls';
-import { twMerge } from 'tailwind-merge';
+import { AlertCard } from '@/components/AlertCard';
+import { ArticleControls } from '@/components/ArticleControls';
+import { ArticleSkeleton } from '@/components/ArticleSkeleton';
+import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
-import { Skeleton } from './ui/skeleton';
+import { twMerge } from 'tailwind-merge';
 
 async function saveArticle(db: Database, url: string) {
-	const response = await fetch(
-		`/download-article?url=${encodeURIComponent(url)}`
-	);
+	const response = await fetch(`/download-article?url=${encodeURIComponent(url)}`);
 
 	if (!response.ok) {
 		throw new Error('Failed to download article');
@@ -51,7 +49,7 @@ function ArticleHeader({
 					fontFamily === 'sans' && 'font-sans',
 					fontFamily === 'serif' && 'font-serif',
 					fontFamily === 'mono' && 'font-mono',
-					'text-4xl font-bold mb-2'
+					'text-4xl font-bold mb-2',
 				)}
 			>
 				{article?.title}
@@ -61,7 +59,7 @@ function ArticleHeader({
 					fontFamily === 'sans' && 'font-sans',
 					fontFamily === 'serif' && 'font-serif',
 					fontFamily === 'mono' && 'font-mono',
-					'text-xl text-neutral-500 dark:text-neutral-400 mb-4'
+					'text-xl text-neutral-500 dark:text-neutral-400 mb-4',
 				)}
 			>
 				{article?.subtitle}
@@ -76,10 +74,10 @@ function ArticleHeader({
 							fontFamily === 'sans' && 'font-sans',
 							fontFamily === 'serif' && 'font-serif',
 							fontFamily === 'mono' && 'font-mono',
-							'text-md text-neutral-500 dark:text-neutral-400'
+							'text-md text-neutral-500 dark:text-neutral-400',
 						)}
 					>
-						<a>{article?.author}</a>
+						<span>{article?.author}</span>
 					</p>
 				</div>
 			</div>
@@ -95,7 +93,7 @@ function ArticleHeader({
 }
 
 export function ArticleViewer() {
-	let [searchParams] = useSearchParams();
+	const [searchParams] = useSearchParams();
 	const [article, setArticle] = useState<ArticleSaved | null>(null);
 	const [settings, setSettings] = useState<Settings | null>(null);
 	const [title, setTitle] = useState<string>('');
@@ -142,15 +140,13 @@ export function ArticleViewer() {
 			const writer = new HtmlRenderer();
 
 			if (typeof article?.markdown === 'string') {
-				var parsed = reader.parse(article.markdown ?? '');
+				const parsed = reader.parse(article.markdown ?? '');
 
 				const result = writer.render(parsed);
 				setMarkdown(result);
 			} else if (url && article?.markdown === false) {
 				try {
-					const response = await fetch(
-						`/download-article?url=${encodeURIComponent(url)}`
-					);
+					const response = await fetch(`/download-article?url=${encodeURIComponent(url)}`);
 
 					if (!response.ok) {
 						navigate('/');
@@ -176,12 +172,12 @@ export function ArticleViewer() {
 		};
 
 		fetchData();
-	}, [article, url, navigate]);
+	}, [article]);
 
 	useEffect(() => {
 		const fetchSettings = async () => {
 			await db.open();
-			let settings = await db.getSettings();
+			const settings = await db.getSettings();
 
 			if (settings) {
 				setSettings(settings);
@@ -196,65 +192,60 @@ export function ArticleViewer() {
 
 	if (!article) {
 		return <ArticleSkeleton />;
-	} else {
-		return (
-			<div className="max-w-3xl mx-auto px-4 py-8 ">
-				<Helmet>
-					<title>{title}</title>
-				</Helmet>
-				<ArticleHeader
-					onSettingsChange={onSettingsChange}
-					article={article}
-					db={db}
-					setArticle={setArticle}
-					failed={failed}
-					fontFamily={settings?.formatting.fontFamily}
-				/>
-				<hr className="my-6" />
-				{failed ? (
-					<AlertCard
-						title="Archived article"
-						icon={<ArchiveIcon className="h-16 w-16" aria-hidden="true" />}
-					>
-						This article has been archived and is no longer available without an
-						internet connection.
-					</AlertCard>
-				) : (
-					<article
-						className={twMerge(
-							settings?.formatting.fontFamily === 'sans' && 'font-sans',
-							settings?.formatting.fontFamily === 'serif' && 'font-serif',
-							settings?.formatting.fontFamily === 'mono' && 'font-mono',
-							settings?.formatting.fontSize === 'sm' &&
-								'prose-sm print:prose-sm',
-							settings?.formatting.fontSize === 'base' && 'prose-base',
-							settings?.formatting.fontSize === 'dynamic' &&
-								'prose-base lg:prose-lg print:prose-sm',
-							settings?.formatting.fontSize === null &&
-								'prose-base lg:prose-lg print:prose-sm',
-							settings?.formatting.fontSize === 'lg' && 'prose-lg',
-							settings?.formatting.fontSize === 'xl' && 'prose-xl',
-							settings?.formatting.printImages === false &&
-								'print:prose-img:hidden',
-							'prose space-y-4 prose-img:mx-auto prose-figcaption:text-center dark:prose-invert prose-figcaption:mt-[-18px] prose-blockquote:font-normal prose-blockquote:not-italic max-w-none break-words'
-						)}
-					>
-						{markdown ? (
-							<div
-								dangerouslySetInnerHTML={{
-									__html: markdown,
-								}}
-							></div>
-						) : (
-							<article className="space-y-4">
-								<Skeleton className="h-6 w-full" />
-								<Skeleton className="h-6 w-full" />
-								<Skeleton className="h-6 w-3/4" />
-							</article>
-						)}
-					</article>
-				)}
-			</div>
-		);
 	}
+	return (
+		<div className="max-w-3xl mx-auto px-4 py-8 ">
+			<Helmet>
+				<title>{title}</title>
+			</Helmet>
+			<ArticleHeader
+				onSettingsChange={onSettingsChange}
+				article={article}
+				db={db}
+				setArticle={setArticle}
+				failed={failed}
+				fontFamily={settings?.formatting.fontFamily}
+			/>
+			<hr className="my-6" />
+			{failed ? (
+				<AlertCard
+					title="Archived article"
+					icon={<ArchiveIcon className="h-16 w-16" aria-hidden="true" />}
+				>
+					This article has been archived and is no longer available without an internet connection.
+				</AlertCard>
+			) : (
+				<article
+					className={twMerge(
+						settings?.formatting.fontFamily === 'sans' && 'font-sans',
+						settings?.formatting.fontFamily === 'serif' && 'font-serif',
+						settings?.formatting.fontFamily === 'mono' && 'font-mono',
+						settings?.formatting.fontSize === 'sm' && 'prose-sm print:prose-sm',
+						settings?.formatting.fontSize === 'base' && 'prose-base',
+						settings?.formatting.fontSize === 'dynamic' && 'prose-base lg:prose-lg print:prose-sm',
+						settings?.formatting.fontSize === null && 'prose-base lg:prose-lg print:prose-sm',
+						settings?.formatting.fontSize === 'lg' && 'prose-lg',
+						settings?.formatting.fontSize === 'xl' && 'prose-xl',
+						settings?.formatting.printImages === false && 'print:prose-img:hidden',
+						'prose space-y-4 prose-img:mx-auto prose-figcaption:text-center dark:prose-invert prose-figcaption:mt-[-18px] prose-blockquote:font-normal prose-blockquote:not-italic max-w-none break-words',
+					)}
+				>
+					{markdown ? (
+						<div
+							// biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+							dangerouslySetInnerHTML={{
+								__html: markdown,
+							}}
+						/>
+					) : (
+						<article className="space-y-4">
+							<Skeleton className="h-6 w-full" />
+							<Skeleton className="h-6 w-full" />
+							<Skeleton className="h-6 w-3/4" />
+						</article>
+					)}
+				</article>
+			)}
+		</div>
+	);
 }

@@ -14,9 +14,7 @@ export function AlertCard({
 			<CardContent className="flex flex-col items-center space-y-4 p-6">
 				{icon}
 				<h3 className="text-md">{title}</h3>
-				<p className="text-center text-neutral-500 dark:text-neutral-400">
-					{children}
-				</p>
+				<p className="text-center text-neutral-500 dark:text-neutral-400">{children}</p>
 			</CardContent>
 		</Card>
 	);
