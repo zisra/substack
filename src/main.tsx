@@ -14,7 +14,7 @@ if (!root) {
 }
 
 ReactDOM.createRoot(root).render(
-	<div vaul-drawer-wrapper="">
+	<div className="dark:bg-neutral-950 bg-white min-h-screen" vaul-drawer-wrapper="">
 		<ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
 			<BrowserRouter>
 				<Routes>

@@ -1,6 +1,6 @@
-import Fastify from 'fastify';
 import fastifyStatic from '@fastify/static';
-import { load, type CheerioAPI } from 'cheerio';
+import { type CheerioAPI, load } from 'cheerio';
+import Fastify from 'fastify';
 import TurndownService from 'turndown';
 
 const app = Fastify();
@@ -54,7 +54,7 @@ function getOGTag(tag: string, cheerioDOM: CheerioAPI) {
 }
 
 app.register(fastifyStatic, {
-	root: process.cwd() + '/dist',
+	root: `${process.cwd()}/dist`,
 	index: 'index.html',
 });
 
@@ -190,7 +190,7 @@ app.get('/image-proxy', async (req, res) => {
 	}
 });
 
-const port = parseInt(process.env.PORT || '3000', 10);
+const port = Number.parseInt(process.env.PORT || '3000', 10);
 
 console.log('Listening on port', port);
 

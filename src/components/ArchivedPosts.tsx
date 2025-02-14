@@ -57,8 +57,8 @@ export function ArchivedPosts() {
 						<CredenzaHeader>
 							<CredenzaTitle>Are you sure?</CredenzaTitle>
 							<CredenzaDescription>
-								This action cannot be undone. This will permanently delete all
-								your archived articles
+								This action cannot be undone. This will permanently delete all your archived
+								articles
 							</CredenzaDescription>
 						</CredenzaHeader>
 						<CredenzaFooter>
@@ -70,9 +70,7 @@ export function ArchivedPosts() {
 									variant="destructive"
 									onClick={async () => {
 										await db.open();
-										await Promise.all(
-											articles.map((article) => db.deleteArticle(article.url))
-										);
+										await Promise.all(articles.map((article) => db.deleteArticle(article.url)));
 										setArticles([]);
 									}}
 								>
