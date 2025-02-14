@@ -1,3 +1,4 @@
+import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export function ArticleSkeleton() {
@@ -11,7 +12,7 @@ export function ArticleSkeleton() {
 					<Skeleton className="h-6 w-1/4" />
 				</div>
 			</header>
-			<hr className="my-6" />
+			<Separator className="my-6" />
 			<article className="space-y-4">
 				<Skeleton className="h-6 w-full" />
 				<Skeleton className="h-6 w-full" />

@@ -10,6 +10,7 @@ import { useNavigate, useSearchParams } from 'react-router';
 import { AlertCard } from '@/components/AlertCard';
 import { ArticleControls } from '@/components/ArticleControls';
 import { ArticleSkeleton } from '@/components/ArticleSkeleton';
+import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 import { twMerge } from 'tailwind-merge';
@@ -49,7 +50,7 @@ function ArticleHeader({
 					fontFamily === 'sans' && 'font-sans',
 					fontFamily === 'serif' && 'font-serif',
 					fontFamily === 'mono' && 'font-mono',
-					'text-4xl font-bold mb-2',
+					'text-4xl font-bold mb-2 text-slate-950 dark:text-slate-50',
 				)}
 			>
 				{article?.title}
@@ -206,7 +207,7 @@ export function ArticleViewer() {
 				failed={failed}
 				fontFamily={settings?.formatting.fontFamily}
 			/>
-			<hr className="my-6" />
+			<Separator className="my-6" />
 			{failed ? (
 				<AlertCard
 					title="Archived article"

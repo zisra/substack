@@ -5,6 +5,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Separator } from '@/components/ui/separator';
 import type { Database } from '@/lib/database';
 import type { ArticleSaved, Settings } from '@/lib/types';
 import { DropdownMenu } from '@radix-ui/react-dropdown-menu';
@@ -36,7 +37,7 @@ export function ArticleControls({
 
 	return (
 		<div className="print:hidden">
-			<hr className="my-6" />
+			<Separator className="my-6" />
 			<div className="flex items-center justify-between">
 				<div className="flex items-center space-x-4">
 					<Button
