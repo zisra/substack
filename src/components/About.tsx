@@ -92,6 +92,7 @@ export function About() {
 								<Button
 									variant="destructive"
 									size="sm"
+									className="mb-2 sm:mb-0"
 									onClick={async () => {
 										await db.open();
 										await db.clearAll();
