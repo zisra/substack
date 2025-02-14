@@ -45,12 +45,7 @@ export function About() {
 					<CredenzaTitle>Info</CredenzaTitle>
 					<CredenzaDescription className="text-neutral-500 dark:text-neutral-400">
 						Use this application to save{' '}
-						<a
-							className="underline"
-							href="https://substack.com"
-							target="_blank"
-							rel="noreferrer"
-						>
+						<a className="underline" href="https://substack.com" target="_blank" rel="noreferrer">
 							Substack
 						</a>{' '}
 						articles offline.
@@ -62,7 +57,7 @@ export function About() {
 							<Label>Install iOS Shortcut</Label>
 							<p className="text-sm">
 								<a
-									href="/"
+									href="https://www.icloud.com/shortcuts/b67b3dbd230648cd949bdab9bf4560c9"
 									className="text-blue-500 dark:text-blue-400"
 									target="_blank"
 									rel="noreferrer"
