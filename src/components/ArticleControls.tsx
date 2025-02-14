@@ -1,5 +1,5 @@
 import { Formatting } from '@/components/Formatting';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import {
 	DropdownMenuContent,
 	DropdownMenuItem,
@@ -49,10 +49,13 @@ export function ArticleControls({
 					>
 						<PrinterIcon />
 					</Button>
-					<a href={article.url} target="_blank" rel="noopener noreferrer">
-						<Button variant="outline" size="icon">
-							<ExternalLinkIcon />
-						</Button>
+					<a
+						href={article.url}
+						target="_blank"
+						rel="noopener noreferrer"
+						className={buttonVariants({ variant: 'outline', size: 'icon' })}
+					>
+						<ExternalLinkIcon />
 					</a>
 					<Formatting onSettingsChange={onSettingsChange} />
 				</div>

@@ -16,8 +16,15 @@
 	scroll-margin-top: 60px;
 }
 
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
 	-webkit-appearance: none;
 	margin: 0;
+}
+
+/* make background color white on print mode */
+@media print {
+	body {
+		background-color: white;
+	}
 }
