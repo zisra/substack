@@ -34,3 +34,14 @@ export function useIsOffline() {
 
 	return isOffline;
 }
+
+export async function getDataStored() {
+	const data = await navigator.storage.estimate();
+
+	if (!data.usage) {
+		return null;
+	}
+	const usageInMB = data.usage / 1024 / 1024;
+
+	return usageInMB.toFixed(2);
+}

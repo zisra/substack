@@ -27,7 +27,7 @@ export function ThemeProvider({
 	...props
 }: ThemeProviderProps) {
 	const [theme, setTheme] = useState<Theme>(
-		() => (localStorage.getItem(storageKey) as Theme) || defaultTheme,
+		() => (localStorage.getItem(storageKey) as Theme) || defaultTheme
 	);
 
 	useEffect(() => {
@@ -36,16 +36,42 @@ export function ThemeProvider({
 		root.classList.remove('light', 'dark');
 
 		if (theme === 'system') {
-			const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
+			const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
+				.matches
 				? 'dark'
 				: 'light';
 
 			root.classList.add(systemTheme);
+			updateThemeColor(systemTheme); // Update theme color for system
 			return;
 		}
 
 		root.classList.add(theme);
+		updateThemeColor(theme); // Update theme color for light/dark
 	}, [theme]);
+
+	const updateThemeColor = (theme: Theme) => {
+		const metaThemeColor = document.querySelector("meta[name='theme-color']");
+		if (metaThemeColor) {
+			metaThemeColor.setAttribute(
+				'content',
+				theme === 'dark' ? '#0A0A0A' : '#FFFFFF'
+			);
+		}
+
+		// Optionally, update the manifest if needed (not always necessary)
+		// const link = document.querySelector('link[rel="manifest"]');
+		// if (link) {
+		//     fetch(link.href)
+		//         .then(response => response.json())
+		//         .then(manifest => {
+		//             manifest.theme_color = theme === 'dark' ? '#000000' : '#FFFFFF';
+		//             const blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+		//             const newManifestUrl = URL.createObjectURL(blob);
+		//             link.href = newManifestUrl;
+		//         });
+		// }
+	};
 
 	const value = {
 		theme,
@@ -65,7 +91,8 @@ export function ThemeProvider({
 export const useTheme = () => {
 	const context = useContext(ThemeProviderContext);
 
-	if (context === undefined) throw new Error('useTheme must be used within a ThemeProvider');
+	if (context === undefined)
+		throw new Error('useTheme must be used within a ThemeProvider');
 
 	return context;
 };

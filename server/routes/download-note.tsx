@@ -76,14 +76,6 @@ export const downloadNote = async (
 			p.replaceWith(pContent);
 		});
 
-		const article = dom.html(
-			dom(
-				'.pencraft.pc-display-flex.pc-flexDirection-column.pc-gap-12.pc-reset.feedPermalinkUnit-JBJrHa > div:nth-child(2)'
-			)
-		);
-
-		const markdown = htmlToMarkdown(dom(article).html() ?? '');
-
 		let authorImg = dom(
 			'#reader-nav-page-scroll > div > div > div > div > div > div > div > div > div > a > div > div > div > picture'
 		)
@@ -161,6 +153,15 @@ export const downloadNote = async (
 				authorImg: authorImg ?? '',
 			};
 		}
+
+		const elements = dom(
+			'.pencraft.pc-display-flex.pc-flexDirection-column.pc-gap-12.pc-reset.feedPermalinkUnit-JBJrHa'
+		);
+
+		elements.children().eq(-1).remove();
+		elements.children().eq(0).remove();
+
+		const markdown = htmlToMarkdown(dom(elements).html() ?? '');
 
 		res.send({
 			url: getOGTag('url', dom),

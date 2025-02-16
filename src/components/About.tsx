@@ -10,19 +10,9 @@ import {
 } from '@/components/ui/credenza';
 import { Label } from '@/components/ui/label';
 import { Database } from '@/lib/database';
+import { getDataStored } from '@/lib/utils';
 import { InfoIcon } from 'lucide-react';
 import { useState } from 'react';
-
-async function getDataStored() {
-	const data = await navigator.storage.estimate();
-
-	if (!data.usage) {
-		return null;
-	}
-	const usageInMB = data.usage / 1024 / 1024;
-
-	return usageInMB.toFixed(2);
-}
 
 export function About() {
 	const [dataStored, setDataStored] = useState<string | null>(null);

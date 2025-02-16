@@ -37,7 +37,7 @@ export function ArticleControls({
 
 	return (
 		<div className="print:hidden">
-			<Separator className="my-6" />
+			<Separator className="my-4" />
 			<div className="flex items-center justify-between">
 				<div className="flex items-center space-x-4">
 					<Button

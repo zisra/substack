@@ -4,8 +4,9 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
-		"start": "tsx ./server/index.ts",
+		"start-dev": "node --import=tsx --watch ./server/index.ts",
 		"dev": "vite build --watch --sourcemap true --minify false",
+		"start": "tsx ./server/index.ts",
 		"build": "tsc && vite build",
 		"preview": "vite preview",
 		"biome": "biome check --write ./src"
