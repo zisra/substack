@@ -110,46 +110,51 @@ export const downloadNote = async (
 			?.includes(
 				'M17.4385 1.2681C19.3988 0.456149 21.6012 0.45615 23.5615 1.2681L31.5807 4.58976C33.5409 5.40172 35.0983'
 			);
-
 		const isArticle = embedHtml.find('a.postAttachment-eYV3fM').length > 0;
 
 		if (isQuote) {
-			const url = embedHtml.find('.pencraft > a').attr('href') ?? '';
+			const url = embedHtml
+				.find('div.pencraft.pc-display-flex > a')
+				.eq(1)
+				.attr('href');
 			const content = embedHtml
 				.find('.pencraft > a > div > .pencraft > div')
-				.children()
 				.eq(1)
 				.text();
 			const author = embedHtml
 				.find('.pencraft > a > div > .pencraft > div')
-				.children()
 				.eq(2)
 				.text();
 
 			embed = {
 				type: 'quote',
-				url,
+				url: url ?? '',
 				content,
 				author,
 			};
 		} else if (isArticle) {
-			const url = embedHtml.find('a.postAttachment-eYV3fM').attr('href') ?? '';
+			const articleEmbedIndicator = 'eYV3fM';
+			const url = embedHtml
+				.find(`a.postAttachment-${articleEmbedIndicator}`)
+				.attr('href');
 			const image = embedHtml
 				.find('a.postAttachment-eYV3fM img')
 				.attr('srcset');
 			const author = embedHtml
-				.find('div:has(a.postAttachment-eYV3fM) > div  > div > div')
+				.find('div.pencraft > div > div.pencraft > div a:nth-child(2)')
 				.text();
 			const title = embedHtml
-				.find('div:has(a.postAttachment-eYV3fM) > div:nth-child(3)')
+				.find(
+					`div:has(a.postAttachment-${articleEmbedIndicator}) > div:nth-child(3)`
+				)
 				.text();
 			const authorImg = embedHtml
-				.find('div:has(a.postAttachment-eYV3fM) a img')
+				.find('div.pencraft > div > div.pencraft > a img')
 				.attr('src');
 
 			embed = {
 				type: 'article',
-				url,
+				url: url ?? '',
 				title,
 				image: image ?? '',
 				author,
@@ -163,6 +168,7 @@ export const downloadNote = async (
 			authorImg,
 			markdown: markdown,
 			embed,
+			embedHtml: embedHtml.html(),
 		});
 	} catch (error) {
 		console.error('Error fetching the URL:', error);

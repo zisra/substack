@@ -1,8 +1,9 @@
 import { AlertCard } from '@/components/AlertCard';
 import { ArticleSkeleton } from '@/components/ArticleSkeleton';
+import { ArticleCard, Quote } from '@/components/EmbedComponents';
 import { Formatting } from '@/components/Formatting';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
-import { Button, buttonVariants } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import {
 	DropdownMenuContent,
 	DropdownMenuItem,
@@ -20,13 +21,11 @@ import {
 	ExternalLinkIcon,
 	LinkIcon,
 	MoreVerticalIcon,
-	PrinterIcon,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useNavigate, useSearchParams } from 'react-router';
 import { twMerge } from 'tailwind-merge';
-import { ArticleCard, Quote } from './ArticleElements';
 
 export function NoteControls({
 	note,
@@ -36,30 +35,9 @@ export function NoteControls({
 	onSettingsChange: (settings: Settings) => void;
 }) {
 	return (
-		<div className="print:hidden">
-			<Separator className="my-6" />
-			<div className="flex items-center justify-between">
-				<div className="flex items-center space-x-4">
-					<Button
-						variant="outline"
-						size="icon"
-						onClick={() => {
-							window.print();
-						}}
-					>
-						<PrinterIcon />
-					</Button>
-					<a
-						href={note.url}
-						target="_blank"
-						rel="noopener noreferrer"
-						className={buttonVariants({ variant: 'outline', size: 'icon' })}
-					>
-						<ExternalLinkIcon />
-					</a>
-					<Formatting onSettingsChange={onSettingsChange} />
-				</div>
-
+		<div className="flex items-center justify-between">
+			<div className="flex items-center space-x-4">
+				<Formatting onSettingsChange={onSettingsChange} />
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
 						<Button variant="outline" size="icon">
@@ -67,6 +45,12 @@ export function NoteControls({
 						</Button>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align="end" className="w-40">
+						<a href={note.url} target="_blank" rel="noopener noreferrer">
+							<DropdownMenuItem className="cursor-pointer">
+								<ExternalLinkIcon className="mr-2 h-4 w-4" />
+								<span>Open</span>
+							</DropdownMenuItem>
+						</a>
 						<DropdownMenuItem
 							onClick={() => {
 								navigator.clipboard.writeText(note.url);
@@ -93,12 +77,12 @@ function NoteHeader({
 	fontFamily?: string;
 }) {
 	return (
-		<header className="mb-4">
-			<div className="flex items-center space-x-2">
-				<Avatar className="pointer-events-none h-8 w-8">
-					<AvatarImage src={note?.authorImg} alt="Author" />
-				</Avatar>
-				<div>
+		<header>
+			<div className="flex items-center space-x-2 justify-between">
+				<div className="flex items-center space-x-2">
+					<Avatar className="pointer-events-none h-8 w-8">
+						<AvatarImage src={note?.authorImg} alt="Author" />
+					</Avatar>
 					<p
 						className={cn(
 							fontFamily === 'sans' && 'font-sans',
@@ -110,8 +94,8 @@ function NoteHeader({
 						<span>{note?.author}</span>
 					</p>
 				</div>
+				<NoteControls onSettingsChange={onSettingsChange} note={note} />
 			</div>
-			<NoteControls onSettingsChange={onSettingsChange} note={note} />
 		</header>
 	);
 }
@@ -122,7 +106,7 @@ function Embeds({ note }: { note: Note }) {
 	if (note.embed?.type === 'quote') {
 		return (
 			<Quote
-				url={note.url}
+				url={note.embed.url}
 				content={note.embed.content}
 				author={note.embed.author}
 			/>

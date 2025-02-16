@@ -23,8 +23,8 @@ export function ArticleCard({
 			>
 				<div className="mx-auto max-w-xl overflow-hidden">
 					<img
-						className="h-56 w-full object-cover rounded-lg"
-						src={image}
+						className="h-56 w-full object-cover rounded-t-md"
+						srcSet={image}
 						alt={title}
 					/>
 					<div className="p-4">
@@ -56,7 +56,7 @@ export function Quote({
 	author: string;
 }) {
 	return (
-		<Card className="w-full max-w-md mx-auto duration-300 ease-in-out hover:shadow-sm hover:bg-accent/50 cursor-pointer">
+		<Card className="w-full max-w-2xl mx-auto duration-300 ease-in-out hover:shadow-sm hover:bg-accent/50 cursor-pointer">
 			<Link
 				to={`/article/?url=${encodeURIComponent(url)}`}
 				className="flex-grow"
@@ -66,7 +66,7 @@ export function Quote({
 						<span className="absolute top-0 left-0 text-6xl text-primary opacity-20 -translate-x-4 -translate-y-4 font-serif">
 							<QuoteIcon />
 						</span>
-						<blockquote className="text-lg font-medium leading-relaxed mb-4 pt-4 border-none">
+						<blockquote className="text-lg leading-relaxed mb-4 pt-4 border-none">
 							{content}
 						</blockquote>
 						<footer className="text-sm text-muted-foreground">
