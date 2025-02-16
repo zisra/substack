@@ -157,6 +157,95 @@ app.get('/download-article', async (req, res) => {
 	}
 });
 
+app.get('/download-note', async (req, res) => {
+	const url = (req.query as { url?: string }).url;
+
+	if (!url) {
+		return res.status(400).send('URL parameter is required');
+	}
+
+	const urlObj = new URL(url);
+	urlObj.search = '';
+
+	try {
+		const response = await fetch(urlObj.toString());
+		const html = await response.text();
+
+		const dom = load(html);
+
+		// Remove links from images
+		dom('.is-viewable-img').each((_index, element) => {
+			dom(element).removeAttr('href');
+		});
+
+		dom('.image-link').each((_index, element) => {
+			// replace .image-link with it's child
+			const child = dom(element).children().first();
+			dom(element).replaceWith(child);
+		});
+
+		dom('img').each((_index, element) => {
+			const title = dom(element).attr('title');
+			const alt = dom(element).attr('alt');
+
+			if (title) {
+				dom(element).attr('title', title.replace(/"/g, '\\"'));
+			}
+			if (alt) {
+				dom(element).attr('alt', alt.replace(/"/g, '\\"'));
+			}
+		});
+
+		dom('li').each((_index, element) => {
+			// Remove the p child of li and put it as li's child
+			const p = dom(element).find('p').first();
+
+			const pContent = p.contents();
+			p.replaceWith(pContent);
+		});
+
+		const article = dom.html(
+			dom(
+				'.pencraft.pc-display-flex.pc-flexDirection-column.pc-gap-12.pc-reset.feedPermalinkUnit-JBJrHa > div:nth-child(2)'
+			)
+		);
+
+		const quote = dom(
+			'.pencraft.pc-display-flex.pc-flexDirection-column.pc-gap-12.pc-reset.feedPermalinkUnit-JBJrHa'
+		);
+
+		const markdown = turndownService.turndown(dom(article).html() ?? '');
+
+		let authorImg = dom(
+			'#reader-nav-page-scroll > div > div > div > div > div > div > div > div > div > a > div > div > div > picture'
+		)
+			.children()
+			.eq(1)
+			.attr('src');
+
+		if (!authorImg) {
+			authorImg = dom('[rel="shortcut icon"]').attr('href');
+		}
+
+		const authorName = dom(
+			'#reader-nav-page-scroll > div > div > div > div > div > div > div > div > div > div > div:nth-child(1) > span > div > span > a'
+		).text();
+
+		res.send({
+			url: getOGTag('url', dom),
+			author: authorName,
+			authorImg,
+			markdown: markdown,
+			quote: quote.toString(),
+		});
+	} catch (error) {
+		console.error('Error fetching the URL:', error);
+		res.status(500).send({
+			error: 'Error fetching the URL',
+		});
+	}
+});
+
 app.get('/image-proxy', async (req, res) => {
 	const url = (req.query as { url?: string }).url;
 

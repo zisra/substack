@@ -1,7 +1,8 @@
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { Archived } from '@/routes/archived';
-import { Article } from '@/routes/article.tsx';
-import { Index } from '@/routes/index.tsx';
+import { Article } from '@/routes/article';
+import { Index } from '@/routes/index';
+import { Note } from '@/routes/note';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
 
@@ -20,6 +21,7 @@ ReactDOM.createRoot(root).render(
 				<Routes>
 					<Route path="/" element={<Index />} />
 					<Route path="/article" element={<Article />} />
+					<Route path="/note" element={<Note />} />
 					<Route path="/archived" element={<Archived />} />
 					<Route path="*" element={<Navigate to="/" replace />} />
 				</Routes>

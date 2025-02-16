@@ -62,13 +62,7 @@ export function ArticleControls({
 
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
-						<Button
-							variant="outline"
-							size="icon"
-							onClick={() => {
-								navigator.clipboard.writeText(article.url);
-							}}
-						>
+						<Button variant="outline" size="icon">
 							<MoreVerticalIcon />
 						</Button>
 					</DropdownMenuTrigger>

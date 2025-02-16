@@ -27,3 +27,10 @@ export type Settings = {
 		printImages: boolean;
 	};
 };
+
+export type Note = {
+	url: string;
+	author: string;
+	authorImg: string;
+	markdown: string;
+};
