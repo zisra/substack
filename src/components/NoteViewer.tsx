@@ -16,12 +16,7 @@ import type { Note, Settings } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { DropdownMenu } from '@radix-ui/react-dropdown-menu';
 import { HtmlRenderer, Parser } from 'commonmark';
-import {
-	ArchiveIcon,
-	ExternalLinkIcon,
-	LinkIcon,
-	MoreVerticalIcon,
-} from 'lucide-react';
+import { ArchiveIcon, ExternalLinkIcon, LinkIcon, MoreVerticalIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useNavigate, useSearchParams } from 'react-router';
@@ -88,7 +83,7 @@ function NoteHeader({
 							fontFamily === 'sans' && 'font-sans',
 							fontFamily === 'serif' && 'font-serif',
 							fontFamily === 'mono' && 'font-mono',
-							'text-slate-950 dark:text-slate-50'
+							'text-slate-950 dark:text-slate-50',
 						)}
 					>
 						<span>{note?.author}</span>
@@ -104,13 +99,7 @@ function Embeds({ note }: { note: Note }) {
 	if (!note.embed) return null;
 
 	if (note.embed?.type === 'quote') {
-		return (
-			<Quote
-				url={note.embed.url}
-				content={note.embed.content}
-				author={note.embed.author}
-			/>
-		);
+		return <Quote url={note.embed.url} content={note.embed.content} author={note.embed.author} />;
 	}
 	return (
 		<ArticleCard
@@ -143,9 +132,7 @@ export function NoteViewer() {
 
 			if (url) {
 				try {
-					const response = await fetch(
-						`/download-note?url=${encodeURIComponent(url)}`
-					);
+					const response = await fetch(`/download-note?url=${encodeURIComponent(url)}`);
 
 					if (!response.ok) {
 						navigate('/');
@@ -212,8 +199,7 @@ export function NoteViewer() {
 					title="Archived article"
 					icon={<ArchiveIcon className="h-16 w-16" aria-hidden="true" />}
 				>
-					This article has been archived and is no longer available without an
-					internet connection.
+					This article has been archived and is no longer available without an internet connection.
 				</AlertCard>
 			) : (
 				<>
@@ -222,18 +208,15 @@ export function NoteViewer() {
 							settings?.formatting.fontFamily === 'sans' && 'font-sans',
 							settings?.formatting.fontFamily === 'serif' && 'font-serif',
 							settings?.formatting.fontFamily === 'mono' && 'font-mono',
-							settings?.formatting.fontSize === 'sm' &&
-								'prose-sm print:prose-sm',
+							settings?.formatting.fontSize === 'sm' && 'prose-sm print:prose-sm',
 							settings?.formatting.fontSize === 'base' && 'prose-base',
 							settings?.formatting.fontSize === 'dynamic' &&
 								'prose-base lg:prose-lg print:prose-sm',
-							settings?.formatting.fontSize === null &&
-								'prose-base lg:prose-lg print:prose-sm',
+							settings?.formatting.fontSize === null && 'prose-base lg:prose-lg print:prose-sm',
 							settings?.formatting.fontSize === 'lg' && 'prose-lg',
 							settings?.formatting.fontSize === 'xl' && 'prose-xl',
-							settings?.formatting.printImages === false &&
-								'print:prose-img:hidden',
-							'prose space-y-4 prose-img:mx-auto prose-figcaption:text-center dark:prose-invert prose-figcaption:mt-[-18px] prose-blockquote:font-normal prose-blockquote:not-italic max-w-none break-words'
+							settings?.formatting.printImages === false && 'print:prose-img:hidden',
+							'prose space-y-4 prose-img:mx-auto prose-figcaption:text-center dark:prose-invert prose-figcaption:mt-[-18px] prose-blockquote:font-normal prose-blockquote:not-italic max-w-none break-words',
 						)}
 					>
 						{markdown ? (

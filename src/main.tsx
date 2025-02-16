@@ -3,6 +3,7 @@ import { Archived } from '@/routes/archived';
 import { Article } from '@/routes/article';
 import { Index } from '@/routes/index';
 import { Note } from '@/routes/note';
+import { Wiki } from '@/routes/wiki';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
 
@@ -23,6 +24,7 @@ ReactDOM.createRoot(root).render(
 					<Route path="/article" element={<Article />} />
 					<Route path="/note" element={<Note />} />
 					<Route path="/archived" element={<Archived />} />
+					<Route path="/wiki/*" element={<Wiki />} />
 					<Route path="*" element={<Navigate to="/" replace />} />
 				</Routes>
 			</BrowserRouter>
