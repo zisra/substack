@@ -26,7 +26,7 @@ import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useNavigate, useSearchParams } from 'react-router';
 import { twMerge } from 'tailwind-merge';
-import { Card, CardContent } from './ui/card';
+import { ArticleCard, Quote } from './ArticleElements';
 
 export function NoteControls({
 	note,
@@ -104,7 +104,7 @@ function NoteHeader({
 							fontFamily === 'sans' && 'font-sans',
 							fontFamily === 'serif' && 'font-serif',
 							fontFamily === 'mono' && 'font-mono',
-							'text-slate-950 dark:text-slate-50',
+							'text-slate-950 dark:text-slate-50'
 						)}
 					>
 						<span>{note?.author}</span>
@@ -113,6 +113,29 @@ function NoteHeader({
 			</div>
 			<NoteControls onSettingsChange={onSettingsChange} note={note} />
 		</header>
+	);
+}
+
+function Embeds({ note }: { note: Note }) {
+	if (!note.embed) return null;
+
+	if (note.embed?.type === 'quote') {
+		return (
+			<Quote
+				url={note.url}
+				content={note.embed.content}
+				author={note.embed.author}
+			/>
+		);
+	}
+	return (
+		<ArticleCard
+			title={note.embed.title}
+			author={note.embed.author}
+			url={note.embed.url}
+			image={note.embed.image}
+			authorUrl={note.embed.authorImg}
+		/>
 	);
 }
 
@@ -136,7 +159,9 @@ export function NoteViewer() {
 
 			if (url) {
 				try {
-					const response = await fetch(`/download-note?url=${encodeURIComponent(url)}`);
+					const response = await fetch(
+						`/download-note?url=${encodeURIComponent(url)}`
+					);
 
 					if (!response.ok) {
 						navigate('/');
@@ -203,77 +228,47 @@ export function NoteViewer() {
 					title="Archived article"
 					icon={<ArchiveIcon className="h-16 w-16" aria-hidden="true" />}
 				>
-					This article has been archived and is no longer available without an internet connection.
+					This article has been archived and is no longer available without an
+					internet connection.
 				</AlertCard>
 			) : (
-				<article
-					className={twMerge(
-						settings?.formatting.fontFamily === 'sans' && 'font-sans',
-						settings?.formatting.fontFamily === 'serif' && 'font-serif',
-						settings?.formatting.fontFamily === 'mono' && 'font-mono',
-						settings?.formatting.fontSize === 'sm' && 'prose-sm print:prose-sm',
-						settings?.formatting.fontSize === 'base' && 'prose-base',
-						settings?.formatting.fontSize === 'dynamic' && 'prose-base lg:prose-lg print:prose-sm',
-						settings?.formatting.fontSize === null && 'prose-base lg:prose-lg print:prose-sm',
-						settings?.formatting.fontSize === 'lg' && 'prose-lg',
-						settings?.formatting.fontSize === 'xl' && 'prose-xl',
-						settings?.formatting.printImages === false && 'print:prose-img:hidden',
-						'prose space-y-4 prose-img:mx-auto prose-figcaption:text-center dark:prose-invert prose-figcaption:mt-[-18px] prose-blockquote:font-normal prose-blockquote:not-italic max-w-none break-words',
-					)}
-				>
-					{markdown ? (
-						<div
-							// biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
-							dangerouslySetInnerHTML={{
-								__html: markdown,
-							}}
-						/>
-					) : (
-						<div className="space-y-4">
-							<Skeleton className="h-6 w-full" />
-							<Skeleton className="h-6 w-full" />
-							<Skeleton className="h-6 w-3/4" />
-						</div>
-					)}
-					<Card className="w-full max-w-md mx-auto">
-						<CardContent className="p-6">
-							<div className="relative">
-								<span className="absolute top-0 left-0 text-6xl text-primary opacity-20 -translate-x-4 -translate-y-4  font-serif">
-									"
-								</span>
-								<blockquote className="text-lg font-medium leading-relaxed mb-4 pt-4 border-none">
-									Sometimes I say stuff I just think of after reading half a journal paper.
-								</blockquote>
-								<footer className="text-sm text-muted-foreground">— Sam Atis</footer>
-							</div>
-						</CardContent>
-					</Card>
-					<Card className="max-w-md mx-auto overflow-hidden shadow-lg">
-						<div className="relative w-full h-48">
-							<img
-								src="https://substackcdn.com/image/fetch/w_1040,c_fill,f_webp,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4a8d7e41-6476-4b50-b001-ecb353452d7c_680x434.png"
-								alt="Article header"
-								style={{ objectFit: 'cover' }}
+				<>
+					<article
+						className={twMerge(
+							settings?.formatting.fontFamily === 'sans' && 'font-sans',
+							settings?.formatting.fontFamily === 'serif' && 'font-serif',
+							settings?.formatting.fontFamily === 'mono' && 'font-mono',
+							settings?.formatting.fontSize === 'sm' &&
+								'prose-sm print:prose-sm',
+							settings?.formatting.fontSize === 'base' && 'prose-base',
+							settings?.formatting.fontSize === 'dynamic' &&
+								'prose-base lg:prose-lg print:prose-sm',
+							settings?.formatting.fontSize === null &&
+								'prose-base lg:prose-lg print:prose-sm',
+							settings?.formatting.fontSize === 'lg' && 'prose-lg',
+							settings?.formatting.fontSize === 'xl' && 'prose-xl',
+							settings?.formatting.printImages === false &&
+								'print:prose-img:hidden',
+							'prose space-y-4 prose-img:mx-auto prose-figcaption:text-center dark:prose-invert prose-figcaption:mt-[-18px] prose-blockquote:font-normal prose-blockquote:not-italic max-w-none break-words'
+						)}
+					>
+						{markdown ? (
+							<div
+								// biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+								dangerouslySetInnerHTML={{
+									__html: markdown,
+								}}
 							/>
-						</div>
-						<CardContent className="p-6">
-							<h2 className="text-lg font-semibold mb-3 text-gray-800">
-								Why IQ Research Doesn't Publish Well
-							</h2>
-							<div className="flex items-center">
-								<div className="relative w-6 h-6 mr-2">
-									<img
-										src="https://substackcdn.com/image/fetch/w_36,h_36,c_fill,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3c062404-95e3-4b54-96a3-875f4ff87641_4000x6000.jpeg"
-										alt="Lyman Stone"
-										className="rounded-full"
-										style={{ objectFit: 'cover' }}
-									/>
-								</div>
-								<span className="text-sm text-gray-500">Lyman Stone</span>
+						) : (
+							<div className="space-y-4">
+								<Skeleton className="h-6 w-full" />
+								<Skeleton className="h-6 w-full" />
+								<Skeleton className="h-6 w-3/4" />
 							</div>
-						</CardContent>
-					</Card>
-				</article>
+						)}
+					</article>
+					<Embeds note={note} />
+				</>
 			)}
 		</div>
 	);

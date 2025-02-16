@@ -28,9 +28,27 @@ export type Settings = {
 	};
 };
 
+type Embed =
+	| {
+			type: 'quote';
+			url: string;
+			content: string;
+			author: string;
+	  }
+	| {
+			type: 'article';
+			url: string;
+			title: string;
+			image: string;
+			author: string;
+			authorImg: string;
+	  }
+	| null;
+
 export type Note = {
 	url: string;
 	author: string;
 	authorImg: string;
 	markdown: string;
+	embed?: Embed;
 };
