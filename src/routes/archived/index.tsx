@@ -1,5 +1,5 @@
-import { ArchivedPosts } from '@/components/ArchivedPosts';
 import { Header } from '@/components/Header';
+import { ArchivedPosts } from '@/routes/archived/ArchivedPosts';
 import { Helmet } from 'react-helmet';
 
 export function Archived() {

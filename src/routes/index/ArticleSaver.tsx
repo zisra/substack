@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 
 import { AlertCard } from '@/components/AlertCard';
-import { ArticleList } from '@/components/ArticleList';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Database } from '@/lib/database';
 import type { Article, ArticleSaved } from '@/lib/types';
 import { checkUrlValid, useIsOffline } from '@/lib/utils';
+import { ArticleList } from '@/routes/index/ArticleList';
 import { ChevronRightIcon, Loader2Icon, WifiOffIcon } from 'lucide-react';
 import { Link } from 'react-router';
 

@@ -1,21 +1,10 @@
-import { useEffect, useState } from 'react';
-
-import { ArticleList } from '@/components/ArticleList';
-import { Button } from '@/components/ui/button';
+import { DeleteArchivedPosts } from '@/components/modals/DeleteArchivedPosts';
 import { Card } from '@/components/ui/card';
-import {
-	Credenza,
-	CredenzaClose,
-	CredenzaContent,
-	CredenzaDescription,
-	CredenzaFooter,
-	CredenzaHeader,
-	CredenzaTitle,
-	CredenzaTrigger,
-} from '@/components/ui/credenza';
 import { Database } from '@/lib/database';
 import type { ArticleSaved } from '@/lib/types';
+import { ArticleList } from '@/routes/index/ArticleList';
 import { ChevronLeftIcon } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 
 export function ArchivedPosts() {
@@ -42,39 +31,7 @@ export function ArchivedPosts() {
 		<div className="container mx-auto p-4 max-w-3xl">
 			<div className="flex justify-between items-center mb-4">
 				<h2 className="text-2xl font-bold">Archived Articles</h2>
-				<Credenza>
-					<CredenzaTrigger asChild>
-						<Button size="sm" variant="destructive" disabled={articles.length === 0}>
-							Delete All Archived
-						</Button>
-					</CredenzaTrigger>
-					<CredenzaContent>
-						<CredenzaHeader>
-							<CredenzaTitle>Are you sure?</CredenzaTitle>
-							<CredenzaDescription>
-								This action cannot be undone. This will permanently delete all your archived
-								articles
-							</CredenzaDescription>
-						</CredenzaHeader>
-						<CredenzaFooter>
-							<CredenzaClose asChild>
-								<Button variant="outline">Cancel</Button>
-							</CredenzaClose>
-							<CredenzaClose asChild>
-								<Button
-									variant="destructive"
-									onClick={async () => {
-										await db.open();
-										await Promise.all(articles.map((article) => db.deleteArticle(article.url)));
-										setArticles([]);
-									}}
-								>
-									Delete
-								</Button>
-							</CredenzaClose>
-						</CredenzaFooter>
-					</CredenzaContent>
-				</Credenza>
+				<DeleteArchivedPosts db={db} articles={articles} setArticles={setArticles} />
 			</div>
 			<Card className="mb-6 p-0 py-0">
 				<Link to="/" className="flex items-center p-4 gap-2">

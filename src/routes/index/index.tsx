@@ -1,5 +1,5 @@
 import { Header } from '@/components/Header';
-import { OfflineArticleSaver } from '@/components/OfflineArticleSaver';
+import { OfflineArticleSaver } from '@/routes/index/ArticleSaver';
 import { Helmet } from 'react-helmet';
 
 export function Index() {

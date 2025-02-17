@@ -1,4 +1,4 @@
-import { Formatting } from '@/components/Formatting';
+import { Formatting } from '@/components/modals/Formatting';
 import { Button, buttonVariants } from '@/components/ui/button';
 import {
 	DropdownMenuContent,
