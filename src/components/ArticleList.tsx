@@ -66,7 +66,7 @@ export function ArticleList({
 								<div className="flex-grow pr-4">
 									<div className="flex items-center mb-2">
 										<img
-											src={article.authorImg || '/placeholder.svg'}
+											src={article.authorImg}
 											alt={article.author}
 											className="w-6 h-6 rounded-full mr-2 pointer-events-none"
 										/>
@@ -79,13 +79,15 @@ export function ArticleList({
 										{article.subtitle}
 									</p>
 								</div>
-								<div className="flex-shrink-0">
-									<img
-										src={article.image || '/placeholder.svg'}
-										alt={article.title}
-										className="w-24 h-24 object-cover rounded-md pointer-events-none"
-									/>
-								</div>
+								{article.image ? (
+									<div className="flex-shrink-0">
+										<img
+											src={article.image}
+											alt={article.title}
+											className="w-24 h-24 object-cover rounded-md pointer-events-none"
+										/>
+									</div>
+								) : null}
 							</div>
 						</Link>
 						<DropdownMenu>

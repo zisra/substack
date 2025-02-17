@@ -20,7 +20,7 @@ export const imageProxy = async (
 	if (
 		urlObj.hostname !== 'substackcdn.com' &&
 		urlObj.hostname !== 'images.unsplash.com' &&
-		urlObj.hostname !== 'wikimedia.org'
+		!urlObj.hostname.endsWith('wikimedia.org')
 	) {
 		return res.status(400).send('Only images from Substack are allowed');
 	}

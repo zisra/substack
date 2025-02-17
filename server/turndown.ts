@@ -20,7 +20,7 @@ turndownService.addRule('figcaption', {
 });
 
 // Display footnote links correctly
-turndownService.addRule('footnoteAnchor', {
+turndownService.addRule('footnote-anchor-substack', {
 	filter(node) {
 		return node.nodeName === 'A' && node.classList.contains('footnote-anchor');
 	},
@@ -31,7 +31,7 @@ turndownService.addRule('footnoteAnchor', {
 });
 
 // Display footnotes correctly
-turndownService.addRule('footnoteDiv', {
+turndownService.addRule('footnote-content-substack', {
 	filter(node) {
 		return node.nodeName === 'DIV' && node.classList.contains('footnote');
 	},

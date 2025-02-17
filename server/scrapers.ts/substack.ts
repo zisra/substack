@@ -1,21 +1,27 @@
 import { load } from 'cheerio';
-import { getOGTag } from '../utils';
 import { htmlToMarkdown } from '../turndown';
+import { getOGTag } from '../utils';
+
+const selectorsToRemove = [
+	'.subscription-widget',
+	'[data-component-name="ButtonCreateButton"]',
+	'[data-component-name="AudioEmbedPlayer"]',
+	'[data-component-name="SubscribeWidget"]',
+	'[data-component-name="DigestPostEmbed"]',
+	'[data-component-name="EmbeddedPublicationToDOMWithSubscribe"]',
+	'.embedded-post-wrap',
+	'.image-link-expand',
+	'.poll-embed',
+	'audio',
+];
 
 export function scrapeSubstack(html: string) {
 	const dom = load(html);
 
 	// Remove unnecessary elements
-	dom('.subscription-widget').remove();
-	dom('[data-component-name="ButtonCreateButton"]').remove();
-	dom('[data-component-name="AudioEmbedPlayer"]').remove();
-	dom('[data-component-name="SubscribeWidget"]').remove();
-	dom('[data-component-name="DigestPostEmbed"]').remove();
-	dom('[data-component-name="EmbeddedPublicationToDOMWithSubscribe"]').remove();
-	dom('.embedded-post-wrap').remove();
-	dom('.image-link-expand').remove();
-	dom('.poll-embed').remove();
-	dom('audio').remove();
+	selectorsToRemove.forEach((selector) => {
+		dom(selector).remove();
+	});
 
 	// Remove links from images
 	dom('.is-viewable-img').each((_index, element) => {
