@@ -73,7 +73,7 @@ export function ArticleControls({
 							}}
 							className="cursor-pointer"
 						>
-							<LinkIcon className="mr-2 h-4 w-4" />
+							<LinkIcon className="mr-2 size-4" />
 							<span>Copy link</span>
 						</DropdownMenuItem>
 
@@ -87,7 +87,7 @@ export function ArticleControls({
 								}}
 								disabled={failed}
 							>
-								<ArchiveRestoreIcon className="mr-2 h-4 w-4" />
+								<ArchiveRestoreIcon className="mr-2 size-4" />
 								<span>Unarchive</span>
 							</DropdownMenuItem>
 						) : (
@@ -99,20 +99,20 @@ export function ArticleControls({
 									setArticle({ ...article, archived: true });
 								}}
 							>
-								<ArchiveIcon className="mr-2 h-4 w-4" />
+								<ArchiveIcon className="mr-2 size-4" />
 								<span>Archive</span>
 							</DropdownMenuItem>
 						)}
 
 						<DropdownMenuItem
-							className="cursor-pointer text-red-600"
+							className="cursor-pointer text-red-600 hover:!text-red-600"
 							onClick={async () => {
 								navigate('/');
 								await db.open();
 								db.deleteArticle(article.url);
 							}}
 						>
-							<TrashIcon className="mr-2 h-4 w-4" />
+							<TrashIcon className="mr-2 size-4 text-red-600" />
 							<span>Delete</span>
 						</DropdownMenuItem>
 					</DropdownMenuContent>

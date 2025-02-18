@@ -167,7 +167,7 @@ export function Formatting({
 									>
 										<MinusIcon />
 									</Button>
-									<Card className="w-24 h-10 flex items-center justify-center text-sm shadow-none select-none">
+									<Card className="w-26 h-9 flex items-center justify-center text-sm shadow-none select-none rounded-md">
 										{fontSize ? fontSizes[fontSize] : null}
 									</Card>
 									<Button

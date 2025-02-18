@@ -57,13 +57,13 @@ export function ArticleList({
 		return (
 			<Card
 				key={article.url}
-				className="transition-all duration-300 ease-in-out hover:shadow-sm hover:bg-accent/50 cursor-pointer"
+				className="transition-all duration-200 ease-in-out hover:bg-accent/50"
 			>
 				<CardContent className="p-4">
 					<div className="flex justify-between items-start">
-						<Link to={`/article/?url=${encodeURIComponent(article.url)}`} className="flex-grow">
+						<Link to={`/article/?url=${encodeURIComponent(article.url)}`} className="grow">
 							<div className="flex">
-								<div className="flex-grow pr-4">
+								<div className="grow pr-4">
 									<div className="flex items-center mb-2">
 										<img
 											src={article.authorImg}
@@ -80,7 +80,7 @@ export function ArticleList({
 									</p>
 								</div>
 								{article.image ? (
-									<div className="flex-shrink-0">
+									<div className="shrink-0">
 										<img
 											src={article.image}
 											alt={article.title}
@@ -94,7 +94,7 @@ export function ArticleList({
 							<DropdownMenuTrigger asChild>
 								<Button variant="ghost" className="h-8 w-8 p-0 hover:bg-background">
 									<span className="sr-only">Open menu</span>
-									<MoreVerticalIcon className="h-4 w-4 text-neutral-500 dark:text-neutral-400" />
+									<MoreVerticalIcon className="size-4 text-neutral-500 dark:text-neutral-400" />
 								</Button>
 							</DropdownMenuTrigger>
 							<DropdownMenuContent align="end" className="w-40">
@@ -102,7 +102,7 @@ export function ArticleList({
 									onClick={() => onCopyLink(article.url)}
 									className="cursor-pointer"
 								>
-									<LinkIcon className="mr-2 h-4 w-4" />
+									<LinkIcon className="mr-2 size-4" />
 									<span>Copy link</span>
 								</DropdownMenuItem>
 
@@ -112,7 +112,7 @@ export function ArticleList({
 										className="cursor-pointer"
 										disabled={offline && article.markdown === false}
 									>
-										<ArchiveRestoreIcon className="mr-2 h-4 w-4" />
+										<ArchiveRestoreIcon className="mr-2 size-4" />
 										<span>Unarchive</span>
 									</DropdownMenuItem>
 								) : null}
@@ -122,16 +122,16 @@ export function ArticleList({
 										onClick={() => onArchive(article.url)}
 										className="cursor-pointer"
 									>
-										<ArchiveIcon className="mr-2 h-4 w-4" />
+										<ArchiveIcon className="mr-2 size-4" />
 										<span>Archive</span>
 									</DropdownMenuItem>
 								) : null}
 
 								<DropdownMenuItem
 									onClick={() => onDelete(article.url)}
-									className="cursor-pointer text-red-600"
+									className="cursor-pointer text-red-600 hover:!text-red-600"
 								>
-									<TrashIcon className="mr-2 h-4 w-4" />
+									<TrashIcon className="mr-2 size-4 text-red-600" />
 									<span>Delete</span>
 								</DropdownMenuItem>
 							</DropdownMenuContent>

@@ -29,7 +29,7 @@ export function NoteControls({
 					<DropdownMenuContent align="end" className="w-40">
 						<a href={note.url} target="_blank" rel="noopener noreferrer">
 							<DropdownMenuItem className="cursor-pointer">
-								<ExternalLinkIcon className="mr-2 h-4 w-4" />
+								<ExternalLinkIcon className="mr-2 size-4" />
 								<span>Open</span>
 							</DropdownMenuItem>
 						</a>
@@ -39,7 +39,7 @@ export function NoteControls({
 							}}
 							className="cursor-pointer"
 						>
-							<LinkIcon className="mr-2 h-4 w-4" />
+							<LinkIcon className="mr-2 size-4" />
 							<span>Copy link</span>
 						</DropdownMenuItem>
 					</DropdownMenuContent>

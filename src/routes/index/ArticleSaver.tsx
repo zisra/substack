@@ -78,7 +78,7 @@ export function OfflineArticleSaver() {
 								placeholder="Enter article URL"
 								value={url}
 								onChange={(e) => setUrl(e.target.value)}
-								className="flex-grow"
+								className="grow"
 								disabled={isSaving}
 								onKeyUp={(e) => {
 									if (e.key === 'Enter') {
@@ -90,7 +90,7 @@ export function OfflineArticleSaver() {
 							<Button onClick={handleSave} disabled={isSaving || checkUrlValid(url)}>
 								{isSaving ? (
 									<>
-										<Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
+										<Loader2Icon className="mr-2 size-4 animate-spin" />
 										Saving...
 									</>
 								) : (
@@ -110,9 +110,12 @@ export function OfflineArticleSaver() {
 
 			<h2 className="text-2xl font-bold mb-4">Saved Articles</h2>
 			<Card className="mb-6 p-0 py-0">
-				<Link to="/archived" className="flex justify-between items-center p-4">
+				<Link
+					to="/archived"
+					className="flex justify-between items-center p-4 transition-all duration-200 ease-in-out hover:bg-accent/50"
+				>
 					<span>View Archived Articles</span>
-					<ChevronRightIcon className="h-4 w-4" />
+					<ChevronRightIcon className="size-4" />
 				</Link>
 			</Card>
 
