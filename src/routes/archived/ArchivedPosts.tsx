@@ -38,7 +38,7 @@ export function ArchivedPosts() {
 					to='/'
 					className='flex items-center p-4 gap-2 transition-all duration-200 ease-in-out hover:bg-accent/50 cursor-pointer'
 				>
-					<ChevronLeftIcon className='size-4' />
+					<ChevronLeftIcon className='size-4 text-neutral-500 dark:text-neutral-400' />
 					<span>View All Articles</span>
 				</Link>
 			</Card>
