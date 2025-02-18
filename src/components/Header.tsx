@@ -1,9 +1,8 @@
-import { HomeIcon } from 'lucide-react';
-
 import { ToggleMode } from '@/components/ToggleMode';
 import { About } from '@/components/modals/About';
 import { Formatting } from '@/components/modals/Formatting';
 import { buttonVariants } from '@/components/ui/button';
+import { HomeIcon } from 'lucide-react';
 import { Link } from 'react-router';
 import { useLocation } from 'react-router';
 

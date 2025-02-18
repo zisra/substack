@@ -1,7 +1,6 @@
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import type { Database } from '@/lib/database';
 import type { ArticleSaved, Settings } from '@/lib/types';
-
 import { cn } from '@/lib/utils';
 import { ArticleControls } from '@/routes/article/ArticleControls';
 

@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-
 import { AlertCard } from '@/components/AlertCard';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,6 +7,7 @@ import type { Article, ArticleSaved } from '@/lib/types';
 import { checkUrlValid, useIsOffline } from '@/lib/utils';
 import { ArticleList } from '@/routes/index/ArticleList';
 import { ChevronRightIcon, Loader2Icon, WifiOffIcon } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 
 export function OfflineArticleSaver() {
