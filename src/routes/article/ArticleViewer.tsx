@@ -9,7 +9,7 @@ import { HtmlRenderer, Parser } from 'commonmark';
 import { ArchiveIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { useNavigate, useSearchParams } from 'react-router';
+import { useBlocker, useNavigate, useSearchParams } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
 async function saveArticle(db: Database, url: string) {
@@ -47,10 +47,12 @@ export function ArticleViewer() {
 					.then(async (article) => {
 						if (article) {
 							setArticle(article);
+							scrollTo(0);
 						} else {
 							const articleResponse = await saveArticle(db, url);
 							if (articleResponse) {
 								setArticle(articleResponse);
+								scrollTo(0);
 							}
 						}
 					})
@@ -119,9 +121,29 @@ export function ArticleViewer() {
 		fetchSettings();
 	}, []);
 
+	const handleBeforeUnload = () => {
+		console.log('Current location:', window.scrollY);
+		return false;
+	};
+
+	const scrollTo = (top: number) => {
+		setTimeout(() => {
+			window.scrollTo({
+				top,
+				behavior: 'smooth',
+			});
+		}, 100);
+	};
+
 	const onSettingsChange = async (settings: Settings) => {
 		setSettings(settings);
 	};
+
+	useBlocker(handleBeforeUnload);
+
+	useEffect(() => {
+		window.addEventListener('beforeunload', handleBeforeUnload);
+	}, []);
 
 	if (!article) {
 		return <ArticleSkeleton />;
