@@ -24,7 +24,7 @@ export function DeleteArchivedPosts({
 	return (
 		<Credenza>
 			<CredenzaTrigger asChild>
-				<Button size="sm" variant="destructive" disabled={articles.length === 0}>
+				<Button size='sm' variant='destructive' disabled={articles.length === 0}>
 					Delete All Archived
 				</Button>
 			</CredenzaTrigger>
@@ -37,11 +37,11 @@ export function DeleteArchivedPosts({
 				</CredenzaHeader>
 				<CredenzaFooter>
 					<CredenzaClose asChild>
-						<Button variant="outline">Cancel</Button>
+						<Button variant='outline'>Cancel</Button>
 					</CredenzaClose>
 					<CredenzaClose asChild>
 						<Button
-							variant="destructive"
+							variant='destructive'
 							onClick={async () => {
 								await db.open();
 								await Promise.all(articles.map((article) => db.deleteArticle(article.url)));

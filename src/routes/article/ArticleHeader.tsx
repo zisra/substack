@@ -20,7 +20,7 @@ export function ArticleHeader({
 	fontFamily?: string;
 }) {
 	return (
-		<header className="mb-4">
+		<header className='mb-4'>
 			<h1
 				className={cn(
 					fontFamily === 'sans' && 'font-sans',
@@ -41,9 +41,9 @@ export function ArticleHeader({
 			>
 				{article?.subtitle}
 			</p>
-			<div className="flex items-center space-x-2">
-				<Avatar className="pointer-events-none h-6 w-6">
-					<AvatarImage src={article?.authorImg} alt="Author" />
+			<div className='flex items-center space-x-2'>
+				<Avatar className='pointer-events-none h-6 w-6'>
+					<AvatarImage src={article?.authorImg} alt='Author' />
 				</Avatar>
 				<div>
 					<p

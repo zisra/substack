@@ -28,22 +28,22 @@ export function ArchivedPosts() {
 	}, []);
 
 	return (
-		<div className="container mx-auto p-4 max-w-3xl">
-			<div className="flex justify-between items-center mb-4">
-				<h2 className="text-2xl font-bold">Archived Articles</h2>
+		<div className='container mx-auto p-4 max-w-3xl'>
+			<div className='flex justify-between items-center mb-4'>
+				<h2 className='text-2xl font-bold'>Archived Articles</h2>
 				<DeleteArchivedPosts db={db} articles={articles} setArticles={setArticles} />
 			</div>
-			<Card className="mb-6 p-0 py-0">
+			<Card className='mb-6 p-0 py-0'>
 				<Link
-					to="/"
-					className="flex items-center p-4 gap-2 transition-all duration-200 ease-in-out hover:bg-accent/50 cursor-pointer"
+					to='/'
+					className='flex items-center p-4 gap-2 transition-all duration-200 ease-in-out hover:bg-accent/50 cursor-pointer'
 				>
-					<ChevronLeftIcon className="size-4" />
+					<ChevronLeftIcon className='size-4' />
 					<span>View All Articles</span>
 				</Link>
 			</Card>
 
-			<div className="grid gap-4">
+			<div className='grid gap-4'>
 				<ArticleList
 					articles={articles}
 					onCopyLink={(url) => {

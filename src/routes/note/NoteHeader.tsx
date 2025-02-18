@@ -14,10 +14,10 @@ export function NoteHeader({
 }) {
 	return (
 		<header>
-			<div className="flex items-center space-x-2 justify-between">
-				<div className="flex items-center space-x-2">
-					<Avatar className="pointer-events-none h-8 w-8">
-						<AvatarImage src={note?.authorImg} alt="Author" />
+			<div className='flex items-center space-x-2 justify-between'>
+				<div className='flex items-center space-x-2'>
+					<Avatar className='pointer-events-none h-8 w-8'>
+						<AvatarImage src={note?.authorImg} alt='Author' />
 					</Avatar>
 					<p
 						className={cn(

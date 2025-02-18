@@ -64,21 +64,21 @@ export function OfflineArticleSaver() {
 	}, []);
 
 	return (
-		<div className="container mx-auto p-4 max-w-3xl">
+		<div className='container mx-auto p-4 max-w-3xl'>
 			{offline ? null : (
-				<Card className="mb-8">
+				<Card className='mb-8'>
 					<CardHeader>
 						<CardTitle>Save Substack Articles Offline</CardTitle>
 						<CardDescription>Enter a URL to save an article for offline reading</CardDescription>
 					</CardHeader>
 					<CardContent>
-						<div className="flex space-x-2">
+						<div className='flex space-x-2'>
 							<Input
-								type="url"
-								placeholder="Enter article URL"
+								type='url'
+								placeholder='Enter article URL'
 								value={url}
 								onChange={(e) => setUrl(e.target.value)}
-								className="grow"
+								className='grow'
 								disabled={isSaving}
 								onKeyUp={(e) => {
 									if (e.key === 'Enter') {
@@ -90,7 +90,7 @@ export function OfflineArticleSaver() {
 							<Button onClick={handleSave} disabled={isSaving || checkUrlValid(url)}>
 								{isSaving ? (
 									<>
-										<Loader2Icon className="mr-2 size-4 animate-spin" />
+										<Loader2Icon className='mr-2 size-4 animate-spin' />
 										Saving...
 									</>
 								) : (
@@ -103,23 +103,23 @@ export function OfflineArticleSaver() {
 			)}
 
 			{offline ? (
-				<AlertCard title="Offline" icon={<WifiOffIcon className="h-16 w-16" />}>
+				<AlertCard title='Offline' icon={<WifiOffIcon className='h-16 w-16' />}>
 					Please connect to the internet to save articles.
 				</AlertCard>
 			) : null}
 
-			<h2 className="text-2xl font-bold mb-4">Saved Articles</h2>
-			<Card className="mb-6 p-0 py-0">
+			<h2 className='text-2xl font-bold mb-4'>Saved Articles</h2>
+			<Card className='mb-6 p-0 py-0'>
 				<Link
-					to="/archived"
-					className="flex justify-between items-center p-4 transition-all duration-200 ease-in-out hover:bg-accent/50"
+					to='/archived'
+					className='flex justify-between items-center p-4 transition-all duration-200 ease-in-out hover:bg-accent/50'
 				>
 					<span>View Archived Articles</span>
-					<ChevronRightIcon className="size-4" />
+					<ChevronRightIcon className='size-4' />
 				</Link>
 			</Card>
 
-			<div className="grid gap-4">
+			<div className='grid gap-4'>
 				<ArticleList
 					articles={articles}
 					onCopyLink={(url) => {
