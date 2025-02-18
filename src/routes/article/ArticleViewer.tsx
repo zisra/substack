@@ -5,9 +5,10 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Database } from '@/lib/database';
 import type { Article, ArticleSaved, Settings } from '@/lib/types';
 import { ArticleHeader } from '@/routes/article/ArticleHeader';
+import { FinishedReadingButton } from '@/routes/article/FinishedReadingButton';
 import { HtmlRenderer, Parser } from 'commonmark';
 import { ArchiveIcon } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useBlocker, useNavigate, useSearchParams } from 'react-router';
 import { twMerge } from 'tailwind-merge';
@@ -47,7 +48,9 @@ export function ArticleViewer() {
 					.then(async (article) => {
 						if (article) {
 							setArticle(article);
-							scrollTo(0);
+							if (!article.archived) {
+								scrollTo(article.scrollLocation);
+							}
 						} else {
 							const articleResponse = await saveArticle(db, url);
 							if (articleResponse) {
@@ -95,6 +98,7 @@ export function ArticleViewer() {
 						archived: article.archived,
 						timestamp: article.timestamp,
 						imagesSaved: article.imagesSaved,
+						scrollLocation: 0,
 					});
 				} catch (error) {
 					setFailed(true);
@@ -121,9 +125,35 @@ export function ArticleViewer() {
 		fetchSettings();
 	}, []);
 
-	const handleBeforeUnload = () => {
-		console.log('Current location:', window.scrollY);
+	db.open();
+
+	const saveScrollPosition = useCallback(() => {
+		if (article) {
+			console.log(window.scrollY);
+			db.saveScrollLocation(article.url, window.scrollY);
+		}
+	}, [article]);
+
+	// Handle browser refresh or tab close
+	useEffect(() => {
+		const handleBeforeUnload = () => {
+			saveScrollPosition();
+		};
+
+		window.addEventListener('beforeunload', handleBeforeUnload);
+
+		return () => {
+			window.removeEventListener('beforeunload', handleBeforeUnload);
+		};
+	}, [saveScrollPosition]);
+
+	useBlocker(() => {
+		saveScrollPosition();
 		return false;
+	});
+
+	const onSettingsChange = async (settings: Settings) => {
+		setSettings(settings);
 	};
 
 	const scrollTo = (top: number) => {
@@ -132,22 +162,13 @@ export function ArticleViewer() {
 				top,
 				behavior: 'smooth',
 			});
-		}, 100);
+		}, 10);
 	};
-
-	const onSettingsChange = async (settings: Settings) => {
-		setSettings(settings);
-	};
-
-	useBlocker(handleBeforeUnload);
-
-	useEffect(() => {
-		window.addEventListener('beforeunload', handleBeforeUnload);
-	}, []);
 
 	if (!article) {
 		return <ArticleSkeleton />;
 	}
+
 	return (
 		<div className='max-w-3xl mx-auto px-4 py-8 '>
 			<Helmet>
@@ -202,6 +223,12 @@ export function ArticleViewer() {
 					)}
 				</article>
 			)}
+			<div>
+				<Separator className='my-2' />
+				{markdown ? (
+					<FinishedReadingButton db={db} setArticle={setArticle} article={article} />
+				) : null}
+			</div>
 		</div>
 	);
 }

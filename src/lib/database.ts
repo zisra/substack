@@ -58,6 +58,7 @@ export class Database {
 			timestamp: Date.now(),
 			imagesSaved: [article.authorImg, article.image, ...[...images].map((img) => img.src)],
 			archived: false,
+			scrollLocation: 0,
 		};
 
 		const existingArticle = await store.get(article.url);
@@ -243,5 +244,17 @@ export class Database {
 		await articlesStore.clear();
 		await imagesStore.clear();
 		await settingsStore.clear();
+	}
+
+	async saveScrollLocation(url: string, scrollLocation: number) {
+		if (!this.db) return;
+		const tx = this.db.transaction('articles', 'readwrite');
+		const store = tx.objectStore('articles');
+		const article = await store.get(url);
+
+		if (article) {
+			article.scrollLocation = scrollLocation;
+			await store.put(article);
+		}
 	}
 }

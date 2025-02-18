@@ -16,6 +16,7 @@ export type ArticleSaved = BaseArticle & {
 	imagesSaved: string[];
 	archived: boolean;
 	markdown: string | boolean;
+	scrollLocation: number;
 };
 
 export type Settings = {
