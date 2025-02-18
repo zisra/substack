@@ -210,7 +210,7 @@ export function Formatting({
 							</div>
 						</div>
 					</CredenzaBody>
-					<CredenzaFooter>
+					<CredenzaFooter className='gap-x-2'>
 						<Button onClick={resetSettings} variant='secondary'>
 							Reset
 						</Button>

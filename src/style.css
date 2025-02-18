@@ -2,12 +2,6 @@
 	margin-top: -15px;
 }
 
-@media print {
-	.footnote-content {
-		margin-top: -5px;
-	}
-}
-
 .footnote-number {
 	scroll-margin-top: 60px;
 }
@@ -22,9 +16,28 @@ input[type="number"]::-webkit-outer-spin-button {
 	margin: 0;
 }
 
-/* make background color white on print mode */
 @media print {
 	body {
 		background-color: white;
 	}
+
+	.footnote-content {
+		margin-top: -5px;
+	}
+}
+
+@media (min-width: 768px) {
+	[id^="footnote-"] {
+		scroll-margin-top: 53px; /* adjust to the header's height */
+	}
+}
+
+@media (max-width: 767px) {
+	[id^="footnote-"] {
+		scroll-margin-top: 0;
+	}
+}
+
+html {
+	scroll-behavior: smooth;
 }

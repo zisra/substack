@@ -1,5 +1,5 @@
 import { Header } from '@/components/Header';
-import { OfflineArticleSaver } from '@/routes/index/ArticleSaver';
+import { ArticleSaver } from '@/routes/index/ArticleSaver';
 import { Helmet } from 'react-helmet';
 
 export function Index() {
@@ -9,7 +9,7 @@ export function Index() {
 				<title>Substack Offline</title>
 			</Helmet>
 			<Header />
-			<OfflineArticleSaver />
+			<ArticleSaver />
 		</>
 	);
 }

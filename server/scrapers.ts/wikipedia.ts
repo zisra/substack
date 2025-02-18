@@ -43,6 +43,7 @@ const selectorsToRemove = [
 	'.sidebar',
 	'.infobox',
 	'table',
+	'.ext-phonos',
 ];
 
 export function scrapeWikipedia(html: string) {
@@ -53,6 +54,8 @@ export function scrapeWikipedia(html: string) {
 		.find('#mw-content-text > div > p:not(.mw-empty-elt)')
 		.first()
 		.text();
+
+	// Remove all citations
 	subtitle = RegExp(/[^.]*\./).exec(subtitle)?.[0] ?? '';
 	if (subtitle.length > 180) {
 		subtitle = `${subtitle.substring(0, 180)}...`;

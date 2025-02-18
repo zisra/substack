@@ -35,7 +35,7 @@ export function DeleteArchivedPosts({
 						This action cannot be undone. This will permanently delete all your archived articles
 					</CredenzaDescription>
 				</CredenzaHeader>
-				<CredenzaFooter>
+				<CredenzaFooter className='gap-x-2'>
 					<CredenzaClose asChild>
 						<Button variant='outline'>Cancel</Button>
 					</CredenzaClose>
