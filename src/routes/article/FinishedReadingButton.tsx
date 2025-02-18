@@ -13,7 +13,7 @@ export function FinishedReadingButton({
 	db: Database;
 }) {
 	return (
-		<div className="text-center pt-4">
+		<div className='text-center pt-4'>
 			{!article.archived ? (
 				<Button
 					onClick={async () => {
