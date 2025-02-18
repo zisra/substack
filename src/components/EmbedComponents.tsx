@@ -23,7 +23,7 @@ export function ArticleCard({
 					<div className='p-4'>
 						<div className='flex items-center'>
 							<img
-								className='w-6 h-6 rounded-full mr-2 pointer-events-none aspect-16/9'
+								className='size-6 rounded-full mr-2 pointer-events-none aspect-16/9'
 								src={authorUrl}
 								alt={author}
 							/>

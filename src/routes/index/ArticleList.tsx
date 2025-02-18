@@ -41,13 +41,13 @@ export function ArticleList({
 	if (articles.length === 0) {
 		if (archivedView) {
 			return (
-				<AlertCard title='No archived articles' icon={<ArchiveIcon className='h-16 w-16' />}>
+				<AlertCard title='No archived articles' icon={<ArchiveIcon className='size-16' />}>
 					Go back and archive some articles that you finished reading.
 				</AlertCard>
 			);
 		}
 		return (
-			<AlertCard title='No articles saved' icon={<BookOpenTextIcon className='h-16 w-16' />}>
+			<AlertCard title='No articles saved' icon={<BookOpenTextIcon className='size-16' />}>
 				Get started by saving your first article.
 			</AlertCard>
 		);
@@ -68,7 +68,7 @@ export function ArticleList({
 										<img
 											src={article.authorImg}
 											alt={article.author}
-											className='w-6 h-6 rounded-full mr-2 pointer-events-none'
+											className='size-6 rounded-full mr-2 pointer-events-none'
 										/>
 										<span className='text-sm text-neutral-500 dark:text-neutral-400'>
 											{article.author}
@@ -84,7 +84,7 @@ export function ArticleList({
 										<img
 											src={article.image}
 											alt={article.title}
-											className='w-24 h-24 object-cover rounded-md pointer-events-none'
+											className='size-24 object-cover rounded-md pointer-events-none'
 										/>
 									</div>
 								) : null}
@@ -92,7 +92,7 @@ export function ArticleList({
 						</Link>
 						<DropdownMenu>
 							<DropdownMenuTrigger asChild>
-								<Button variant='ghost' className='h-8 w-8 p-0 hover:bg-background'>
+								<Button variant='ghost' className='size-8 p-0 hover:bg-background'>
 									<span className='sr-only'>Open menu</span>
 									<MoreVerticalIcon className='size-4 text-neutral-500 dark:text-neutral-400' />
 								</Button>

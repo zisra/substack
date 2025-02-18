@@ -98,7 +98,7 @@ export function NoteViewer() {
 			{failed ? (
 				<AlertCard
 					title='Archived article'
-					icon={<ArchiveIcon className='h-16 w-16' aria-hidden='true' />}
+					icon={<ArchiveIcon className='size-16' aria-hidden='true' />}
 				>
 					This article has been archived and is no longer available without an internet connection.
 				</AlertCard>

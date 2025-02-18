@@ -42,7 +42,7 @@ export function ArticleHeader({
 				{article?.subtitle}
 			</p>
 			<div className='flex items-center space-x-2'>
-				<Avatar className='pointer-events-none h-6 w-6'>
+				<Avatar className='pointer-events-none size-6'>
 					<AvatarImage src={article?.authorImg} alt='Author' />
 				</Avatar>
 				<div>

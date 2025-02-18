@@ -16,7 +16,7 @@ turndownService.addRule('figcaption', {
 		const innerHTML = (node as HTMLElement).innerHTML;
 		const captionContent = turndownService.turndown(innerHTML);
 
-		return `<figcaption>\n\n${captionContent}\n\n</figcaption>`;
+		return `<figcaption aria-hidden="true">\n\n${captionContent}\n\n</figcaption>`;
 	},
 });
 

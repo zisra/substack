@@ -8,7 +8,7 @@ export function ArticleSkeleton() {
 				<Skeleton className='h-10 w-3/4 mb-2' />
 				<Skeleton className='h-6 w-1/2 mb-4' />
 				<div className='flex items-center space-x-2'>
-					<Skeleton className='h-6 w-6 rounded-full' />
+					<Skeleton className='size-6 rounded-full' />
 					<Skeleton className='h-6 w-1/4' />
 				</div>
 			</header>

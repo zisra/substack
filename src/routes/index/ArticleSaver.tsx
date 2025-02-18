@@ -103,7 +103,7 @@ export function OfflineArticleSaver() {
 			)}
 
 			{offline ? (
-				<AlertCard title='Offline' icon={<WifiOffIcon className='h-16 w-16' />}>
+				<AlertCard title='Offline' icon={<WifiOffIcon className='size-16' />}>
 					Please connect to the internet to save articles.
 				</AlertCard>
 			) : null}

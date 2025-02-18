@@ -35,6 +35,7 @@ const selectorsToRemove = [
 	'div.mw-heading:has(#References)',
 	'div.mw-heading:has(#Citations)',
 	'div.mw-heading:has(#Notes)',
+	'div.mw-heading:has(#External_links)',
 	'.navbox',
 	'.metadata',
 	'.hatnote',
@@ -48,7 +49,10 @@ export function scrapeWikipedia(html: string) {
 	const dom = load(html);
 
 	const article = dom('#mw-content-text');
-	let subtitle = article.find('.mw-parser-output > p').first().text();
+	let subtitle = article
+		.find('#mw-content-text > div > p:not(.mw-empty-elt)')
+		.first()
+		.text();
 	subtitle = RegExp(/[^.]*\./).exec(subtitle)?.[0] ?? '';
 	if (subtitle.length > 180) {
 		subtitle = `${subtitle.substring(0, 180)}...`;
@@ -62,7 +66,7 @@ export function scrapeWikipedia(html: string) {
 
 	return {
 		url: dom('link[rel="canonical"]').attr('href'),
-		title: dom('title').text(),
+		title: dom('title').text().replaceAll(' - Wikipedia', ''),
 		subtitle,
 		author: 'Wikipedia',
 		authorImg: 'https://www.wikipedia.org/static/favicon/wikipedia.ico',
