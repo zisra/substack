@@ -5,9 +5,7 @@
 Fix:
 
 - [ ] Move dropdown menu of each article to better place
-- [ ] Change theme_color based on mode
 - [ ] Change background color on mobile credenza
-- [ ] Tailwind v4
 
 Add:
 

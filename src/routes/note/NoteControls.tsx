@@ -17,19 +17,19 @@ export function NoteControls({
 	onSettingsChange: (settings: Settings) => void;
 }) {
 	return (
-		<div className="flex items-center justify-between">
-			<div className="flex items-center space-x-4">
+		<div className='flex items-center justify-between'>
+			<div className='flex items-center space-x-4'>
 				<Formatting onSettingsChange={onSettingsChange} />
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
-						<Button variant="outline" size="icon">
+						<Button variant='outline' size='icon'>
 							<MoreVerticalIcon />
 						</Button>
 					</DropdownMenuTrigger>
-					<DropdownMenuContent align="end" className="w-40">
-						<a href={note.url} target="_blank" rel="noopener noreferrer">
-							<DropdownMenuItem className="cursor-pointer">
-								<ExternalLinkIcon className="mr-2 h-4 w-4" />
+					<DropdownMenuContent align='end' className='w-40'>
+						<a href={note.url} target='_blank' rel='noopener noreferrer'>
+							<DropdownMenuItem className='cursor-pointer'>
+								<ExternalLinkIcon className='mr-2 size-4' />
 								<span>Open</span>
 							</DropdownMenuItem>
 						</a>
@@ -37,9 +37,9 @@ export function NoteControls({
 							onClick={() => {
 								navigator.clipboard.writeText(note.url);
 							}}
-							className="cursor-pointer"
+							className='cursor-pointer'
 						>
-							<LinkIcon className="mr-2 h-4 w-4" />
+							<LinkIcon className='mr-2 size-4' />
 							<span>Copy link</span>
 						</DropdownMenuItem>
 					</DropdownMenuContent>

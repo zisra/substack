@@ -127,7 +127,7 @@ export function ArticleViewer() {
 		return <ArticleSkeleton />;
 	}
 	return (
-		<div className="max-w-3xl mx-auto px-4 py-8 ">
+		<div className='max-w-3xl mx-auto px-4 py-8 '>
 			<Helmet>
 				<title>{title}</title>
 			</Helmet>
@@ -139,11 +139,11 @@ export function ArticleViewer() {
 				failed={failed}
 				fontFamily={settings?.formatting.fontFamily}
 			/>
-			<Separator className="my-2" />
+			<Separator className='my-2' />
 			{failed ? (
 				<AlertCard
-					title="Archived article"
-					icon={<ArchiveIcon className="h-16 w-16" aria-hidden="true" />}
+					title='Archived article'
+					icon={<ArchiveIcon className='h-16 w-16' aria-hidden='true' />}
 				>
 					This article has been archived and is no longer available without an internet connection.
 				</AlertCard>
@@ -159,7 +159,8 @@ export function ArticleViewer() {
 						settings?.formatting.fontSize === null && 'prose-base lg:prose-lg print:prose-sm',
 						settings?.formatting.fontSize === 'lg' && 'prose-lg',
 						settings?.formatting.fontSize === 'xl' && 'prose-xl',
-						settings?.formatting.printImages === false && 'print:prose-img:hidden',
+						settings?.formatting.printImages === false &&
+							'print:prose-img:hidden print:prose-figcaption:hidden',
 						'prose space-y-4 prose-img:mx-auto prose-figcaption:text-center dark:prose-invert prose-figcaption:mt-[-18px] prose-blockquote:font-normal prose-blockquote:not-italic max-w-none break-words',
 					)}
 				>
@@ -171,10 +172,10 @@ export function ArticleViewer() {
 							}}
 						/>
 					) : (
-						<article className="space-y-4">
-							<Skeleton className="h-6 w-full" />
-							<Skeleton className="h-6 w-full" />
-							<Skeleton className="h-6 w-3/4" />
+						<article className='space-y-4'>
+							<Skeleton className='h-6 w-full' />
+							<Skeleton className='h-6 w-full' />
+							<Skeleton className='h-6 w-3/4' />
 						</article>
 					)}
 				</article>

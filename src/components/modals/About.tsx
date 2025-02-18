@@ -26,45 +26,45 @@ export function About() {
 	return (
 		<Credenza>
 			<CredenzaTrigger asChild>
-				<Button onClick={updateDataStored} variant="outline" size="icon">
+				<Button onClick={updateDataStored} variant='outline' size='icon'>
 					<InfoIcon />
 				</Button>
 			</CredenzaTrigger>
 			<CredenzaContent>
 				<CredenzaHeader>
 					<CredenzaTitle>Info</CredenzaTitle>
-					<CredenzaDescription className="text-neutral-500 dark:text-neutral-400">
+					<CredenzaDescription className='text-neutral-500 dark:text-neutral-400'>
 						Use this application to save{' '}
-						<a className="underline" href="https://substack.com" target="_blank" rel="noreferrer">
+						<a className='underline' href='https://substack.com' target='_blank' rel='noreferrer'>
 							Substack
 						</a>{' '}
 						articles offline.
 					</CredenzaDescription>
 				</CredenzaHeader>
 				<CredenzaBody>
-					<div className="space-y-4 mb-2">
-						<div className="grid gap-1.5">
+					<div className='space-y-4 mb-2'>
+						<div className='grid gap-1.5'>
 							<Label>Install iOS Shortcut</Label>
-							<p className="text-sm">
+							<p className='text-sm'>
 								<a
-									href="https://www.icloud.com/shortcuts/b67b3dbd230648cd949bdab9bf4560c9"
-									className="text-blue-500 dark:text-blue-400"
-									target="_blank"
-									rel="noreferrer"
+									href='https://www.icloud.com/shortcuts/b67b3dbd230648cd949bdab9bf4560c9'
+									className='text-blue-500 dark:text-blue-400'
+									target='_blank'
+									rel='noreferrer'
 								>
 									Click here to install
 								</a>
 							</p>
 						</div>
-						<div className="flex items-center justify-between gap-4">
-							<div className="grid gap-1.5">
+						<div className='flex items-center justify-between gap-4'>
+							<div className='grid gap-1.5'>
 								<Label>Source Code</Label>
-								<p className="text-sm">
+								<p className='text-sm'>
 									<a
-										href="https://github.com/zisra/substack"
-										className="text-blue-500 dark:text-blue-400"
-										target="_blank"
-										rel="noreferrer"
+										href='https://github.com/zisra/substack'
+										className='text-blue-500 dark:text-blue-400'
+										target='_blank'
+										rel='noreferrer'
 									>
 										GitHub
 									</a>
@@ -72,17 +72,17 @@ export function About() {
 							</div>
 						</div>
 						{dataStored ? (
-							<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-								<div className="grid gap-1.5">
+							<div className='flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4'>
+								<div className='grid gap-1.5'>
 									<Label>Manage Storage</Label>
-									<p className="text-sm text-neutral-500 dark:text-neutral-400">
+									<p className='text-sm text-neutral-500 dark:text-neutral-400'>
 										Data stored: {dataStored} MB
 									</p>
 								</div>
 								<Button
-									variant="destructive"
-									size="sm"
-									className="mb-2 sm:mb-0"
+									variant='destructive'
+									size='sm'
+									className='mb-2 sm:mb-0'
 									onClick={async () => {
 										await db.open();
 										await db.clearAll();

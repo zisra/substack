@@ -85,7 +85,7 @@ export function NoteViewer() {
 	}
 
 	return (
-		<div className="max-w-3xl mx-auto px-4 py-8 ">
+		<div className='max-w-3xl mx-auto px-4 py-8 '>
 			<Helmet>
 				<title>{title}</title>
 			</Helmet>
@@ -94,11 +94,11 @@ export function NoteViewer() {
 				note={note}
 				fontFamily={settings?.formatting.fontFamily}
 			/>
-			<Separator className="my-6" />
+			<Separator className='my-6' />
 			{failed ? (
 				<AlertCard
-					title="Archived article"
-					icon={<ArchiveIcon className="h-16 w-16" aria-hidden="true" />}
+					title='Archived article'
+					icon={<ArchiveIcon className='h-16 w-16' aria-hidden='true' />}
 				>
 					This article has been archived and is no longer available without an internet connection.
 				</AlertCard>
@@ -128,10 +128,10 @@ export function NoteViewer() {
 								}}
 							/>
 						) : (
-							<div className="space-y-4">
-								<Skeleton className="h-6 w-full" />
-								<Skeleton className="h-6 w-full" />
-								<Skeleton className="h-6 w-3/4" />
+							<div className='space-y-4'>
+								<Skeleton className='h-6 w-full' />
+								<Skeleton className='h-6 w-full' />
+								<Skeleton className='h-6 w-3/4' />
 							</div>
 						)}
 					</article>

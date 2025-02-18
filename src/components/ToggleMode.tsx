@@ -11,8 +11,8 @@ export function ToggleMode() {
 			onClick={() => {
 				setTheme(theme === 'dark' ? 'light' : 'dark');
 			}}
-			variant="outline"
-			size="icon"
+			variant='outline'
+			size='icon'
 		>
 			{theme === 'dark' ? (
 				<SunIcon onClick={() => setTheme('light')} />
