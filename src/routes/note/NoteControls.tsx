@@ -27,7 +27,7 @@ export function NoteControls({
 						</Button>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align='end' className='w-40'>
-						<a href={note.url} target='_blank' rel='noopener noreferrer'>
+						<a href={note.url} target='_blank' rel='noreferrer'>
 							<DropdownMenuItem className='cursor-pointer'>
 								<ExternalLinkIcon className='mr-2 size-4' />
 								<span>Open</span>

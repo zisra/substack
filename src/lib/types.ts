@@ -4,6 +4,7 @@ export type BaseArticle = {
 	subtitle: string;
 	author: string;
 	authorImg: string;
+	authorUrl: string;
 	image: string;
 };
 
