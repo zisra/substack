@@ -14,7 +14,9 @@ import { useBlocker, useNavigate, useSearchParams } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
 async function saveArticle(db: Database, url: string) {
-	const response = await fetch(`/download-article?url=${encodeURIComponent(url)}`);
+	const response = await fetch(
+		`/download-article?url=${encodeURIComponent(url)}`
+	);
 
 	if (!response.ok) {
 		throw new Error('Failed to download article');
@@ -43,13 +45,21 @@ export function ArticleViewer() {
 		const loadArticles = async () => {
 			await db.open();
 
+			const settings = await db.getSettings();
+
+			if (settings) {
+				setSettings(settings);
+			}
+
 			if (url) {
 				db.getArticle(url)
 					.then(async (article) => {
 						if (article) {
 							setArticle(article);
-							if (!article.archived) {
+							if (!article.archived && settings?.scrollArticles) {
 								scrollTo(article.scrollLocation);
+							} else {
+								scrollTo(0);
 							}
 						} else {
 							const articleResponse = await saveArticle(db, url);
@@ -84,7 +94,9 @@ export function ArticleViewer() {
 				setMarkdown(result);
 			} else if (url && article?.markdown === false) {
 				try {
-					const response = await fetch(`/download-article?url=${encodeURIComponent(url)}`);
+					const response = await fetch(
+						`/download-article?url=${encodeURIComponent(url)}`
+					);
 
 					if (!response.ok) {
 						navigate('/');
@@ -112,18 +124,6 @@ export function ArticleViewer() {
 
 		fetchData();
 	}, [article]);
-
-	useEffect(() => {
-		const fetchSettings = async () => {
-			await db.open();
-			const settings = await db.getSettings();
-
-			if (settings) {
-				setSettings(settings);
-			}
-		};
-		fetchSettings();
-	}, []);
 
 	db.open();
 
@@ -170,7 +170,7 @@ export function ArticleViewer() {
 	}
 
 	return (
-		<div className='max-w-3xl mx-auto px-4 py-8 '>
+		<div className="max-w-3xl mx-auto px-4 py-8 ">
 			<Helmet>
 				<title>{title}</title>
 			</Helmet>
@@ -182,13 +182,14 @@ export function ArticleViewer() {
 				failed={failed}
 				fontFamily={settings?.formatting.fontFamily}
 			/>
-			<Separator className='my-2' />
+			<Separator className="my-2" />
 			{failed ? (
 				<AlertCard
-					title='Archived article'
-					icon={<ArchiveIcon className='size-16' aria-hidden='true' />}
+					title="Archived article"
+					icon={<ArchiveIcon className="size-16" aria-hidden="true" />}
 				>
-					This article has been archived and is no longer available without an internet connection.
+					This article has been archived and is no longer available without an
+					internet connection.
 				</AlertCard>
 			) : (
 				<article
@@ -198,13 +199,15 @@ export function ArticleViewer() {
 						settings?.formatting.fontFamily === 'mono' && 'font-mono',
 						settings?.formatting.fontSize === 'sm' && 'prose-sm print:prose-sm',
 						settings?.formatting.fontSize === 'base' && 'prose-base',
-						settings?.formatting.fontSize === 'dynamic' && 'prose-base lg:prose-lg print:prose-sm',
-						settings?.formatting.fontSize === null && 'prose-base lg:prose-lg print:prose-sm',
+						settings?.formatting.fontSize === 'dynamic' &&
+							'prose-base lg:prose-lg print:prose-sm',
+						settings?.formatting.fontSize === null &&
+							'prose-base lg:prose-lg print:prose-sm',
 						settings?.formatting.fontSize === 'lg' && 'prose-lg',
 						settings?.formatting.fontSize === 'xl' && 'prose-xl',
 						settings?.formatting.printImages === false &&
 							'print:prose-img:hidden print:prose-figcaption:hidden',
-						'prose space-y-4 prose-img:mx-auto prose-figcaption:text-center dark:prose-invert prose-figcaption:mt-[-18px] prose-blockquote:font-normal prose-blockquote:not-italic max-w-none break-words',
+						'prose space-y-4 prose-img:mx-auto prose-figcaption:text-center dark:prose-invert prose-figcaption:mt-[-18px] prose-blockquote:font-normal prose-blockquote:not-italic prose-hr:border-input max-w-none break-words'
 					)}
 				>
 					{markdown ? (
@@ -215,17 +218,21 @@ export function ArticleViewer() {
 							}}
 						/>
 					) : (
-						<article className='space-y-4'>
-							<Skeleton className='h-6 w-full' />
-							<Skeleton className='h-6 w-full' />
-							<Skeleton className='h-6 w-3/4' />
+						<article className="space-y-4">
+							<Skeleton className="h-6 w-full" />
+							<Skeleton className="h-6 w-full" />
+							<Skeleton className="h-6 w-3/4" />
 						</article>
 					)}
 				</article>
 			)}
 
 			{markdown ? (
-				<FinishedReadingButton db={db} setArticle={setArticle} article={article} />
+				<FinishedReadingButton
+					db={db}
+					setArticle={setArticle}
+					article={article}
+				/>
 			) : null}
 		</div>
 	);

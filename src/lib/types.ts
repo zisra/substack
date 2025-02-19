@@ -22,6 +22,7 @@ export type ArticleSaved = BaseArticle & {
 export type Settings = {
 	saveArchivedContent: boolean;
 	version: number;
+	scrollArticles: boolean;
 	formatting: {
 		fontSize: 'sm' | 'base' | 'dynamic' | 'lg' | 'xl';
 		fontFamily: 'sans' | 'serif' | 'mono';

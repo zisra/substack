@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
 import type { Database } from '@/lib/database';
 import type { ArticleSaved } from '@/lib/types';
-import { Separator } from '@radix-ui/react-select';
 import { ArchiveIcon, ArchiveXIcon } from 'lucide-react';
 
 export function FinishedReadingButton({

@@ -40,19 +40,13 @@ export function ArticleList({
 	if (articles.length === 0) {
 		if (archivedView) {
 			return (
-				<AlertCard
-					title="No archived articles"
-					icon={<ArchiveIcon className="size-16" />}
-				>
+				<AlertCard title='No archived articles' icon={<ArchiveIcon className='size-16' />}>
 					Go back and archive some articles that you finished reading.
 				</AlertCard>
 			);
 		}
 		return (
-			<AlertCard
-				title="No articles saved"
-				icon={<BookOpenTextIcon className="size-16" />}
-			>
+			<AlertCard title='No articles saved' icon={<BookOpenTextIcon className='size-16' />}>
 				Get started by saving your first article.
 			</AlertCard>
 		);
@@ -62,37 +56,34 @@ export function ArticleList({
 		return (
 			<Card
 				key={article.url}
-				className="transition-all duration-200 ease-in-out hover:bg-accent/50  hover:shadow-xs"
+				className='transition-all duration-200 ease-in-out hover:bg-accent/50  hover:shadow-xs'
 			>
-				<Link
-					to={`/article/?url=${encodeURIComponent(article.url)}`}
-					className="grow"
-				>
-					<CardContent className="pl-4 py-4 pr-2">
-						<div className="flex justify-between items-start">
-							<div className="flex grow pr-2">
-								<div className="grow">
-									<div className="flex items-center mb-2">
+				<Link to={`/article/?url=${encodeURIComponent(article.url)}`} className='grow'>
+					<CardContent className='pl-4 py-4 pr-2'>
+						<div className='flex justify-between items-start'>
+							<div className='flex grow pr-2'>
+								<div className='grow'>
+									<div className='flex items-center mb-2'>
 										<img
 											src={article.authorImg}
 											alt={article.author}
-											className="size-6 rounded-full mr-2 pointer-events-none"
+											className='size-6 rounded-full mr-2 pointer-events-none'
 										/>
-										<span className="text-sm text-neutral-500 dark:text-neutral-400">
+										<span className='text-sm text-neutral-500 dark:text-neutral-400'>
 											{article.author}
 										</span>
 									</div>
-									<h3 className="font-bold text-lg mb-2">{article.title}</h3>
-									<p className="text-sm text-neutral-500 dark:text-neutral-400">
+									<h3 className='font-bold text-lg mb-2'>{article.title}</h3>
+									<p className='text-sm text-neutral-500 dark:text-neutral-400'>
 										{article.subtitle}
 									</p>
 								</div>
 								{article.image ? (
-									<div className="shrink-0 ml-4">
+									<div className='shrink-0 ml-4'>
 										<img
 											src={article.image}
 											alt={article.title}
-											className="size-24 object-cover rounded-md pointer-events-none"
+											className='size-24 object-cover rounded-md pointer-events-none'
 										/>
 									</div>
 								) : null}
@@ -135,46 +126,40 @@ function ArticleListDropdown({
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button variant="ghost" className="size-8 p-0">
-					<span className="sr-only">Open menu</span>
-					<MoreVerticalIcon className="size-4 text-neutral-500 dark:text-neutral-400" />
+				<Button variant='ghost' className='size-8 p-0'>
+					<span className='sr-only'>Open menu</span>
+					<MoreVerticalIcon className='size-4 text-neutral-500 dark:text-neutral-400' />
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent align="end" className="w-40">
-				<DropdownMenuItem
-					onClick={() => onCopyLink(article.url)}
-					className="cursor-pointer"
-				>
-					<LinkIcon className="mr-2 size-4" />
+			<DropdownMenuContent align='end' className='w-40'>
+				<DropdownMenuItem onClick={() => onCopyLink(article.url)} className='cursor-pointer'>
+					<LinkIcon className='mr-2 size-4' />
 					<span>Copy link</span>
 				</DropdownMenuItem>
 
 				{archivedView && onUnArchive ? (
 					<DropdownMenuItem
 						onClick={() => onUnArchive(article.url)}
-						className="cursor-pointer"
+						className='cursor-pointer'
 						disabled={offline && article.markdown === false}
 					>
-						<ArchiveRestoreIcon className="mr-2 size-4" />
+						<ArchiveRestoreIcon className='mr-2 size-4' />
 						<span>Unarchive</span>
 					</DropdownMenuItem>
 				) : null}
 
 				{!archivedView && onArchive ? (
-					<DropdownMenuItem
-						onClick={() => onArchive(article.url)}
-						className="cursor-pointer"
-					>
-						<ArchiveIcon className="mr-2 size-4" />
+					<DropdownMenuItem onClick={() => onArchive(article.url)} className='cursor-pointer'>
+						<ArchiveIcon className='mr-2 size-4' />
 						<span>Archive</span>
 					</DropdownMenuItem>
 				) : null}
 
 				<DropdownMenuItem
 					onClick={() => onDelete(article.url)}
-					className="cursor-pointer text-red-600 hover:!text-red-600"
+					className='cursor-pointer text-red-600 hover:!text-red-600'
 				>
-					<TrashIcon className="mr-2 size-4 text-red-600" />
+					<TrashIcon className='mr-2 size-4 text-red-600' />
 					<span>Delete</span>
 				</DropdownMenuItem>
 			</DropdownMenuContent>
