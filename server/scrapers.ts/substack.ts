@@ -61,9 +61,9 @@ export function scrapeSubstack(html: string) {
 		.first()
 		.attr('src');
 
-	let authorUrl = dom('.post-header .profile-hover-card-target > a')
-		.eq(1)
-		.attr('href');
+	let authorUrl = dom('.post-header .profile-hover-card-target > a').attr(
+		'href'
+	);
 
 	if (!authorUrl) {
 		const url = new URL(getOGTag('url', dom) ?? '');
