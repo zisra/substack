@@ -42,7 +42,7 @@ export function ArticleHeader({
 				{article?.subtitle}
 			</p>
 			<div className='flex items-center space-x-2'>
-				<a target='_blank' href={article.authorUrl ?? ''} rel='noreferrer'>
+				<a target='_blank' href={article.authorUrl} rel='noreferrer'>
 					<Avatar className='pointer-events-none size-6'>
 						<AvatarImage src={article?.authorImg} alt='Author' />
 					</Avatar>
@@ -58,7 +58,7 @@ export function ArticleHeader({
 					>
 						<a
 							target='_blank'
-							href={article.authorUrl ?? ''}
+							href={article.authorUrl}
 							rel='noreferrer'
 							className='hover:underline'
 						>
