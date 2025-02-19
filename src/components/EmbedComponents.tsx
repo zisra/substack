@@ -16,7 +16,7 @@ export function ArticleCard({
 	authorUrl: string;
 }) {
 	return (
-		<Card className='w-full max-w-md mx-auto transition-all duration-200 ease-in-out hover:bg-accent/50 cursor-pointer'>
+		<Card className='w-full max-w-md mx-auto transition-all duration-200 ease-in-out hover:bg-accent/50 hover:shadow-xs cursor-pointer'>
 			<Link to={`/article/?url=${encodeURIComponent(url)}`} className='grow'>
 				<div className='mx-auto max-w-xl overflow-hidden'>
 					<img className='h-56 w-full object-cover rounded-t-md' srcSet={image} alt={title} />
