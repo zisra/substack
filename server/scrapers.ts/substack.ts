@@ -61,15 +61,13 @@ export function scrapeSubstack(html: string) {
 		.first()
 		.attr('src');
 
-	const url = new URL(getOGTag('url', dom) ?? '');
-
 	let authorUrl = dom('.post-header .profile-hover-card-target > a')
 		.eq(1)
 		.attr('href');
 
 	if (!authorUrl) {
-		const newUrl = url;
-		newUrl.pathname = newUrl.pathname = '/';
+		const url = new URL(getOGTag('url', dom) ?? '');
+		url.pathname = url.pathname = '/';
 		authorUrl = url.href;
 	}
 
@@ -84,7 +82,7 @@ export function scrapeSubstack(html: string) {
 	}
 
 	return {
-		url: url.href,
+		url: getOGTag('url', dom),
 		title: getOGTag('title', dom),
 		subtitle: getOGTag('description', dom),
 		author: dom('meta[name="author"]').attr('content'),

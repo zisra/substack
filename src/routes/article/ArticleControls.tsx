@@ -36,13 +36,13 @@ export function ArticleControls({
 	const navigate = useNavigate();
 
 	return (
-		<div className="print:hidden">
-			<Separator className="my-4" />
-			<div className="flex items-center justify-between">
-				<div className="flex items-center space-x-4">
+		<div className='print:hidden'>
+			<Separator className='my-4' />
+			<div className='flex items-center justify-between'>
+				<div className='flex items-center space-x-4'>
 					<Button
-						variant="outline"
-						size="icon"
+						variant='outline'
+						size='icon'
 						onClick={() => {
 							window.print();
 						}}
@@ -51,8 +51,8 @@ export function ArticleControls({
 					</Button>
 					<a
 						href={article.url}
-						target="_blank"
-						rel="noopener noreferrer"
+						target='_blank'
+						rel='noopener noreferrer'
 						className={buttonVariants({ variant: 'outline', size: 'icon' })}
 					>
 						<ExternalLinkIcon />
@@ -62,24 +62,24 @@ export function ArticleControls({
 
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
-						<Button variant="outline" size="icon">
+						<Button variant='outline' size='icon'>
 							<MoreVerticalIcon />
 						</Button>
 					</DropdownMenuTrigger>
-					<DropdownMenuContent align="end" className="w-40">
+					<DropdownMenuContent align='end' className='w-40'>
 						<DropdownMenuItem
 							onClick={() => {
 								navigator.clipboard.writeText(article.url);
 							}}
-							className="cursor-pointer"
+							className='cursor-pointer'
 						>
-							<LinkIcon className="mr-2 size-4" />
+							<LinkIcon className='mr-2 size-4' />
 							<span>Copy link</span>
 						</DropdownMenuItem>
 
 						{article.archived ? (
 							<DropdownMenuItem
-								className="cursor-pointer"
+								className='cursor-pointer'
 								onClick={async () => {
 									await db.open();
 									db.unArchiveArticle(article.url);
@@ -87,32 +87,32 @@ export function ArticleControls({
 								}}
 								disabled={failed}
 							>
-								<ArchiveRestoreIcon className="mr-2 size-4" />
+								<ArchiveRestoreIcon className='mr-2 size-4' />
 								<span>Unarchive</span>
 							</DropdownMenuItem>
 						) : (
 							<DropdownMenuItem
-								className="cursor-pointer"
+								className='cursor-pointer'
 								onClick={async () => {
 									await db.open();
 									db.archiveArticle(article.url);
 									setArticle({ ...article, archived: true });
 								}}
 							>
-								<ArchiveIcon className="mr-2 size-4" />
+								<ArchiveIcon className='mr-2 size-4' />
 								<span>Archive</span>
 							</DropdownMenuItem>
 						)}
 
 						<DropdownMenuItem
-							variant="destructive"
+							className='cursor-pointer'
 							onClick={async () => {
 								navigate('/');
 								await db.open();
 								db.deleteArticle(article.url);
 							}}
 						>
-							<TrashIcon className="mr-2 size-4" />
+							<TrashIcon className='mr-2 size-4' />
 							<span>Delete</span>
 						</DropdownMenuItem>
 					</DropdownMenuContent>
