@@ -16,16 +16,74 @@ const selectorsToRemove = [
 	'audio',
 ];
 
-export function scrapeSubstack(html: string) {
-	const dom = load(html, {
+export async function scrapeSubstack(html: string) {
+	let loadedThroughApi = false;
+	let dom = load(html, {
 		xml: {
 			decodeEntities: false,
 		},
 	});
 
+	// Get metadata from the page
+	let authorUrl = dom('.post-header .profile-hover-card-target > a').attr(
+		'href'
+	);
+	if (!authorUrl) {
+		console.log(getOGTag('url', dom));
+		const url = new URL(getOGTag('url', dom));
+		url.pathname = url.pathname = '/';
+		authorUrl = url.href;
+	}
+
+	let authorImgRaw = dom('.post-header img:not(.share-dialog img)')
+		.first()
+		.attr('src');
+	if (!authorImgRaw) {
+		authorImgRaw = dom('.navbar-logo').attr('src');
+	}
+	if (!authorImgRaw) {
+		authorImgRaw = dom('.byline-wrapper img').first().attr('src');
+	}
+	if (!authorImgRaw) {
+		authorImgRaw = dom('[rel="shortcut icon"]').attr('href');
+	}
+
+	const url = getOGTag('url', dom);
+	const title = getOGTag('title', dom);
+	const subtitle = getOGTag('description', dom);
+	const image = he.decode(getOGTag('image', dom));
+	let author = he.decode(dom('meta[name="author"]').attr('content') ?? '');
+	let authorImg = he.decode(authorImgRaw ?? '');
+
+	// If the URL does not have a separate website, fetch the post through the API
+	if (
+		url.startsWith('https://substack.com/inbox/post/') ||
+		url.startsWith('https://substack.com/home/post/')
+	) {
+		const postId = getOGTag('url', dom).split('/').pop()?.replace('p-', '');
+		if (postId) {
+			const newUrl = `https://substack.com/api/v1/posts/by-id/${postId}`;
+			const response = await fetch(newUrl);
+			const json = await response.json();
+
+			dom = load(json.post.body_html, {
+				xml: {
+					decodeEntities: false,
+				},
+			});
+			loadedThroughApi = true;
+
+			author = json.publication.author_name;
+			authorImg = json.publication.author_photo_url;
+			authorUrl = json.publication.base_url;
+		}
+	}
+
 	// Remove unnecessary elements
 	selectorsToRemove.forEach((selector) => {
-		dom(selector).remove();
+		dom(selector).each((_index, element) => {
+			dom(element).remove();
+		});
 	});
 
 	// Remove links from images
@@ -47,6 +105,7 @@ export function scrapeSubstack(html: string) {
 		}
 	);
 
+	// Unescape HTML entities
 	dom('img').each((_index, element) => {
 		const title = dom(element).attr('title');
 		const alt = dom(element).attr('alt');
@@ -59,6 +118,7 @@ export function scrapeSubstack(html: string) {
 		}
 	});
 
+	// Remove paraphs from list items
 	dom('li').each((_index, element) => {
 		const p = dom(element).find('p').first();
 
@@ -66,41 +126,24 @@ export function scrapeSubstack(html: string) {
 		p.replaceWith(pContent);
 	});
 
-	const article = dom.html(dom('.available-content'));
-	const markdown = htmlToMarkdown(he.decode(article));
-
-	let authorImg = dom('.post-header img:not(.share-dialog img)')
-		.first()
-		.attr('src');
-
-	let authorUrl = dom('.post-header .profile-hover-card-target > a').attr(
-		'href'
-	);
-
-	if (!authorUrl) {
-		const url = new URL(getOGTag('url', dom) ?? '');
-		url.pathname = url.pathname = '/';
-		authorUrl = url.href;
-	}
-
-	if (!authorImg) {
-		authorImg = dom('.navbar-logo').attr('src');
-	}
-	if (!authorImg) {
-		authorImg = dom('.byline-wrapper img').first().attr('src');
-	}
-	if (!authorImg) {
-		authorImg = dom('[rel="shortcut icon"]').attr('href');
+	// Markdown to HTML
+	let markdown = '';
+	if (loadedThroughApi) {
+		markdown = htmlToMarkdown(he.decode(dom.html() ?? ''));
+	} else {
+		markdown = htmlToMarkdown(
+			he.decode(dom('.available-content').html() ?? '')
+		);
 	}
 
 	return {
-		url: getOGTag('url', dom),
-		title: getOGTag('title', dom),
-		subtitle: getOGTag('description', dom),
-		author: he.decode(dom('meta[name="author"]').attr('content') ?? ''),
-		authorUrl: authorUrl,
-		authorImg: he.decode(authorImg ?? ''),
-		image: getOGTag('image', dom),
-		markdown: markdown,
+		url,
+		title,
+		subtitle,
+		author,
+		authorUrl,
+		authorImg,
+		image,
+		markdown,
 	};
 }

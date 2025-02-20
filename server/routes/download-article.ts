@@ -27,7 +27,7 @@ export const downloadArticle = async (
 			const output = scrapeWikipedia(html);
 			return res.send(output);
 		}
-		const output = scrapeSubstack(html);
+		const output = await scrapeSubstack(html);
 		res.send(output);
 	} catch (error) {
 		console.error('Error fetching the URL:', error);
