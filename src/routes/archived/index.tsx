@@ -1,6 +1,6 @@
 import { Header } from '@/components/Header';
 import { ArchivedPosts } from '@/routes/archived/ArchivedPosts';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 export function Archived() {
 	return (

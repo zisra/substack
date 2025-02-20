@@ -8,4 +8,4 @@ Fix:
 
 Add:
 
-- [ ] Export list of articles to markdown
+- [ ] Export list of articles in markdown

@@ -1,5 +1,5 @@
 import type { FastifyReply, FastifyRequest } from 'fastify';
-import { scrapeSubstackNote } from '../scrapers.ts/substackNote';
+import { scrapeSubstackNote } from '../scrapers/substackNote';
 
 interface Query {
 	url?: string;

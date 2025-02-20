@@ -4,12 +4,13 @@ import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Database } from '@/lib/database';
 import type { Note, Settings } from '@/lib/types';
+import { sanitizeDom } from '@/lib/utils';
 import { Embeds } from '@/routes/note/Embeds';
 import { NoteHeader } from '@/routes/note/NoteHeader';
 import { HtmlRenderer, Parser } from 'commonmark';
 import { ArchiveIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { useNavigate, useSearchParams } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
@@ -124,7 +125,7 @@ export function NoteViewer() {
 							<div
 								// biome-ignore lint/security/noDangerouslySetInnerHtml: Markdown content
 								dangerouslySetInnerHTML={{
-									__html: markdown,
+									__html: sanitizeDom(markdown),
 								}}
 							/>
 						) : (

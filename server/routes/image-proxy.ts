@@ -1,7 +1,5 @@
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
-// using fastify
-
 interface Query {
 	url?: string;
 }

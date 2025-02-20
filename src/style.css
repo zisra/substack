@@ -10,8 +10,16 @@
 	scroll-margin-top: 60px;
 }
 
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
+.center {
+	text-align: center;
+}
+
+.author-link {
+	display: inline-block;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
 	-webkit-appearance: none;
 	margin: 0;
 }
@@ -27,13 +35,13 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 @media (min-width: 768px) {
-	[id^="footnote-"] {
+	[id^='footnote-'] {
 		scroll-margin-top: 53px; /* adjust to the header's height */
 	}
 }
 
 @media (max-width: 767px) {
-	[id^="footnote-"] {
+	[id^='footnote-'] {
 		scroll-margin-top: 0;
 	}
 }

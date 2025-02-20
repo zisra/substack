@@ -4,12 +4,13 @@ import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Database } from '@/lib/database';
 import type { Article, ArticleSaved, Settings } from '@/lib/types';
+import { sanitizeDom } from '@/lib/utils';
 import { ArticleHeader } from '@/routes/article/ArticleHeader';
 import { FinishedReadingButton } from '@/routes/article/FinishedReadingButton';
 import { HtmlRenderer, Parser } from 'commonmark';
 import { ArchiveIcon } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { useBlocker, useNavigate, useSearchParams } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
@@ -207,7 +208,7 @@ export function ArticleViewer() {
 						<div
 							// biome-ignore lint/security/noDangerouslySetInnerHtml: Markdown content
 							dangerouslySetInnerHTML={{
-								__html: markdown,
+								__html: sanitizeDom(markdown),
 							}}
 						/>
 					) : (

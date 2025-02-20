@@ -5,6 +5,7 @@ import { Index } from '@/routes/index';
 import { Note } from '@/routes/note';
 import { Wiki } from '@/routes/wiki';
 import ReactDOM from 'react-dom/client';
+import { HelmetProvider } from 'react-helmet-async';
 import {
 	Navigate,
 	Route,
@@ -35,9 +36,11 @@ const router = createBrowserRouter(
 );
 
 ReactDOM.createRoot(root).render(
-	<div className='dark:bg-neutral-950 bg-white min-h-screen' vaul-drawer-wrapper=''>
-		<ThemeProvider defaultTheme='dark' storageKey='vite-ui-theme'>
-			<RouterProvider router={router} />
-		</ThemeProvider>
-	</div>,
+	<HelmetProvider>
+		<div className='dark:bg-neutral-950 bg-white min-h-screen' vaul-drawer-wrapper=''>
+			<ThemeProvider defaultTheme='dark' storageKey='vite-ui-theme'>
+				<RouterProvider router={router} />
+			</ThemeProvider>
+		</div>
+	</HelmetProvider>,
 );

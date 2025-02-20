@@ -36,6 +36,7 @@ const selectorsToRemove = [
 	'div.mw-heading:has(#Citations)',
 	'div.mw-heading:has(#Notes)',
 	'div.mw-heading:has(#External_links)',
+	'div.mw-heading:has(#Explanatory_notes)',
 	'.navbox',
 	'.metadata',
 	'.hatnote',
@@ -44,6 +45,10 @@ const selectorsToRemove = [
 	'.infobox',
 	'table',
 	'.ext-phonos',
+	'.floatright',
+	'.legend',
+	'span[typeof="mw:File"]',
+	'.geo-inline-hidden',
 ];
 
 export function scrapeWikipedia(html: string) {
@@ -56,13 +61,17 @@ export function scrapeWikipedia(html: string) {
 		.text();
 
 	// Remove all citations
-	subtitle = RegExp(/[^.]*\./).exec(subtitle)?.[0] ?? '';
+	subtitle = subtitle
+		.replace(RegExp(/\[[^\]]*\]/, 'g'), '')
+		.replaceAll('ⓘ', '');
 	if (subtitle.length > 180) {
 		subtitle = `${subtitle.substring(0, 180)}...`;
 	}
 
 	selectorsToRemove.forEach((selector) => {
-		article.find(selector).remove();
+		article.find(selector).each((_index, element) => {
+			dom(element).remove();
+		});
 	});
 
 	const markdown = htmlToMarkdown(article.html() ?? '');
@@ -72,6 +81,7 @@ export function scrapeWikipedia(html: string) {
 		title: dom('title').text().replaceAll(' - Wikipedia', ''),
 		subtitle,
 		author: 'Wikipedia',
+		authorUrl: 'https://www.wikipedia.org/',
 		authorImg: 'https://www.wikipedia.org/static/favicon/wikipedia.ico',
 		image: getOGTag('image', dom),
 		markdown: markdown,

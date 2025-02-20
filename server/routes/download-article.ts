@@ -1,6 +1,6 @@
 import type { FastifyReply, FastifyRequest } from 'fastify';
-import { scrapeSubstack } from '../scrapers.ts/substack';
-import { scrapeWikipedia } from '../scrapers.ts/wikipedia';
+import { scrapeSubstack } from '../scrapers/substack';
+import { scrapeWikipedia } from '../scrapers/wikipedia';
 
 interface Query {
 	url?: string;

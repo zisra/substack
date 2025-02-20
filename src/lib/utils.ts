@@ -1,4 +1,5 @@
 import { type ClassValue, clsx } from 'clsx';
+import DOMPurify from 'dompurify';
 import { useEffect, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
@@ -44,4 +45,8 @@ export async function getDataStored() {
 	const usageInMB = data.usage / 1024 / 1024;
 
 	return usageInMB.toFixed(2);
+}
+
+export function sanitizeDom(html: string) {
+	return DOMPurify.sanitize(html);
 }

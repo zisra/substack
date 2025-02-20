@@ -1,5 +1,7 @@
 import type { CheerioAPI } from 'cheerio';
+import he from 'he';
 
 export function getOGTag(tag: string, cheerioDOM: CheerioAPI) {
-	return cheerioDOM(`meta[property="og:${tag}"]`).attr('content');
+	const html = cheerioDOM(`meta[property="og:${tag}"]`).attr('content');
+	return html ? he.decode(html) : '';
 }
