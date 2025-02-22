@@ -73,9 +73,10 @@ export async function scrapeSubstack(html: string) {
 			});
 			loadedThroughApi = true;
 
+			console.log(json);
 			author = json.publication.author_name;
 			authorImg = json.publication.author_photo_url;
-			authorUrl = json.publication.base_url;
+			authorUrl = `https://substack.com/@${json.publication.author_name}`;
 		}
 	}
 

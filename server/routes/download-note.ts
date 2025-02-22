@@ -15,14 +15,8 @@ export const downloadNote = async (
 		return res.status(400).send('URL parameter is required');
 	}
 
-	const urlObj = new URL(url);
-	urlObj.search = '';
-
 	try {
-		const response = await fetch(urlObj.toString());
-		const html = await response.text();
-
-		const output = scrapeSubstackNote(html);
+		const output = await scrapeSubstackNote(url);
 
 		res.send(output);
 	} catch (error) {

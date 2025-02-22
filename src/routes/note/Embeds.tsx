@@ -2,18 +2,58 @@ import { ArticleCard, Quote } from '@/components/EmbedComponents';
 import type { Note } from '@/lib/types';
 
 export function Embeds({ note }: { note: Note }) {
-	if (!note.embed) return null;
+	if (!note.attachments) return null;
 
-	if (note.embed?.type === 'quote') {
-		return <Quote url={note.embed.url} content={note.embed.content} author={note.embed.author} />;
-	}
 	return (
-		<ArticleCard
-			title={note.embed.title}
-			author={note.embed.author}
-			url={note.embed.url}
-			image={note.embed.image}
-			authorUrl={note.embed.authorImg}
-		/>
+		<div>
+			<div className="justify-center flex items-center gap-x-2 m-2">
+				{note.attachments
+					.filter((attachment) => attachment?.type === 'image')
+					.map((attachment) => (
+						<a
+							href={attachment.imageUrl}
+							target="_blank"
+							rel="noopener noreferrer"
+							className="cursor-zoom-in"
+							key={attachment.imageUrl}
+						>
+							<img
+								alt={'Post'}
+								src={`https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/${attachment.imageUrl}`}
+								className="max-h-96 display-inline-block"
+							/>
+						</a>
+					))}
+			</div>
+			<div className="m-2">
+				{note.attachments
+					.filter((attachment) => attachment?.type === 'post')
+					.map((attachment) => {
+						if (attachment.postSelection) {
+							return (
+								<Quote
+									key={attachment.post.canonical_url}
+									url={attachment.post.canonical_url}
+									content={attachment.postSelection.text}
+									author={attachment.post.title}
+								/>
+							);
+						}
+						return (
+							<ArticleCard
+								key={attachment.post.canonical_url}
+								title={attachment.post.title}
+								author={attachment.publication.author_name}
+								url={attachment.post.canonical_url}
+								image={attachment.post.cover_image}
+								authorImg={
+									attachment.publication.logo_url ||
+									attachment.publication.author_photo_url
+								}
+							/>
+						);
+					})}
+			</div>
+		</div>
 	);
 }

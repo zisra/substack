@@ -33,18 +33,27 @@ export type Settings = {
 
 type Embed =
 	| {
-			type: 'quote';
-			url: string;
-			content: string;
-			author: string;
+			type: 'image';
+			imageUrl: string;
+			imageWidth: number;
+			imageHeight: number;
+			explicit: boolean;
 	  }
 	| {
-			type: 'article';
-			url: string;
-			title: string;
-			image: string;
-			author: string;
-			authorImg: string;
+			type: 'post';
+			post: {
+				title: string;
+				canonical_url: string;
+				cover_image: string;
+			};
+			postSelection: {
+				text: string;
+			};
+			publication: {
+				author_name: string;
+				logo_url: string;
+				author_photo_url: string;
+			};
 	  }
 	| null;
 
@@ -52,6 +61,7 @@ export type Note = {
 	url: string;
 	author: string;
 	authorImg: string;
+	authorUrl: string;
 	markdown: string;
-	embed?: Embed;
+	attachments?: Embed[];
 };

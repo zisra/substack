@@ -1,7 +1,6 @@
 import { AlertCard } from '@/components/AlertCard';
 import { ArticleSkeleton } from '@/components/ArticleSkeleton';
 import { Separator } from '@/components/ui/separator';
-import { Skeleton } from '@/components/ui/skeleton';
 import { Database } from '@/lib/database';
 import type { Note, Settings } from '@/lib/types';
 import { sanitizeDom } from '@/lib/utils';
@@ -34,7 +33,9 @@ export function NoteViewer() {
 
 			if (url) {
 				try {
-					const response = await fetch(`/download-note?url=${encodeURIComponent(url)}`);
+					const response = await fetch(
+						`/download-note?url=${encodeURIComponent(url)}`
+					);
 
 					if (!response.ok) {
 						navigate('/');
@@ -86,7 +87,7 @@ export function NoteViewer() {
 	}
 
 	return (
-		<div className='max-w-3xl mx-auto px-4 py-8 '>
+		<div className="max-w-3xl mx-auto px-4 py-8 ">
 			<Helmet>
 				<title>{title}</title>
 			</Helmet>
@@ -95,13 +96,14 @@ export function NoteViewer() {
 				note={note}
 				fontFamily={settings?.formatting.fontFamily}
 			/>
-			<Separator className='my-6' />
+			<Separator className="my-6" />
 			{failed ? (
 				<AlertCard
-					title='Archived article'
-					icon={<ArchiveIcon className='size-16' aria-hidden='true' />}
+					title="Archived article"
+					icon={<ArchiveIcon className="size-16" aria-hidden="true" />}
 				>
-					This article has been archived and is no longer available without an internet connection.
+					This article has been archived and is no longer available without an
+					internet connection.
 				</AlertCard>
 			) : (
 				<>
@@ -110,15 +112,18 @@ export function NoteViewer() {
 							settings?.formatting.fontFamily === 'sans' && 'font-sans',
 							settings?.formatting.fontFamily === 'serif' && 'font-serif',
 							settings?.formatting.fontFamily === 'mono' && 'font-mono',
-							settings?.formatting.fontSize === 'sm' && 'prose-sm print:prose-sm',
+							settings?.formatting.fontSize === 'sm' &&
+								'prose-sm print:prose-sm',
 							settings?.formatting.fontSize === 'base' && 'prose-base',
 							settings?.formatting.fontSize === 'dynamic' &&
 								'prose-base lg:prose-lg print:prose-sm',
-							settings?.formatting.fontSize === null && 'prose-base lg:prose-lg print:prose-sm',
+							settings?.formatting.fontSize === null &&
+								'prose-base lg:prose-lg print:prose-sm',
 							settings?.formatting.fontSize === 'lg' && 'prose-lg',
 							settings?.formatting.fontSize === 'xl' && 'prose-xl',
-							settings?.formatting.printImages === false && 'print:prose-img:hidden',
-							'prose space-y-4 prose-img:mx-auto prose-figcaption:text-center dark:prose-invert prose-figcaption:mt-[-18px] prose-blockquote:font-normal prose-blockquote:not-italic max-w-none break-words',
+							settings?.formatting.printImages === false &&
+								'print:prose-img:hidden',
+							'prose space-y-4 prose-img:mx-auto prose-figcaption:text-center dark:prose-invert prose-figcaption:mt-[-18px] prose-blockquote:font-normal prose-blockquote:not-italic max-w-none break-words'
 						)}
 					>
 						{markdown ? (
@@ -128,13 +133,7 @@ export function NoteViewer() {
 									__html: sanitizeDom(markdown),
 								}}
 							/>
-						) : (
-							<div className='space-y-4'>
-								<Skeleton className='h-6 w-full' />
-								<Skeleton className='h-6 w-full' />
-								<Skeleton className='h-6 w-3/4' />
-							</div>
-						)}
+						) : null}
 					</article>
 					<Embeds note={note} />
 				</>
