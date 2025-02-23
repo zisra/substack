@@ -21,6 +21,13 @@ export async function scrapeSubstackNote(url: string) {
 		dom(element).replaceWith(`<span>${innerHtml}</span>`);
 	});
 
+	dom('li').each((_index, element) => {
+		const p = dom(element).find('p').first();
+
+		const pContent = p.contents();
+		p.replaceWith(pContent);
+	});
+
 	const elements = dom(
 		'.pencraft.pc-display-flex.pc-flexDirection-column.pc-gap-12.pc-reset.feedPermalinkUnit-JBJrHa .ProseMirror.FeedProseMirror'
 	);
@@ -53,9 +60,11 @@ export async function scrapeSubstackNote(url: string) {
 					canonical_url: a.post.canonical_url,
 					cover_image: a.post.cover_image,
 				},
-				postSelection: a.postSelection ? {
-					text: a.postSelection.text,
-				} : null,
+				postSelection: a.postSelection
+					? {
+							text: a.postSelection.text,
+					  }
+					: null,
 				publication: {
 					author_name: a.publication.author_name,
 					logo_url: a.publication.logo_url,

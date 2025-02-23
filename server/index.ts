@@ -1,6 +1,7 @@
 import fastifyStatic from '@fastify/static';
 import Fastify from 'fastify';
 import { downloadArticle } from './routes/download-article';
+import { downloadComments } from './routes/download-comments';
 import { downloadNote } from './routes/download-note';
 import { imageProxy } from './routes/image-proxy';
 
@@ -19,6 +20,7 @@ app.setNotFoundHandler((_request, reply) => {
 app.get('/download-article', downloadArticle);
 app.get('/download-note', downloadNote);
 app.get('/image-proxy', imageProxy);
+app.get('/download-comments', downloadComments);
 
 const port = Number.parseInt(process.env.PORT || '3000', 10);
 
