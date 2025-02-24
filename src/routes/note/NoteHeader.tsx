@@ -14,11 +14,11 @@ export function NoteHeader({
 }) {
 	return (
 		<header>
-			<div className="flex items-center space-x-2 justify-between">
-				<div className="flex items-center space-x-2">
-					<a target="_blank" href={note.authorUrl} rel="noreferrer">
-						<Avatar className="pointer-events-none size-8">
-							<AvatarImage src={note?.authorImg} alt="Author" />
+			<div className='flex items-center space-x-2 justify-between'>
+				<div className='flex items-center space-x-2'>
+					<a target='_blank' href={note.authorUrl} rel='noreferrer'>
+						<Avatar className='pointer-events-none size-8'>
+							<AvatarImage src={note?.authorImg} alt='Author' />
 						</Avatar>
 					</a>
 					<p
@@ -26,15 +26,10 @@ export function NoteHeader({
 							fontFamily === 'sans' && 'font-sans',
 							fontFamily === 'serif' && 'font-serif',
 							fontFamily === 'mono' && 'font-mono',
-							'text-slate-950 dark:text-slate-50'
+							'text-slate-950 dark:text-slate-50',
 						)}
 					>
-						<a
-							target="_blank"
-							href={note.authorUrl}
-							rel="noreferrer"
-							className="hover:underline"
-						>
+						<a target='_blank' href={note.authorUrl} rel='noreferrer' className='hover:underline'>
 							{note?.author}
 						</a>
 					</p>

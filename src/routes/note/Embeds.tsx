@@ -6,26 +6,26 @@ export function Embeds({ note }: { note: Note }) {
 
 	return (
 		<div>
-			<div className="justify-center flex items-center gap-x-2 m-2">
+			<div className='justify-center flex items-center gap-x-2 m-2'>
 				{note.attachments
 					.filter((attachment) => attachment?.type === 'image')
 					.map((attachment) => (
 						<a
 							href={attachment.imageUrl}
-							target="_blank"
-							rel="noopener noreferrer"
-							className="cursor-zoom-in"
+							target='_blank'
+							rel='noopener noreferrer'
+							className='cursor-zoom-in'
 							key={attachment.imageUrl}
 						>
 							<img
 								alt={'Post'}
 								src={`https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/${attachment.imageUrl}`}
-								className="max-h-96 display-inline-block"
+								className='max-h-96 display-inline-block'
 							/>
 						</a>
 					))}
 			</div>
-			<div className="m-2">
+			<div className='m-2'>
 				{note.attachments
 					.filter((attachment) => attachment?.type === 'post')
 					.map((attachment) => {
@@ -47,8 +47,7 @@ export function Embeds({ note }: { note: Note }) {
 								url={attachment.post.canonical_url}
 								image={attachment.post.cover_image}
 								authorImg={
-									attachment.publication.logo_url ||
-									attachment.publication.author_photo_url
+									attachment.publication.logo_url || attachment.publication.author_photo_url
 								}
 							/>
 						);
