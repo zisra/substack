@@ -126,7 +126,6 @@ export function ArticleViewer() {
 
 	const saveScrollPosition = useCallback(() => {
 		if (article) {
-			console.log(window.scrollY);
 			db.saveScrollLocation(article.url, window.scrollY);
 		}
 	}, [article]);
