@@ -29,7 +29,6 @@ export async function scrapeSubstack(html: string) {
 		'href'
 	);
 	if (!authorUrl) {
-		console.log(getOGTag('url', dom));
 		const url = new URL(getOGTag('url', dom));
 		url.pathname = url.pathname = '/';
 		authorUrl = url.href;
@@ -73,7 +72,6 @@ export async function scrapeSubstack(html: string) {
 			});
 			loadedThroughApi = true;
 
-			console.log(json);
 			author = json.publication.author_name;
 			authorImg = json.publication.author_photo_url;
 			authorUrl = `https://substack.com/@${json.publication.author_name}`;

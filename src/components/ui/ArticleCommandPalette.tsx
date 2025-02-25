@@ -1,5 +1,3 @@
-'use client';
-
 import {
 	CommandDialog,
 	CommandInput,
@@ -8,8 +6,9 @@ import {
 } from '@/components/ui/command';
 import { Database } from '@/lib/database';
 import type { ArticleSaved } from '@/lib/types';
+import { checkUrlValid } from '@/lib/utils';
 import { CommandEmpty, CommandGroup } from 'cmdk';
-import { DotIcon } from 'lucide-react';
+import { DotIcon, GlobeIcon } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
@@ -75,10 +74,15 @@ export function ArticleCommandPalette() {
 	};
 
 	return (
-		<CommandDialog open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
+		<CommandDialog
+			shouldFilter={false}
+			open={isOpen}
+			onOpenChange={(open) => setIsOpen(open)}
+		>
 			<CommandInput
 				value={searchTerm}
 				onValueChange={(value) => setSearchTerm(value)}
+				className="pr-6"
 				placeholder="Type a command or search..."
 			/>
 			<CommandList className="py-2">
@@ -93,11 +97,19 @@ export function ArticleCommandPalette() {
 							className="flex items-center space-x-2 py-2 cursor-pointer duration-100"
 						>
 							<div className="flex-shrink-0">
-								<img
-									src={article.image}
-									alt={article.title}
-									className="size-8 object-cover rounded-md pointer-events-none"
-								/>
+								{article.image ? (
+									<img
+										src={article.image}
+										alt={article.title}
+										className="size-8 object-cover rounded-md pointer-events-none"
+									/>
+								) : (
+									<img
+										src={article.authorImg}
+										alt={article.title}
+										className="size-8 object-cover rounded-md pointer-events-none"
+									/>
+								)}
 							</div>
 							<div className="flex-grow">
 								<h3 className="text-sm font-medium">{article.title}</h3>
@@ -109,6 +121,19 @@ export function ArticleCommandPalette() {
 							</div>
 						</CommandItem>
 					))}
+					{!checkUrlValid(searchTerm) && (
+						<CommandItem
+							onSelect={() => {
+								navigate(`/article?url=${encodeURIComponent(searchTerm)}`);
+								setIsOpen(false);
+							}}
+						>
+							<GlobeIcon className="size-8 text-muted-foreground" />
+							<span className="text-sm text-muted-foreground truncate line-clamp-1 overflow-hidden">
+								{searchTerm}
+							</span>
+						</CommandItem>
+					)}
 				</CommandGroup>
 			</CommandList>
 		</CommandDialog>
