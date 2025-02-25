@@ -12,10 +12,7 @@ export function Index() {
 			<Helmet>
 				<title>Substack Offline</title>
 			</Helmet>
-			<ArticleCommandPalette
-				openCommand={commandOpen}
-				setOpenCommand={setCommandOpen}
-			/>
+			<ArticleCommandPalette openCommand={commandOpen} setOpenCommand={setCommandOpen} />
 			<Header />
 			<ArticleSaver openCommand={() => setCommandOpen(true)} />
 		</>

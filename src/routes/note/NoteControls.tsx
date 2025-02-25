@@ -17,7 +17,7 @@ export function NoteControls({
 	onSettingsChange: (settings: Settings) => void;
 }) {
 	return (
-		<div className='flex items-center justify-between'>
+		<div className='flex items-center justify-between print:hidden'>
 			<div className='flex items-center space-x-4'>
 				<Formatting onSettingsChange={onSettingsChange} />
 				<DropdownMenu>
