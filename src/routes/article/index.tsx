@@ -6,7 +6,7 @@ export function Article() {
 	return (
 		<>
 			<Header />
-			<ArticleCommandPalette />
+			<ArticleCommandPalette  />
 			<ArticleViewer />
 		</>
 	);
