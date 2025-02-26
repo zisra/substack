@@ -8,6 +8,7 @@ import {
 import { Separator } from '@/components/ui/separator';
 import type { Database } from '@/lib/database';
 import type { ArticleSaved, Settings } from '@/lib/types';
+import { useIsOffline } from '@/lib/utils';
 import { DropdownMenu } from '@radix-ui/react-dropdown-menu';
 import {
 	ArchiveIcon,
@@ -25,15 +26,14 @@ export function ArticleControls({
 	setArticle,
 	article,
 	onSettingsChange,
-	failed,
 }: {
 	db: Database;
 	setArticle: React.Dispatch<React.SetStateAction<ArticleSaved | null>>;
 	article: ArticleSaved;
 	onSettingsChange: (settings: Settings) => void;
-	failed: boolean;
 }) {
 	const navigate = useNavigate();
+	const offline = useIsOffline();
 
 	return (
 		<div className='print:hidden'>
@@ -85,7 +85,7 @@ export function ArticleControls({
 									db.unArchiveArticle(article.url);
 									setArticle({ ...article, archived: false });
 								}}
-								disabled={failed}
+								disabled={offline}
 							>
 								<ArchiveRestoreIcon className='mr-2 size-4' />
 								<span>Unarchive</span>

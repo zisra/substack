@@ -1,12 +1,12 @@
 import { Header } from '@/components/Header';
-import { ArticleCommandPalette } from '@/components/ui/ArticleCommandPalette';
+import { CommandPalette } from '@/components/ui/CommandPalette';
 import { ArticleViewer } from '@/routes/article/ArticleViewer';
 
 export function Article() {
 	return (
 		<>
 			<Header />
-			<ArticleCommandPalette />
+			<CommandPalette />
 			<ArticleViewer />
 		</>
 	);

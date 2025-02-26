@@ -1,13 +1,13 @@
 import { CommandDialog, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { Database } from '@/lib/database';
 import type { ArticleSaved } from '@/lib/types';
-import { checkUrlValid } from '@/lib/utils';
+import { checkUrlValid, useIsOffline } from '@/lib/utils';
 import { CommandEmpty, CommandGroup } from 'cmdk';
 import { DotIcon, GlobeIcon } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
-export function ArticleCommandPalette({
+export function CommandPalette({
 	openCommand,
 	setOpenCommand,
 }: {
@@ -20,6 +20,7 @@ export function ArticleCommandPalette({
 	const [filteredArticles, setFilteredArticles] = useState<ArticleSaved[]>([]);
 	const [articles, setArticles] = useState<ArticleSaved[]>([]);
 	const navigate = useNavigate();
+	const offline = useIsOffline();
 
 	const fetchArticles = useCallback(async () => {
 		const db = new Database();
@@ -133,7 +134,7 @@ export function ArticleCommandPalette({
 							</div>
 						</CommandItem>
 					))}
-					{!checkUrlValid(searchTerm) && (
+					{!checkUrlValid(searchTerm) && !offline ? (
 						<CommandItem
 							onSelect={() => {
 								navigate(`/article?url=${encodeURIComponent(searchTerm)}`);
@@ -145,7 +146,7 @@ export function ArticleCommandPalette({
 								{searchTerm}
 							</span>
 						</CommandItem>
-					)}
+					) : null}
 				</CommandGroup>
 			</CommandList>
 		</CommandDialog>
