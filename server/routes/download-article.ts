@@ -1,9 +1,11 @@
 import type { FastifyReply, FastifyRequest } from 'fastify';
+import { scrapeUniversal } from '../scrapers/scrapeUniversal';
 import { scrapeSubstack } from '../scrapers/substack';
 import { scrapeWikipedia } from '../scrapers/wikipedia';
 
 interface Query {
 	url?: string;
+	universal?: boolean;
 }
 
 export const downloadArticle = async (
@@ -11,6 +13,7 @@ export const downloadArticle = async (
 	res: FastifyReply
 ) => {
 	const url = req.query.url;
+	const universal = req.query.universal;
 
 	if (!url) {
 		return res.status(400).send('URL parameter is required');
@@ -22,6 +25,11 @@ export const downloadArticle = async (
 	try {
 		const response = await fetch(urlObj.toString());
 		const html = await response.text();
+
+		if (universal === true) {
+			const output = await scrapeUniversal(html);
+			return res.send(output);
+		}
 
 		if (urlObj.hostname === 'en.wikipedia.org') {
 			const output = scrapeWikipedia(html);
