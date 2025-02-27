@@ -30,6 +30,7 @@ const selectorsToRemove = [
 	'style',
 	'.noviewer',
 	'.reflist',
+	'.references',
 	'.printfooter',
 	'.reference',
 	'div.mw-heading:has(#References)',

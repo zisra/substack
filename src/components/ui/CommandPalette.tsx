@@ -143,7 +143,7 @@ export function CommandPalette({
 						>
 							<GlobeIcon className='size-8 text-muted-foreground' />
 							<span className='text-sm text-muted-foreground truncate line-clamp-1 overflow-hidden'>
-								{searchTerm}
+								Open URL
 							</span>
 						</CommandItem>
 					) : null}

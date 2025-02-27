@@ -18,13 +18,13 @@ export function ArticleHeader({
 	fontFamily?: string;
 }) {
 	return (
-		<header className="mb-4">
+		<header className='mb-4'>
 			<h1
 				className={cn(
 					fontFamily === 'sans' && 'font-sans',
 					fontFamily === 'serif' && 'font-serif',
 					fontFamily === 'mono' && 'font-mono',
-					'text-4xl font-bold mb-2 text-slate-950 dark:text-slate-50'
+					'text-4xl font-bold mb-2 text-slate-950 dark:text-slate-50',
 				)}
 			>
 				{article?.title}
@@ -34,15 +34,15 @@ export function ArticleHeader({
 					fontFamily === 'sans' && 'font-sans',
 					fontFamily === 'serif' && 'font-serif',
 					fontFamily === 'mono' && 'font-mono',
-					'text-xl text-neutral-500 dark:text-neutral-400 mb-4'
+					'text-xl text-neutral-500 dark:text-neutral-400 mb-4',
 				)}
 			>
 				{article?.subtitle}
 			</p>
-			<div className="flex items-center space-x-2">
-				<a target="_blank" href={article.authorUrl} rel="noreferrer">
-					<Avatar className="pointer-events-none size-6">
-						<AvatarImage src={article?.authorImg} alt="Author" />
+			<div className='flex items-center space-x-2'>
+				<a target='_blank' href={article.authorUrl} rel='noreferrer'>
+					<Avatar className='pointer-events-none size-6'>
+						<AvatarImage src={article?.authorImg} alt='Author' />
 					</Avatar>
 				</a>
 				<div>
@@ -51,14 +51,14 @@ export function ArticleHeader({
 							fontFamily === 'sans' && 'font-sans',
 							fontFamily === 'serif' && 'font-serif',
 							fontFamily === 'mono' && 'font-mono',
-							'text-md text-neutral-500 dark:text-neutral-400'
+							'text-md text-neutral-500 dark:text-neutral-400',
 						)}
 					>
 						<a
-							target="_blank"
+							target='_blank'
 							href={article.authorUrl}
-							rel="noreferrer"
-							className="hover:underline"
+							rel='noreferrer'
+							className='hover:underline'
 						>
 							{article?.author}
 						</a>

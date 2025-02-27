@@ -24,23 +24,20 @@ if (!root) {
 const router = createBrowserRouter(
 	createRoutesFromElements(
 		<>
-			<Route path="/" element={<Index />} />
-			<Route path="/article" element={<Article />} />
-			<Route path="/note" element={<Note />} />
-			<Route path="/archived" element={<Archived />} />
-			<Route path="/wiki/*" element={<Wiki />} />
-			<Route path="*" element={<Navigate to="/" replace />} />
-		</>
-	)
+			<Route path='/' element={<Index />} />
+			<Route path='/article' element={<Article />} />
+			<Route path='/note' element={<Note />} />
+			<Route path='/archived' element={<Archived />} />
+			<Route path='/wiki/*' element={<Wiki />} />
+			<Route path='*' element={<Navigate to='/' replace />} />
+		</>,
+	),
 );
 
 ReactDOM.createRoot(root).render(
-	<div
-		className="dark:bg-neutral-950 bg-white min-h-screen"
-		vaul-drawer-wrapper=""
-	>
-		<ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+	<div className='dark:bg-neutral-950 bg-white min-h-screen' vaul-drawer-wrapper=''>
+		<ThemeProvider defaultTheme='dark' storageKey='vite-ui-theme'>
 			<RouterProvider router={router} />
 		</ThemeProvider>
-	</div>
+	</div>,
 );
