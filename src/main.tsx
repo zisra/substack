@@ -5,7 +5,6 @@ import { Index } from '@/routes/index';
 import { Note } from '@/routes/note';
 import { Wiki } from '@/routes/wiki';
 import ReactDOM from 'react-dom/client';
-import { HelmetProvider } from 'react-helmet-async';
 import {
 	Navigate,
 	Route,
@@ -25,22 +24,23 @@ if (!root) {
 const router = createBrowserRouter(
 	createRoutesFromElements(
 		<>
-			<Route path='/' element={<Index />} />
-			<Route path='/article' element={<Article />} />
-			<Route path='/note' element={<Note />} />
-			<Route path='/archived' element={<Archived />} />
-			<Route path='/wiki/*' element={<Wiki />} />
-			<Route path='*' element={<Navigate to='/' replace />} />
-		</>,
-	),
+			<Route path="/" element={<Index />} />
+			<Route path="/article" element={<Article />} />
+			<Route path="/note" element={<Note />} />
+			<Route path="/archived" element={<Archived />} />
+			<Route path="/wiki/*" element={<Wiki />} />
+			<Route path="*" element={<Navigate to="/" replace />} />
+		</>
+	)
 );
 
 ReactDOM.createRoot(root).render(
-	<HelmetProvider>
-		<div className='dark:bg-neutral-950 bg-white min-h-screen' vaul-drawer-wrapper=''>
-			<ThemeProvider defaultTheme='dark' storageKey='vite-ui-theme'>
-				<RouterProvider router={router} />
-			</ThemeProvider>
-		</div>
-	</HelmetProvider>,
+	<div
+		className="dark:bg-neutral-950 bg-white min-h-screen"
+		vaul-drawer-wrapper=""
+	>
+		<ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+			<RouterProvider router={router} />
+		</ThemeProvider>
+	</div>
 );

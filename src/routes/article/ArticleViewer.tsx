@@ -10,7 +10,7 @@ import { FinishedReadingButton } from '@/routes/article/FinishedReadingButton';
 import { HtmlRenderer, Parser } from 'commonmark';
 import { ArchiveIcon } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+
 import { useBlocker, useNavigate, useSearchParams } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
@@ -173,9 +173,8 @@ export function ArticleViewer() {
 
 	return (
 		<div className="max-w-3xl mx-auto px-4 py-8 ">
-			<Helmet>
-				<title>{title}</title>
-			</Helmet>
+			<title>{title}</title>
+
 			<ArticleHeader
 				onSettingsChange={onSettingsChange}
 				article={article}

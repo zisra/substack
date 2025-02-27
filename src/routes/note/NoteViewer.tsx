@@ -9,7 +9,7 @@ import { NoteHeader } from '@/routes/note/NoteHeader';
 import { HtmlRenderer, Parser } from 'commonmark';
 import { ArchiveIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+
 import { useNavigate, useSearchParams } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
@@ -88,9 +88,8 @@ export function NoteViewer() {
 
 	return (
 		<div className="max-w-3xl mx-auto px-4 py-8 ">
-			<Helmet>
-				<title>{title}</title>
-			</Helmet>
+			<title>{title}</title>
+
 			<NoteHeader
 				onSettingsChange={onSettingsChange}
 				note={note}
