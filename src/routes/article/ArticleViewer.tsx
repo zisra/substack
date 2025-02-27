@@ -64,6 +64,8 @@ export function ArticleViewer() {
 							}
 						} else {
 							const articleResponse = await saveArticle(db, url);
+
+							navigate(`/article?url=${articleResponse?.url}`);
 							if (articleResponse) {
 								setArticle(articleResponse);
 								scrollTo(0);
