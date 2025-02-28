@@ -14,10 +14,6 @@ export function NoteSkeleton() {
 			<div className='space-y-4 mt-7'>
 				<Skeleton className='h-6 w-full' />
 				<Skeleton className='h-6 w-full' />
-				<Skeleton className='h-6 w-3/4 mb-8' />
-
-				<Skeleton className='h-6 w-full' />
-				<Skeleton className='h-6 w-full' />
 				<Skeleton className='h-6 w-3/4' />
 			</div>
 		</div>
