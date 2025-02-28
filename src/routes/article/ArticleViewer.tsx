@@ -54,7 +54,8 @@ export function ArticleViewer() {
 					.then(async (article) => {
 						if (article) {
 							setArticle(article);
-							if (!article.archived && settings?.scrollArticles) {
+
+							if (!article.archived && settings?.scrollArticles !== false) {
 								scrollTo(article.scrollLocation);
 							} else {
 								scrollTo(0);
