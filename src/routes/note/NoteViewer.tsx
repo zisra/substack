@@ -16,7 +16,6 @@ export function NoteViewer() {
 	const [searchParams] = useSearchParams();
 	const [note, setNote] = useState<Note | null>(null);
 	const [settings, setSettings] = useState<Settings | null>(null);
-	const [title, setTitle] = useState<string>('');
 	const [markdown, setMarkdown] = useState<string | null>(null);
 	const [failed, setFailed] = useState(false);
 	const navigate = useNavigate();
@@ -40,7 +39,9 @@ export function NoteViewer() {
 			setFailed(false);
 
 			try {
-				const response = await fetch(`/download-note?url=${encodeURIComponent(url)}`);
+				const response = await fetch(
+					`/download-note?url=${encodeURIComponent(url)}`
+				);
 
 				if (!response.ok) {
 					navigate('/');
@@ -51,6 +52,11 @@ export function NoteViewer() {
 				const parsed = reader.parse(data.markdown ?? '');
 				const result = writer.render(parsed);
 
+				if (data?.author) {
+					// Use this instead of react-helmet to avoid flickering
+					document.title = `Note by ${data.author}`;
+				}
+
 				setMarkdown(result);
 				setNote(data);
 			} catch (error) {
@@ -60,12 +66,6 @@ export function NoteViewer() {
 
 		fetchData();
 	}, [url, navigate]);
-
-	useEffect(() => {
-		if (note?.author) {
-			setTitle(`Note by ${note.author}`);
-		}
-	}, [note?.author]);
 
 	useEffect(() => {
 		const fetchSettings = async () => {
@@ -88,21 +88,20 @@ export function NoteViewer() {
 	}
 
 	return (
-		<div className='max-w-3xl mx-auto px-4 py-8 '>
-			<title>{title}</title>
-
+		<div className="max-w-3xl mx-auto px-4 py-8 ">
 			<NoteHeader
 				onSettingsChange={onSettingsChange}
 				note={note}
 				fontFamily={settings?.formatting.fontFamily}
 			/>
-			<Separator className='my-6' />
+			<Separator className="my-6" />
 			{failed ? (
 				<AlertCard
-					title='Archived article'
-					icon={<ArchiveIcon className='size-16' aria-hidden='true' />}
+					title="Archived article"
+					icon={<ArchiveIcon className="size-16" aria-hidden="true" />}
 				>
-					This article has been archived and is no longer available without an internet connection.
+					This article has been archived and is no longer available without an
+					internet connection.
 				</AlertCard>
 			) : (
 				<>
@@ -111,15 +110,18 @@ export function NoteViewer() {
 							settings?.formatting.fontFamily === 'sans' && 'font-sans',
 							settings?.formatting.fontFamily === 'serif' && 'font-serif',
 							settings?.formatting.fontFamily === 'mono' && 'font-mono',
-							settings?.formatting.fontSize === 'sm' && 'prose-sm print:prose-sm',
+							settings?.formatting.fontSize === 'sm' &&
+								'prose-sm print:prose-sm',
 							settings?.formatting.fontSize === 'base' && 'prose-base',
 							settings?.formatting.fontSize === 'dynamic' &&
 								'prose-base lg:prose-lg print:prose-sm',
-							settings?.formatting.fontSize === null && 'prose-base lg:prose-lg print:prose-sm',
+							settings?.formatting.fontSize === null &&
+								'prose-base lg:prose-lg print:prose-sm',
 							settings?.formatting.fontSize === 'lg' && 'prose-lg',
 							settings?.formatting.fontSize === 'xl' && 'prose-xl',
-							settings?.formatting.printImages === false && 'print:prose-img:hidden',
-							'prose space-y-4 prose-img:mx-auto prose-figcaption:text-center dark:prose-invert prose-figcaption:mt-[-18px] prose-blockquote:font-normal prose-blockquote:not-italic max-w-none break-words',
+							settings?.formatting.printImages === false &&
+								'print:prose-img:hidden',
+							'prose space-y-4 prose-img:mx-auto prose-figcaption:text-center dark:prose-invert prose-figcaption:mt-[-18px] prose-blockquote:font-normal prose-blockquote:not-italic max-w-none break-words'
 						)}
 					>
 						{markdown ? (
