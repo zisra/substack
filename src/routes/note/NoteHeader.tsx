@@ -17,7 +17,7 @@ export function NoteHeader({
 			<div className='flex items-center space-x-2 justify-between'>
 				<div className='flex items-center space-x-2'>
 					<a target='_blank' href={note.authorUrl} rel='noreferrer'>
-						<Avatar className='pointer-events-none size-8'>
+						<Avatar className='pointer-events-none size-6'>
 							<AvatarImage src={note?.authorImg} alt='Author' />
 						</Avatar>
 					</a>
@@ -29,9 +29,11 @@ export function NoteHeader({
 							'text-slate-950 dark:text-slate-50',
 						)}
 					>
-						<a target='_blank' href={note.authorUrl} rel='noreferrer' className='hover:underline'>
-							{note?.author}
-						</a>
+						<p className='text-neutral-500 dark:text-neutral-400'>
+							<a target='_blank' href={note.authorUrl} rel='noreferrer' className='hover:underline'>
+								{note?.author}
+							</a>
+						</p>
 					</p>
 				</div>
 				<NoteControls onSettingsChange={onSettingsChange} note={note} />

@@ -1,7 +1,6 @@
 import { AlertCard } from '@/components/AlertCard';
-import { ArticleSkeleton } from '@/components/ArticleSkeleton';
+import { ArticleSkeleton, ArticleTextSkeleton } from '@/components/ArticleSkeleton';
 import { Separator } from '@/components/ui/separator';
-import { Skeleton } from '@/components/ui/skeleton';
 import { Database } from '@/lib/database';
 import type { Article, ArticleSaved, Settings } from '@/lib/types';
 import { sanitizeDom } from '@/lib/utils';
@@ -211,11 +210,7 @@ export function ArticleViewer() {
 							}}
 						/>
 					) : (
-						<article className='space-y-4'>
-							<Skeleton className='h-6 w-full' />
-							<Skeleton className='h-6 w-full' />
-							<Skeleton className='h-6 w-3/4' />
-						</article>
+						<ArticleTextSkeleton />
 					)}
 				</article>
 			)}

@@ -1,5 +1,5 @@
 import { AlertCard } from '@/components/AlertCard';
-import { ArticleSkeleton } from '@/components/ArticleSkeleton';
+import { NoteSkeleton } from '@/components/NoteSkeleton';
 import { Separator } from '@/components/ui/separator';
 import { Database } from '@/lib/database';
 import type { Note, Settings } from '@/lib/types';
@@ -50,6 +50,7 @@ export function NoteViewer() {
 				const data: Note = await response.json();
 				const parsed = reader.parse(data.markdown ?? '');
 				const result = writer.render(parsed);
+
 				setMarkdown(result);
 				setNote(data);
 			} catch (error) {
@@ -64,7 +65,7 @@ export function NoteViewer() {
 		if (note?.author) {
 			setTitle(`Note by ${note.author}`);
 		}
-	}, [note]);
+	}, [note?.author]);
 
 	useEffect(() => {
 		const fetchSettings = async () => {
@@ -83,7 +84,7 @@ export function NoteViewer() {
 	};
 
 	if (!note) {
-		return <ArticleSkeleton />;
+		return <NoteSkeleton />;
 	}
 
 	return (
