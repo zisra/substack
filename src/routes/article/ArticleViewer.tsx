@@ -62,8 +62,8 @@ export function ArticleViewer() {
 						} else {
 							const articleResponse = await saveArticle(db, url);
 
-							navigate(`/article?url=${articleResponse?.url}`);
 							if (articleResponse) {
+								navigate(`/article?url=${encodeURIComponent(articleResponse?.url)}`);
 								setArticle(articleResponse);
 								scrollTo(0);
 							}
