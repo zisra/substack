@@ -1,4 +1,4 @@
-import { ArticleCard, Quote } from '@/components/EmbedComponents';
+import Comment, { ArticleCard, Quote } from '@/components/EmbedComponents';
 import type { Note } from '@/lib/types';
 
 export function Embeds({ note }: { note: Note }) {
@@ -49,6 +49,19 @@ export function Embeds({ note }: { note: Note }) {
 								authorImg={
 									attachment.publication.logo_url || attachment.publication.author_photo_url
 								}
+							/>
+						);
+					})}
+				{note.attachments
+					.filter((attachment) => attachment?.type === 'comment')
+					.map((attachment) => {
+						return (
+							<Comment
+								key={attachment.trackingParameters.item_entity_key}
+								id={attachment.trackingParameters.item_entity_key}
+								author={attachment.comment.user.name}
+								handle={attachment.comment.user.handle}
+								avatar={attachment.comment.user.photo_url}
 							/>
 						);
 					})}

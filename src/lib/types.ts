@@ -55,6 +55,19 @@ type Embed =
 				author_photo_url: string;
 			};
 	  }
+	| {
+			type: 'comment';
+			trackingParameters: {
+				item_entity_key: string;
+			};
+			comment: {
+				user: {
+					name: string;
+					handle: string;
+					photo_url: string;
+				};
+			};
+	  }
 	| null;
 
 export type Note = {

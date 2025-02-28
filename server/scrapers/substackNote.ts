@@ -43,6 +43,7 @@ export async function scrapeSubstackNote(url: string) {
 
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	const attachments: any[] = [];
+
 	item.comment.attachments.forEach((a) => {
 		if (a.type === 'image') {
 			attachments.push({
@@ -69,6 +70,21 @@ export async function scrapeSubstackNote(url: string) {
 					author_name: a.publication.author_name,
 					logo_url: a.publication.logo_url,
 					author_photo_url: a.publication.author_photo_url,
+				},
+			});
+		} else if (a.type === 'comment') {
+			attachments.push({
+				type: 'comment',
+
+				trackingParameters: {
+					item_entity_key: a.trackingParameters.item_entity_key,
+				},
+				comment: {
+					user: {
+						name: a.comment.user.name,
+						handle: a.comment.user.handle,
+						photo_url: a.comment.user.photo_url,
+					},
 				},
 			});
 		}

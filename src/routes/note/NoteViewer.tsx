@@ -9,7 +9,6 @@ import { NoteHeader } from '@/routes/note/NoteHeader';
 import { HtmlRenderer, Parser } from 'commonmark';
 import { ArchiveIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
-
 import { useNavigate, useSearchParams } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
@@ -31,38 +30,41 @@ export function NoteViewer() {
 			const reader = new Parser();
 			const writer = new HtmlRenderer();
 
-			if (url) {
-				try {
-					const response = await fetch(`/download-note?url=${encodeURIComponent(url)}`);
-
-					if (!response.ok) {
-						navigate('/');
-						throw new Error('Failed to download article');
-					}
-
-					const data: Note = await response.json();
-
-					const parsed = reader.parse(data.markdown ?? '');
-					const result = writer.render(parsed);
-					setMarkdown(result);
-
-					setNote({
-						...data,
-					});
-				} catch (error) {
-					setFailed(true);
-				}
-
-				if (note?.author) {
-					setTitle(`Note by ${note.author}`);
-				}
-			} else {
+			if (!url) {
 				navigate('/');
+				return;
+			}
+
+			setNote(null);
+			setMarkdown(null);
+			setFailed(false);
+
+			try {
+				const response = await fetch(`/download-note?url=${encodeURIComponent(url)}`);
+
+				if (!response.ok) {
+					navigate('/');
+					throw new Error('Failed to download article');
+				}
+
+				const data: Note = await response.json();
+				const parsed = reader.parse(data.markdown ?? '');
+				const result = writer.render(parsed);
+				setMarkdown(result);
+				setNote(data);
+			} catch (error) {
+				setFailed(true);
 			}
 		};
 
 		fetchData();
-	}, []);
+	}, [url, navigate]);
+
+	useEffect(() => {
+		if (note?.author) {
+			setTitle(`Note by ${note.author}`);
+		}
+	}, [note]);
 
 	useEffect(() => {
 		const fetchSettings = async () => {
