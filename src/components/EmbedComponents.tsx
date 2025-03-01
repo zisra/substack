@@ -19,9 +19,9 @@ export function ArticleCard({
 		<Card className='w-full max-w-md mx-auto transition-all duration-200 ease-in-out hover:bg-accent/50 hover:shadow-xs cursor-pointer'>
 			<Link to={`/article/?url=${encodeURIComponent(url)}`} className='grow'>
 				<div className='mx-auto max-w-xl overflow-hidden'>
-					{image ? (
+					{image && (
 						<img className='h-56 w-full object-cover rounded-t-md' src={image} alt={title} />
-					) : null}
+					)}
 					<div className='p-4'>
 						<div className='flex items-center'>
 							<img

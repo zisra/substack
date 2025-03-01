@@ -1,7 +1,8 @@
 import { CommandDialog, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+import { useIsOffline } from '@/hooks/useIsOffline';
 import { Database } from '@/lib/database';
 import type { ArticleSaved } from '@/lib/types';
-import { checkUrlValid, useIsOffline } from '@/lib/utils';
+import { checkUrlValid } from '@/lib/utils';
 import { CommandEmpty, CommandGroup } from 'cmdk';
 import { DotIcon, GlobeIcon } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
@@ -134,7 +135,7 @@ export function CommandPalette({
 							</div>
 						</CommandItem>
 					))}
-					{!checkUrlValid(searchTerm) && !offline ? (
+					{!checkUrlValid(searchTerm) && !offline && (
 						<CommandItem
 							onSelect={() => {
 								navigate(`/article?url=${encodeURIComponent(searchTerm)}`);
@@ -146,7 +147,7 @@ export function CommandPalette({
 								Open URL
 							</span>
 						</CommandItem>
-					) : null}
+					)}
 				</CommandGroup>
 			</CommandList>
 		</CommandDialog>

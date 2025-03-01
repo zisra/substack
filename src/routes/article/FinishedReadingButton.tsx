@@ -1,8 +1,8 @@
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { useIsOffline } from '@/hooks/useIsOffline';
 import type { Database } from '@/lib/database';
 import type { ArticleSaved } from '@/lib/types';
-import { useIsOffline } from '@/lib/utils';
 import { ArchiveIcon, ArchiveXIcon } from 'lucide-react';
 
 export function FinishedReadingButton({

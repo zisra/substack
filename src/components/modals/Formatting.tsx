@@ -145,7 +145,7 @@ export function Formatting({
 									onValueChange={(value) => setFontFamily(value as keyof typeof fonts)}
 								>
 									<SelectTrigger className='max-w-[192px]'>
-										{fontFamily ? <SelectValue placeholder={fonts[fontFamily]} /> : null}
+										{fontFamily && <SelectValue placeholder={fonts[fontFamily]} />}
 									</SelectTrigger>
 									<SelectContent>
 										{Object.entries(fonts).map(([key, value]) => (
@@ -192,12 +192,12 @@ export function Formatting({
 										Whether to include images when printing
 									</p>
 								</div>
-								{includeImages !== null ? (
+								{includeImages !== null && (
 									<Switch
 										checked={includeImages}
 										onCheckedChange={(event) => setIncludeImages(event.valueOf())}
 									/>
-								) : null}
+								)}
 							</div>
 							<div className='flex items-center justify-between gap-4'>
 								<div className='grid gap-1.5'>
@@ -206,12 +206,12 @@ export function Formatting({
 										Whether to save archived articles offline
 									</p>
 								</div>
-								{saveArchivedContent !== null ? (
+								{saveArchivedContent !== null && (
 									<Switch
 										checked={saveArchivedContent}
 										onCheckedChange={(event) => setSaveArchivedContent(event.valueOf())}
 									/>
-								) : null}
+								)}
 							</div>
 							<div className='flex items-center justify-between gap-4'>
 								<div className='grid gap-1.5'>
@@ -220,12 +220,12 @@ export function Formatting({
 										Whether to save and the last position in the article
 									</p>
 								</div>
-								{scrollArticles !== null ? (
+								{scrollArticles !== null && (
 									<Switch
 										checked={scrollArticles}
 										onCheckedChange={(event) => setScrollArticles(event.valueOf())}
 									/>
-								) : null}
+								)}
 							</div>
 						</div>
 					</CredenzaBody>

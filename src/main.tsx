@@ -35,7 +35,7 @@ const router = createBrowserRouter(
 );
 
 ReactDOM.createRoot(root).render(
-	<div className='dark:bg-neutral-950 bg-white min-h-screen' vaul-drawer-wrapper=''>
+	<div vaul-drawer-wrapper=''>
 		<ThemeProvider defaultTheme='dark' storageKey='vite-ui-theme'>
 			<RouterProvider router={router} />
 		</ThemeProvider>

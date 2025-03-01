@@ -6,9 +6,9 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Separator } from '@/components/ui/separator';
+import { useIsOffline } from '@/hooks/useIsOffline';
 import type { Database } from '@/lib/database';
 import type { ArticleSaved, Settings } from '@/lib/types';
-import { useIsOffline } from '@/lib/utils';
 import { DropdownMenu } from '@radix-ui/react-dropdown-menu';
 import {
 	ArchiveIcon,

@@ -35,7 +35,7 @@ export function Embeds({ note }: { note: Note }) {
 									key={attachment.post.canonical_url}
 									url={attachment.post.canonical_url}
 									content={attachment.postSelection.text}
-									author={attachment.post.title}
+									author={attachment.publication.author_name ?? attachment.post.title}
 								/>
 							);
 						}

@@ -71,7 +71,7 @@ export function About() {
 								</p>
 							</div>
 						</div>
-						{dataStored ? (
+						{dataStored && (
 							<div className='flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4'>
 								<div className='grid gap-1.5'>
 									<Label>Manage Storage</Label>
@@ -93,7 +93,7 @@ export function About() {
 									Clear All Storage
 								</Button>
 							</div>
-						) : null}
+						)}
 					</div>
 				</CredenzaBody>
 			</CredenzaContent>

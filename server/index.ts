@@ -1,5 +1,6 @@
 import fastifyStatic from '@fastify/static';
 import Fastify from 'fastify';
+
 import { downloadArticle } from './routes/download-article';
 import { downloadComments } from './routes/download-comments';
 import { downloadNote } from './routes/download-note';

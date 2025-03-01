@@ -7,8 +7,8 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useIsOffline } from '@/hooks/useIsOffline';
 import type { ArticleSaved } from '@/lib/types';
-import { useIsOffline } from '@/lib/utils';
 import {
 	ArchiveIcon,
 	ArchiveRestoreIcon,
@@ -78,7 +78,7 @@ export function ArticleList({
 										{article.subtitle}
 									</p>
 								</div>
-								{article.image ? (
+								{article.image && (
 									<div className='shrink-0 ml-4'>
 										<img
 											src={article.image}
@@ -86,7 +86,7 @@ export function ArticleList({
 											className='size-24 object-cover rounded-md pointer-events-none'
 										/>
 									</div>
-								) : null}
+								)}
 							</div>
 						</Link>
 						<ArticleListDropdown
@@ -136,7 +136,7 @@ function ArticleListDropdown({
 					<span>Copy link</span>
 				</DropdownMenuItem>
 
-				{archivedView && onUnArchive ? (
+				{archivedView && onUnArchive && (
 					<DropdownMenuItem
 						onClick={() => onUnArchive(article.url)}
 						className='cursor-pointer'
@@ -145,14 +145,14 @@ function ArticleListDropdown({
 						<ArchiveRestoreIcon className='mr-2 size-4' />
 						<span>Unarchive</span>
 					</DropdownMenuItem>
-				) : null}
+				)}
 
-				{!archivedView && onArchive ? (
+				{!archivedView && onArchive && (
 					<DropdownMenuItem onClick={() => onArchive(article.url)} className='cursor-pointer'>
 						<ArchiveIcon className='mr-2 size-4' />
 						<span>Archive</span>
 					</DropdownMenuItem>
-				) : null}
+				)}
 
 				<DropdownMenuItem
 					className='cursor-pointer'

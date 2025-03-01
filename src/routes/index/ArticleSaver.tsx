@@ -2,9 +2,10 @@ import { AlertCard } from '@/components/AlertCard';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { useIsOffline } from '@/hooks/useIsOffline';
 import { Database } from '@/lib/database';
 import type { Article, ArticleSaved } from '@/lib/types';
-import { checkUrlValid, useIsOffline } from '@/lib/utils';
+import { checkUrlValid } from '@/lib/utils';
 import { ArticleList } from '@/routes/index/ArticleList';
 import { ChevronRightIcon, Loader2Icon, SearchIcon, WifiOffIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -108,11 +109,11 @@ export function ArticleSaver({ openCommand }: { openCommand: () => void }) {
 				</Card>
 			)}
 
-			{offline ? (
+			{offline && (
 				<AlertCard title='Offline' icon={<WifiOffIcon className='size-16' />}>
 					Please connect to the internet to save articles.
 				</AlertCard>
-			) : null}
+			)}
 
 			<div className='flex justify-between items-center text-2xl font-bold mb-4'>
 				<h2>Saved Articles</h2>
