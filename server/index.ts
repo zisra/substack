@@ -30,7 +30,8 @@ app.setNotFoundHandler(
 			const path = req.url;
 
 			if (path.startsWith('/article')) {
-				const url = req.query.url[0];
+				const url = req.query.url[0] ?? req.query.url;
+				console.log(url);
 
 				if (url) {
 					const response = await fetch(url);
