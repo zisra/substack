@@ -21,7 +21,7 @@ app.setNotFoundHandler(
 				'user-agent': string;
 			};
 			Querystring: {
-				url: string[];
+				url: string;
 			};
 		}>,
 		res
@@ -30,8 +30,8 @@ app.setNotFoundHandler(
 			const path = req.url;
 
 			if (path.startsWith('/article')) {
-				const url = req.query.url[0] ?? req.query.url;
-				console.log(url);
+				const url = req.query.url;
+				console.log(url, '+', req.query, '+', req.url);
 
 				if (url) {
 					const response = await fetch(url);
