@@ -17,7 +17,6 @@ export function Header() {
 					<Link
 						to='/'
 						onClick={() => {
-							console.log(location.pathname);
 							if (location.pathname === '/') {
 								window.scrollTo({ top: 0, behavior: 'smooth' });
 							}

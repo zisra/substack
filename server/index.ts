@@ -1,10 +1,11 @@
 import fastifyStatic from '@fastify/static';
-import Fastify from 'fastify';
-
+import Fastify, { type FastifyRequest } from 'fastify';
+import { isScraper, renderHtml } from './metaTags';
 import { downloadArticle } from './routes/download-article';
 import { downloadComments } from './routes/download-comments';
 import { downloadNote } from './routes/download-note';
 import { imageProxy } from './routes/image-proxy';
+import { scrapeSubstackMeta } from './scrapers/substack';
 
 const app = Fastify();
 
@@ -13,9 +14,44 @@ app.register(fastifyStatic, {
 	index: 'index.html',
 });
 
-app.setNotFoundHandler((_request, reply) => {
-	reply.sendFile('index.html');
-});
+app.setNotFoundHandler(
+	async (
+		req: FastifyRequest<{
+			Headers: {
+				'user-agent': string;
+			};
+			Querystring: {
+				url: string[];
+			};
+		}>,
+		res
+	) => {
+		if (isScraper(req)) {
+			const path = req.url;
+
+			if (path.startsWith('/article')) {
+				const url = req.query.url[0];
+
+				if (url) {
+					const response = await fetch(url);
+					const html = await response.text();
+					const output = scrapeSubstackMeta(html);
+					res.send(
+						renderHtml({
+							title: `${output.title} | ${output.author}`,
+							siteName: 'Substack Offline',
+							description: output.subtitle,
+							image: output.image,
+						})
+					);
+				}
+			} else {
+				res.sendFile('index.html');
+			}
+		}
+		res.sendFile('index.html');
+	}
+);
 
 // Routes
 app.get('/download-article', downloadArticle);

@@ -16,6 +16,28 @@ const selectorsToRemove = [
 	'audio',
 ];
 
+export function scrapeSubstackMeta(html: string) {
+	const dom = load(html, {
+		xml: {
+			decodeEntities: false,
+		},
+	});
+
+	const url = getOGTag('url', dom);
+	const title = getOGTag('title', dom);
+	const subtitle = getOGTag('description', dom);
+	const image = he.decode(getOGTag('image', dom));
+	const author = he.decode(dom('meta[name="author"]').attr('content') ?? '');
+
+	return {
+		url,
+		title,
+		subtitle,
+		image,
+		author,
+	};
+}
+
 export async function scrapeSubstack(html: string) {
 	let loadedThroughApi = false;
 	let dom = load(html, {
