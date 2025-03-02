@@ -44,14 +44,22 @@ app.setNotFoundHandler(
 							image: output.image,
 						})
 					);
+				} else {
+					res.sendFile('index.html');
 				}
 			} else {
 				res.sendFile('index.html');
 			}
+		} else {
+			res.sendFile('index.html');
 		}
-		res.sendFile('index.html');
 	}
 );
+
+app.setErrorHandler((error, _req, res) => {
+	console.error ? console.error(error) : console.log(error);
+	res.status(500).send({ error: 'Something went wrong' });
+});
 
 // Routes
 app.get('/download-article', downloadArticle);
