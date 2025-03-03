@@ -41,6 +41,7 @@ export function renderHtml({
 				<meta charset="UTF-8" />
 				<meta property="og:title" content="${title}" />
 				<meta property="og:description" content="${description}" />
+				<meta property="og:type" content="article" />
 				${image ? html`<meta property="og:image" content="${image}" />` : ''}
 				${siteName
 					? html`<meta property="og:site_name" content="${siteName}" />`
