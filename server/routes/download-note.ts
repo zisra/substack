@@ -1,28 +1,18 @@
-import type { FastifyReply, FastifyRequest } from 'fastify';
+import type { Context } from 'hono';
 import { scrapeSubstackNote } from '../scrapers/substackNote';
 
-interface Query {
-	url?: string;
-}
-
-export const downloadNote = async (
-	req: FastifyRequest<{ Querystring: Query }>,
-	res: FastifyReply
-) => {
-	const url = req.query.url;
+export const downloadNote = async (c: Context) => {
+	const url = c.req.query('url');
 
 	if (!url) {
-		return res.status(400).send('URL parameter is required');
+		return c.text('URL parameter is required', 400);
 	}
 
 	try {
 		const output = await scrapeSubstackNote(url);
-
-		res.send(output);
+		return c.json(output);
 	} catch (error) {
 		console.error('Error fetching the URL:', error);
-		res.status(500).send({
-			error: 'Error fetching the URL',
-		});
+		return c.json({ error: 'Error fetching the URL' }, 500);
 	}
 };

@@ -1,28 +1,22 @@
-import type { FastifyReply, FastifyRequest } from 'fastify';
+import type { Context } from 'hono';
 import { scrapeComments } from '../scrapers/comments';
 
 interface Query {
-    url?: string;
+	url?: string;
 }
 
-export const downloadComments = async (
-    req: FastifyRequest<{ Querystring: Query }>,
-    res: FastifyReply
-) => {
-    const url = req.query.url;
+export const downloadComments = async (c: Context) => {
+	const url = c.req.query('url');
 
-    if (!url) {
-        return res.status(400).send('URL parameter is required');
-    }
+	if (!url) {
+		return c.text('URL parameter is required', 400);
+	}
 
-    try {
-        const output = await scrapeComments(url);
-
-        res.send(output);
-    } catch (error) {
-        console.error('Error fetching the URL:', error);
-        res.status(500).send({
-            error: 'Error fetching the URL',
-        });
-    }
+	try {
+		const output = await scrapeComments(url);
+		return c.json(output);
+	} catch (error) {
+		console.error('Error fetching the URL:', error);
+		return c.json({ error: 'Error fetching the URL' }, 500);
+	}
 };

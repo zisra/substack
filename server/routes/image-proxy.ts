@@ -1,17 +1,10 @@
-import type { FastifyReply, FastifyRequest } from 'fastify';
+import type { Context } from 'hono';
 
-interface Query {
-	url?: string;
-}
-
-export const imageProxy = async (
-	req: FastifyRequest<{ Querystring: Query }>,
-	res: FastifyReply
-) => {
-	const url = req.query.url;
+export const imageProxy = async (c: Context) => {
+	const url = c.req.query('url');
 
 	if (!url) {
-		return res.status(400).send('URL parameter is required');
+		return c.text('URL parameter is required', 400);
 	}
 
 	const urlObj = new URL(url);
@@ -22,23 +15,21 @@ export const imageProxy = async (
 		!urlObj.hostname.endsWith('wikimedia.org') &&
 		!urlObj.hostname.endsWith('wikipedia.org')
 	) {
-		return res.status(400).send('Only images from Substack are allowed');
+		return c.text('Only images from Substack are allowed', 400);
 	}
 
 	try {
 		const response = await fetch(url);
 		const buffer = Buffer.from(await response.arrayBuffer());
 
-		res.header(
+		c.header(
 			'Content-Type',
 			response.headers.get('content-type') ?? 'image/jpeg'
 		);
 
-		res.send(buffer);
+		return c.body(buffer);
 	} catch (error) {
 		console.error('Error fetching the image:', error);
-		res.status(500).send({
-			error: 'Error fetching the image',
-		});
+		return c.json({ error: 'Error fetching the image' }, 500);
 	}
 };

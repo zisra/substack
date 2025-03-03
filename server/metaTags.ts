@@ -1,4 +1,5 @@
-import type { FastifyRequest } from 'fastify';
+import { Hono } from 'hono';
+import { html } from 'hono/html';
 
 export const scraperUserAgents = [
 	/googlebot/i,
@@ -19,17 +20,9 @@ export const scraperUserAgents = [
 	/discordbot/i,
 ];
 
-export function isScraper(
-	request: FastifyRequest<{
-		Headers: {
-			'user-agent': string;
-		};
-	}>
-) {
-	return scraperUserAgents.some((ua) => ua.test(request.headers['user-agent']));
+export function isScraper(userAgent: string) {
+	return scraperUserAgents.some((ua) => ua.test(userAgent));
 }
-
-const html = String.raw;
 
 export function renderHtml({
 	title,
@@ -48,9 +41,9 @@ export function renderHtml({
 				<meta charset="UTF-8" />
 				<meta property="og:title" content="${title}" />
 				<meta property="og:description" content="${description}" />
-				${image ? `<meta property="og:image" content="${image}" />` : ''}
+				${image ? html`<meta property="og:image" content="${image}" />` : ''}
 				${siteName
-					? `<meta property="og:site_name" content="${siteName}" />`
+					? html`<meta property="og:site_name" content="${siteName}" />`
 					: ''}
 				<title>${title}</title>
 			</head>
