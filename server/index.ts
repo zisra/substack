@@ -21,18 +21,19 @@ app.setNotFoundHandler(
 				'user-agent': string;
 			};
 			Querystring: {
-				url: string[];
+				url: string;
 			};
 		}>,
 		res
 	) => {
+		console.log(req.headers['user-agent']);
 		if (isScraper(req)) {
 			const path = req.url;
 
 			if (path.startsWith('/article')) {
 				console.log(req.query.url);
+
 				const url = req.query.url;
-				console.log(req.query);
 
 				if (url) {
 					const response = await fetch(url);
