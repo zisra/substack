@@ -35,7 +35,7 @@ export function NoteViewer() {
 			setFailed(false);
 
 			try {
-				const response = await fetch(`/download-note?url=${encodeURIComponent(url)}`);
+				const response = await fetch(`/download-note/?url=${encodeURIComponent(url)}`);
 
 				if (!response.ok) {
 					navigate('/');

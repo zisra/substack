@@ -13,7 +13,7 @@ import { useBlocker, useNavigate, useSearchParams } from 'react-router';
 
 async function saveArticle(db: Database, url: string) {
 	try {
-		const response = await fetch(`/download-article?url=${encodeURIComponent(url)}`);
+		const response = await fetch(`/download-article/?url=${encodeURIComponent(url)}`);
 
 		if (!response.ok) {
 			throw new Error('Failed to download article');
@@ -112,7 +112,7 @@ export function ArticleViewer() {
 				setMarkdown(result);
 			} else if (url && article.markdown === false) {
 				try {
-					const response = await fetch(`/download-article?url=${encodeURIComponent(url)}`);
+					const response = await fetch(`/download-article/?url=${encodeURIComponent(url)}`);
 
 					if (!response.ok) {
 						navigate('/');

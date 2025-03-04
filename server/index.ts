@@ -53,10 +53,10 @@ app.get('/article/*', async (c) => {
 });
 
 // Routes
-app.get('/download-article', downloadArticle);
-app.get('/download-note', downloadNote);
-app.get('/image-proxy', imageProxy);
-app.get('/download-comments', downloadComments);
+app.on('GET', ['/download-article', '/download-article/'], downloadArticle);
+app.on('GET', ['/download-note', '/download-note/'], downloadNote);
+app.on('GET', ['/image-proxy', '/image-proxy/'], imageProxy);
+app.on('GET', ['/download-comments', '/download-comments/'], downloadComments);
 
 const port = Number(process.env.PORT) || 3000;
 serve(

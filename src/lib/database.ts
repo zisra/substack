@@ -159,7 +159,7 @@ export class Database {
 
 		if (article) {
 			if (article.markdown === false) {
-				const response = await fetch(`/download-article?url=${encodeURIComponent(url)}`);
+				const response = await fetch(`/download-article/?url=${encodeURIComponent(url)}`);
 
 				if (!response.ok) {
 					throw new Error('Failed to download article');
@@ -215,7 +215,7 @@ export class Database {
 	async saveImage(url: string) {
 		if (!this.db) return;
 
-		const imageResponse = await fetch(`/image-proxy?url=${encodeURIComponent(url)}`);
+		const imageResponse = await fetch(`/image-proxy/?url=${encodeURIComponent(url)}`);
 		const imageBlob = await imageResponse.blob();
 
 		const imageTx = this.db.transaction('images', 'readwrite');

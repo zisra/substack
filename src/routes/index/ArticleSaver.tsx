@@ -24,7 +24,7 @@ export function ArticleSaver({ openCommand }: { openCommand: () => void }) {
 
 		setIsSaving(true);
 		try {
-			const response = await fetch(`/download-article?url=${encodeURIComponent(url)}`);
+			const response = await fetch(`/download-article/?url=${encodeURIComponent(url)}`);
 
 			if (!response.ok) {
 				setUrl('');
