@@ -18,7 +18,13 @@ app.notFound(async (c) => {
 });
 
 // Serve static files
-app.use('*', serveStatic({ root: './dist' }));
+app.get('*', serveStatic({ root: './dist' }));
+
+// Routes
+app.on('GET', ['/download-article', '/download-article/'], downloadArticle);
+app.on('GET', ['/download-note', '/download-note/'], downloadNote);
+app.on('GET', ['/image-proxy', '/image-proxy/'], imageProxy);
+app.on('GET', ['/download-comments', '/download-comments/'], downloadComments);
 
 // Meta tags for article
 app.get('/article/*', async (c) => {
@@ -51,12 +57,6 @@ app.get('/article/*', async (c) => {
 	const file = await readFile('./dist/index.html');
 	return c.html(file.toString());
 });
-
-// Routes
-app.on('GET', ['/download-article', '/download-article/'], downloadArticle);
-app.on('GET', ['/download-note', '/download-note/'], downloadNote);
-app.on('GET', ['/image-proxy', '/image-proxy/'], imageProxy);
-app.on('GET', ['/download-comments', '/download-comments/'], downloadComments);
 
 const port = Number(process.env.PORT) || 3000;
 serve(
