@@ -13,6 +13,7 @@ const app = new Hono();
 
 // Send index.html for all other routes
 app.notFound(async (c) => {
+	console.log(c.req.url);
 	const file = await readFile('./dist/index.html');
 	return c.html(file.toString());
 });
@@ -28,6 +29,7 @@ app.on('GET', ['/download-comments', '/download-comments/'], downloadComments);
 
 // Meta tags for article
 app.get('/article/*', async (c) => {
+	console.log(c.req.url);
 	const userAgent = c.req.header('User-Agent');
 
 	if (userAgent && isScraper(userAgent)) {
