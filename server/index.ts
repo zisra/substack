@@ -11,12 +11,6 @@ import { scrapeSubstackMeta } from './scrapers/substack';
 
 const app = new Hono();
 
-// Routes
-app.get('/download-article', downloadArticle);
-app.get('/download-note', downloadNote);
-app.get('/image-proxy', imageProxy);
-app.get('/download-comments', downloadComments);
-
 // Send index.html for all other routes
 app.notFound(async (c) => {
 	const file = await readFile('./dist/index.html');
@@ -57,6 +51,12 @@ app.get('/article/*', async (c) => {
 	const file = await readFile('./dist/index.html');
 	return c.html(file.toString());
 });
+
+// Routes
+app.get('/download-article', downloadArticle);
+app.get('/download-note', downloadNote);
+app.get('/image-proxy', imageProxy);
+app.get('/download-comments', downloadComments);
 
 const port = Number(process.env.PORT) || 3000;
 serve(
