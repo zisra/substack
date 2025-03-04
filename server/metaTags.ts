@@ -42,6 +42,7 @@ export function renderHtml({
 				<meta property="og:title" content="${title}" />
 				<meta property="og:description" content="${description}" />
 				<meta property="og:type" content="article" />
+				<meta name="twitter:card" content="summary_large_image" />
 				${image ? html`<meta property="og:image" content="${image}" />` : ''}
 				${siteName
 					? html`<meta property="og:site_name" content="${siteName}" />`
