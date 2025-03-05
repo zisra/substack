@@ -1,10 +1,6 @@
 import type { Context } from 'hono';
 import { scrapeComments } from '../scrapers/comments';
 
-interface Query {
-	url?: string;
-}
-
 export const downloadComments = async (c: Context) => {
 	const url = c.req.query('url');
 

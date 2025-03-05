@@ -1,38 +1,46 @@
-import he from 'he';
+import { load } from 'cheerio';
 
 export async function scrapeComments(url: string) {
 	const apiUrl = `${url}/comments`;
 
 	const res = await fetch(apiUrl);
 	const html = await res.text();
+	const dom = load(html);
 
-	// Extract the script content
-	const scriptStart = '<script>window._preloads ';
-	const scriptEnd = '</script>';
+	// Find the script tag containing 'window._preloads'
+	const script = dom('script').filter((_, el) => {
+		const text = dom(el).html();
+		return (
+			(text?.includes('window._preloads') && text?.includes('JSON.parse')) ||
+			false
+		);
+	});
 
-	const startIndex = html.indexOf(scriptStart) + scriptStart.length;
-	const endIndex = html.indexOf(scriptEnd, startIndex);
+	const scriptText = script.html();
+	if (!scriptText) return {};
 
-	let jsonString = html.substring(startIndex, endIndex);
+	// Extract the JSON string inside JSON.parse("...")
+	const jsonEscaped = scriptText.match(/JSON\.parse\("(.+)"/)?.[1];
 
-	// Remove the assignment and JSON.parse wrapper
-	jsonString = jsonString.replace('= JSON.parse("', '').replace('");', '');
+	if (!jsonEscaped) return {};
 
-	// Normalize all multiple backslashes to single backslashes
-	jsonString = jsonString.replace(/\\\\/g, '\\').replace(/\\\\"/g, '"').trim();
+	console.log(jsonEscaped.slice(144024, 144035));
 
-	// Decode HTML entities
-	jsonString = he.decode(jsonString);
+	// First parse: Convert the escaped JSON string into a regular string
+	const jsonString = JSON.parse(`"${jsonEscaped}"`);
 
-	try {
-		const jsonData = JSON.parse(jsonString);
-
-		return jsonData;
-	} catch (error) {
-		console.error('JSON parsing failed:', error);
-		return {
-			html: jsonString,
-			error: 'Failed to parse JSON',
-		};
+	// Second parse: Convert the string into an actual JSON object
+	function parseComments(comments) {
+		return comments.map((c) => {
+			return {
+				name: c.name,
+				photo_url: c.photo_url,
+				handle: c.handle,
+				body: c.body,
+				children: parseComments(c.children || []),
+			};
+		});
 	}
+
+	return parseComments(JSON.parse(jsonString).initialComments);
 }

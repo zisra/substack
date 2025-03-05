@@ -9,4 +9,3 @@ Fix:
 Add:
 
 - [ ] Export list of articles in markdown
-- [ ] Search function

@@ -3,10 +3,6 @@ import { scrapeUniversal } from '../scrapers/scrapeUniversal';
 import { scrapeSubstack } from '../scrapers/substack';
 import { scrapeWikipedia } from '../scrapers/wikipedia';
 
-interface Query {
-	url?: string;
-	universal?: boolean;
-}
 export const downloadArticle = async (c: Context) => {
 	const url = c.req.query('url');
 	const universal = c.req.query('universal') === 'true';
