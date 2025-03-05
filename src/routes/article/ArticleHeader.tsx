@@ -3,6 +3,7 @@ import type { Database } from '@/lib/database';
 import type { ArticleSaved, Settings } from '@/lib/types';
 import { cn, fontFormatting } from '@/lib/utils';
 import { ArticleControls } from '@/routes/article/ArticleControls';
+import { AvatarFallback } from '@radix-ui/react-avatar';
 
 export function ArticleHeader({
 	article,
@@ -39,6 +40,7 @@ export function ArticleHeader({
 				<a target='_blank' href={article.authorUrl} rel='noreferrer'>
 					<Avatar className='pointer-events-none size-6'>
 						<AvatarImage src={article?.authorImg} alt='Author' />
+						<AvatarFallback>{article.author?.charAt(0)}</AvatarFallback>
 					</Avatar>
 				</a>
 				<div>

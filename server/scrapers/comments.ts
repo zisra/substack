@@ -24,12 +24,11 @@ export async function scrapeComments(url: string) {
 
 	if (!jsonEscaped) return {};
 
-	console.log(jsonEscaped.slice(144024, 144035));
-
 	// First parse: Convert the escaped JSON string into a regular string
 	const jsonString = JSON.parse(`"${jsonEscaped}"`);
 
 	// Second parse: Convert the string into an actual JSON object
+
 	function parseComments(comments) {
 		return comments.map((c) => {
 			return {

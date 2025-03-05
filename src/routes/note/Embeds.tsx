@@ -13,7 +13,7 @@ export function Embeds({ note }: { note: Note }) {
 						<a
 							href={attachment.imageUrl}
 							target='_blank'
-							rel='noopener noreferrer'
+							rel='noreferrer'
 							className='cursor-zoom-in'
 							key={attachment.imageUrl}
 						>

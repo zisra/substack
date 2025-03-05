@@ -15,11 +15,12 @@ import {
 	ArchiveRestoreIcon,
 	ExternalLinkIcon,
 	LinkIcon,
+	MessageCircleIcon,
 	MoreVerticalIcon,
 	PrinterIcon,
 	TrashIcon,
 } from 'lucide-react';
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 
 export function ArticleControls({
 	db,
@@ -52,12 +53,18 @@ export function ArticleControls({
 					<a
 						href={article.url}
 						target='_blank'
-						rel='noopener noreferrer'
+						rel='noreferrer'
 						className={buttonVariants({ variant: 'outline', size: 'icon' })}
 					>
 						<ExternalLinkIcon />
 					</a>
 					<Formatting onSettingsChange={onSettingsChange} />
+					<Link
+						to={`/article/comments/?url=${article.url}`}
+						className={buttonVariants({ variant: 'outline', size: 'icon' })}
+					>
+						<MessageCircleIcon />
+					</Link>
 				</div>
 
 				<DropdownMenu>

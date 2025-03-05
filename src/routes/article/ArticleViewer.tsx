@@ -28,12 +28,13 @@ async function saveArticle(db: Database, url: string) {
 }
 
 export function ArticleViewer() {
-	const [searchParams] = useSearchParams();
 	const [article, setArticle] = useState<ArticleSaved | null>(null);
 	const [settings, setSettings] = useState<Settings | null>(null);
 	const [title, setTitle] = useState<string>('');
 	const [markdown, setMarkdown] = useState<string | null>(null);
 	const [failed, setFailed] = useState(false);
+
+	const [searchParams] = useSearchParams();
 	const navigate = useNavigate();
 	const url = searchParams.get('url');
 	const db = new Database();

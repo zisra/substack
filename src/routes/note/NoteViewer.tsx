@@ -12,12 +12,13 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
 
 export function NoteViewer() {
-	const [searchParams] = useSearchParams();
 	const [note, setNote] = useState<Note | null>(null);
 	const [settings, setSettings] = useState<Settings | null>(null);
 	const [markdown, setMarkdown] = useState<string | null>(null);
 	const [failed, setFailed] = useState(false);
 	const navigate = useNavigate();
+
+	const [searchParams] = useSearchParams();
 	const url = searchParams.get('url');
 	const db = new Database();
 

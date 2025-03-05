@@ -1,6 +1,7 @@
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { Archived } from '@/routes/archived';
 import { Article } from '@/routes/article';
+import { Comment } from '@/routes/article/comments';
 import { Index } from '@/routes/index';
 import { Note } from '@/routes/note';
 import { Wiki } from '@/routes/wiki';
@@ -26,6 +27,7 @@ const router = createBrowserRouter(
 		<>
 			<Route path='/' element={<Index />} />
 			<Route path='/article' element={<Article />} />
+			<Route path='/article/comments' element={<Comment />} />
 			<Route path='/note' element={<Note />} />
 			<Route path='/archived' element={<Archived />} />
 			<Route path='/wiki/*' element={<Wiki />} />
