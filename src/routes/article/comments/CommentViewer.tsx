@@ -1,3 +1,4 @@
+import { Linkify } from '@/components/Linkify';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
@@ -12,11 +13,23 @@ interface CommentData {
 }
 
 export default function CommentList({ comments }: { comments: CommentData[] }) {
+	const [commentPage, setCommentPage] = useState(1);
+	const maxPage = Math.ceil(comments.length / 10);
+
 	return (
 		<div className="space-y-6 max-w-2xl mx-auto">
-			{comments.map((comment) => (
+			{comments.slice(0, commentPage * 5).map((comment) => (
 				<Comment key={comment.handle} comment={comment} />
 			))}
+			{commentPage < maxPage && (
+				<Button
+					onClick={() => setCommentPage((prev) => prev + 1)}
+					variant="outline"
+					size="sm"
+				>
+					Load more comments
+				</Button>
+			)}
 		</div>
 	);
 }
@@ -48,9 +61,9 @@ function Comment({
 						<div
 							onClick={toggleCollapse}
 							onKeyDown={toggleCollapse}
-							className="relative h-full bg-gray-200 dark:bg-gray-700 mt-2 mb-1 hover:bg-gray-400 hover:cursor-pointer transition-all transition-50 w-px"
+							className="relative h-full bg-gray-200 dark:bg-gray-700 mt-2 hover:bg-gray-400 hover:cursor-pointer transition-all transition-50 w-px"
 						>
-							<div className="absolute -left-2 -right-2 top-0 bottom-0 h-full" />
+							<div className="absolute -left-3 -right-3 top-0 bottom-0 h-full" />
 						</div>
 					)}
 				</div>
@@ -67,11 +80,17 @@ function Comment({
 						</a>
 					</div>
 
-					{!isCollapsed && (
-						<div className="prose prose-sm dark:prose-invert whitespace-pre-line">
-							{body ? body : <em>Comment deleted</em>}
-						</div>
-					)}
+					{!isCollapsed &&
+						(body ? (
+							<Linkify
+								text={body}
+								className="prose prose-sm dark:prose-invert whitespace-pre-line max-w-none break-words"
+							/>
+						) : (
+							<div className="prose prose-sm dark:prose-invert">
+								<em>Comment deleted</em>
+							</div>
+						))}
 
 					{!isCollapsed && (
 						<div className="space-y-0 mt-3 pl-3">
