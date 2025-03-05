@@ -26,7 +26,7 @@ export function scrapeSubstackMeta(html: string) {
 	const url = getOGTag('url', dom);
 	const title = getOGTag('title', dom);
 	const subtitle = getOGTag('description', dom);
-	const image = he.decode(getOGTag('image', dom));
+	const image = getOGTag('image', dom);
 	const author = he.decode(dom('meta[name="author"]').attr('content') ?? '');
 
 	return {
@@ -72,7 +72,7 @@ export async function scrapeSubstack(html: string) {
 	const url = getOGTag('url', dom);
 	const title = getOGTag('title', dom);
 	const subtitle = getOGTag('description', dom);
-	const image = he.decode(getOGTag('image', dom));
+	const image = getOGTag('image', dom);
 	let author = he.decode(dom('meta[name="author"]').attr('content') ?? '');
 	let authorImg = he.decode(authorImgRaw ?? '');
 

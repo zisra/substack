@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import { getOGTag } from '../utils';
 
 export async function scrapeComments(url: string) {
 	const apiUrl = `${url}/comments`;
@@ -29,6 +30,13 @@ export async function scrapeComments(url: string) {
 
 	// Second parse: Convert the string into an actual JSON object
 
+	const title = getOGTag('title', dom);
+	const subtitle = getOGTag('description', dom);
+	const author = dom('meta[name="author"]').attr('content') ?? '';
+	const authorUrl = dom('.post-header .profile-hover-card-target > a').attr(
+		'href'
+	);
+
 	function parseComments(comments) {
 		return comments.map((c) => {
 			return {
@@ -41,5 +49,11 @@ export async function scrapeComments(url: string) {
 		});
 	}
 
-	return parseComments(JSON.parse(jsonString).initialComments);
+	return {
+		title,
+		subtitle,
+		author,
+		authorUrl,
+		comments: parseComments(JSON.parse(jsonString).initialComments),
+	};
 }

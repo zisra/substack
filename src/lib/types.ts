@@ -78,3 +78,19 @@ export type Note = {
 	markdown: string;
 	attachments?: Embed[];
 };
+
+export type Comment = {
+	name: string;
+	photo_url: string;
+	handle: string;
+	body: string;
+	children: Comment[];
+};
+
+export type CommentPage = {
+	title: string;
+	subtitle: string;
+	author: string;
+	authorUrl: string;
+	comments: Comment[];
+};
