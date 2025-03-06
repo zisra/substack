@@ -28,8 +28,6 @@ export async function scrapeComments(url: string) {
 	// First parse: Convert the escaped JSON string into a regular string
 	const jsonString = JSON.parse(`"${jsonEscaped}"`);
 
-	// Second parse: Convert the string into an actual JSON object
-
 	const title = getOGTag('title', dom);
 	const subtitle = getOGTag('description', dom);
 	const author = dom('meta[name="author"]').attr('content') ?? '';

@@ -3,10 +3,10 @@ import { Linkify } from '@/components/Linkify';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import type { Comment, CommentPage } from '@/lib/types';
-import { Separator } from '@radix-ui/react-select';
-import { ArrowRightIcon, MessageCircleOffIcon } from 'lucide-react';
+import { MessageCircleOffIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Link, useNavigate, useSearchParams } from 'react-router';
+import { useNavigate, useSearchParams } from 'react-router';
+import { CommentHeader } from './CommentHeader';
 
 export default function CommentList({ comments }: { comments?: Comment[] }) {
 	if (!comments || !comments.length) {
@@ -21,8 +21,8 @@ export default function CommentList({ comments }: { comments?: Comment[] }) {
 	const maxPage = Math.ceil(comments.length / 10);
 
 	return (
-		<div className="space-y-6 max-w-2xl mx-auto">
-			{comments.slice(0, commentPage * 5).map((comment) => (
+		<>
+			{comments.slice(0, commentPage * 10).map((comment) => (
 				<CommentView key={comment.handle} comment={comment} />
 			))}
 			{commentPage < maxPage && (
@@ -34,7 +34,7 @@ export default function CommentList({ comments }: { comments?: Comment[] }) {
 					Load more comments
 				</Button>
 			)}
-		</div>
+		</>
 	);
 }
 
@@ -51,7 +51,7 @@ function CommentView({
 	};
 
 	return (
-		<div className="mt-4">
+		<div className="my-4">
 			<div className="flex gap-2.5">
 				<div className="flex flex-col items-center">
 					<a href={substackUrl} target="_blank" rel="noreferrer">
@@ -88,7 +88,7 @@ function CommentView({
 						(body ? (
 							<Linkify
 								text={body}
-								className="prose prose-sm dark:prose-invert whitespace-pre-line max-w-none break-words"
+								className="prose prose-sm dark:prose-invert whitespace-pre-line break-words max-w-none"
 							/>
 						) : (
 							<div className="prose prose-sm dark:prose-invert">
@@ -115,47 +115,9 @@ function CommentView({
 	);
 }
 
-function CommentHeader({
-	commentPage,
-	url,
-}: {
-	commentPage: CommentPage;
-	url: string | null;
-}) {
-	return (
-		<header className="mb-4">
-			<h1 className="text-4xl font-bold mb-2 text-slate-950 dark:text-slate-50">
-				{commentPage.title}
-			</h1>
-			<p className="text-xl text-neutral-500 dark:text-neutral-400 mb-4">
-				{commentPage.subtitle}
-			</p>
-			<div className="flex items-center space-x-2">
-				<div>
-					<p className="text-md text-neutral-500 dark:text-neutral-400">
-						<a
-							target="_blank"
-							href={commentPage.authorUrl}
-							rel="noreferrer"
-							className="hover:underline"
-						>
-							{commentPage.author}
-						</a>
-					</p>
-					<Link
-						to={`/article?url=${url}`}
-						className="text-sm text-neutral-500 dark:text-neutral-400 hover:underline flex items-center gap-1"
-					>
-						Read more <ArrowRightIcon className="h-3 w-3" />
-					</Link>
-				</div>
-			</div>
-		</header>
-	);
-}
-
 export function CommentViewer() {
 	const [commentPage, setCommentPage] = useState<CommentPage | null>(null);
+	const [title, setTitle] = useState<string>('');
 
 	const [searchParams] = useSearchParams();
 	const navigate = useNavigate();
@@ -179,7 +141,11 @@ export function CommentViewer() {
 					throw new Error('Failed to download note');
 				}
 
-				const commentPage = await response.json();
+				const commentPage: CommentPage = await response.json();
+
+				if (commentPage.title) {
+					setTitle(commentPage.title);
+				}
 
 				setCommentPage(commentPage);
 			} catch (error) {
@@ -191,10 +157,12 @@ export function CommentViewer() {
 	}, [url, navigate]);
 
 	return (
-		<div className="space-y-6">
-			{commentPage && <CommentHeader commentPage={commentPage} url={url} />}
-			<Separator className="my-2" />
-			<CommentList comments={commentPage?.comments} />
-		</div>
+		<>
+			<title>{title}</title>
+			<div className="max-w-3xl mx-auto px-4 py-8">
+				{commentPage && <CommentHeader commentPage={commentPage} url={url} />}
+				<CommentList comments={commentPage?.comments} />
+			</div>
+		</>
 	);
 }
