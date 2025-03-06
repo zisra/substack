@@ -1,13 +1,14 @@
 import { Fragment, type HTMLAttributes } from 'react';
 
-export const Linkify = ({
+export function Linkify({
 	text,
 	...props
 }: {
 	text: string;
-} & HTMLAttributes<HTMLDivElement>) => {
+} & HTMLAttributes<HTMLDivElement>) {
 	const linkifyText = (text: string) => {
-		const urlPattern = /https?:\/\/[^\s]+/g;
+		// URL Regex that excludes some special characters
+		const urlPattern = /https?:\/\/[^\s.,;:!?()\[\]{}"']+/g;
 
 		const parts = text.split(urlPattern);
 		const links = text.match(urlPattern);
@@ -28,4 +29,4 @@ export const Linkify = ({
 	};
 
 	return <div {...props}>{linkifyText(text)}</div>;
-};
+}

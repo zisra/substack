@@ -12,29 +12,29 @@ export function CommentHeader({
 	url: string | null;
 }) {
 	return (
-		<header className="mb-4">
-			<h1 className="text-xl font-bold mb-2 text-slate-950 dark:text-slate-50">
+		<header className='mb-4'>
+			<h1 className='text-xl font-bold mb-2 text-slate-950 dark:text-slate-50'>
 				{commentPage.title}
 			</h1>
-			<p className="text-neutral-500 dark:text-neutral-400 mb-4">
+			<p className='text-neutral-500 dark:text-neutral-400 mb-4'>
 				<a
-					target="_blank"
+					target='_blank'
 					href={commentPage.authorUrl}
-					rel="noreferrer"
-					className="hover:underline"
+					rel='noreferrer'
+					className='hover:underline'
 				>
 					{commentPage.author}
 				</a>
-				<DotIcon className="px-0 mx-0 inline-block" />
+				<DotIcon className='px-0 mx-0 inline-block' />
 				{commentPage.subtitle}
 			</p>
-			<Button asChild variant="outline">
+			<Button asChild variant='outline'>
 				<Link to={`/article?url=${url}`}>
-					<ArrowLeftIcon className="h-3 w-3" />
+					<ArrowLeftIcon className='h-3 w-3' />
 					Read
 				</Link>
 			</Button>
-			<Separator className="my-2" />
+			<Separator className='my-2' />
 		</header>
 	);
 }

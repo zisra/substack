@@ -60,7 +60,7 @@ export function ArticleControls({
 					</a>
 					<Formatting onSettingsChange={onSettingsChange} />
 					<Link
-						to={`/article/comments/?url=${article.url}`}
+						to={`/article/comments/?url=${encodeURIComponent(article.url)}`}
 						className={buttonVariants({ variant: 'outline', size: 'icon' })}
 					>
 						<MessageCircleIcon />
