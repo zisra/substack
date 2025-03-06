@@ -3,10 +3,10 @@ import { Linkify } from '@/components/Linkify';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import type { Comment, CommentPage } from '@/lib/types';
+import { CommentHeader } from '@/routes/article/comments/CommentHeader';
 import { MessageCircleOffIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
-import { CommentHeader } from './CommentHeader';
 
 export default function CommentList({ comments }: { comments?: Comment[] }) {
 	if (!comments || !comments.length) {
@@ -21,7 +21,7 @@ export default function CommentList({ comments }: { comments?: Comment[] }) {
 	const maxPage = Math.ceil(comments.length / 10);
 
 	return (
-		<>
+		<div className="max-w-3xl mx-auto">
 			{comments.slice(0, commentPage * 10).map((comment) => (
 				<CommentView key={comment.handle} comment={comment} />
 			))}
@@ -30,11 +30,12 @@ export default function CommentList({ comments }: { comments?: Comment[] }) {
 					onClick={() => setCommentPage((prev) => prev + 1)}
 					variant="outline"
 					size="sm"
+					className="mt-4"
 				>
 					Load more comments
 				</Button>
 			)}
-		</>
+		</div>
 	);
 }
 
@@ -51,7 +52,7 @@ function CommentView({
 	};
 
 	return (
-		<div className="my-4">
+		<div className="max-w-3xl mt-2">
 			<div className="flex gap-2.5">
 				<div className="flex flex-col items-center">
 					<a href={substackUrl} target="_blank" rel="noreferrer">
@@ -72,7 +73,7 @@ function CommentView({
 					)}
 				</div>
 
-				<div className="flex-1 space-y-1.5">
+				<div className="flex-1 space-y-1.5 max-w-full overflow-hidden">
 					<div>
 						<a
 							href={substackUrl}
@@ -88,7 +89,7 @@ function CommentView({
 						(body ? (
 							<Linkify
 								text={body}
-								className="prose prose-sm dark:prose-invert whitespace-pre-line break-words max-w-none"
+								className="prose prose-sm dark:prose-invert whitespace-pre-line break-words max-w-full"
 							/>
 						) : (
 							<div className="prose prose-sm dark:prose-invert">
@@ -97,7 +98,7 @@ function CommentView({
 						))}
 
 					{!isCollapsed && children.length !== 0 && (
-						<div className="space-y-0 mt-3 pl-3">
+						<div className="space-y-0 mt-3 pl-1 max-w-full">
 							{children.map((childComment) => (
 								<CommentView key={childComment.handle} comment={childComment} />
 							))}
@@ -157,12 +158,10 @@ export function CommentViewer() {
 	}, [url, navigate]);
 
 	return (
-		<>
+		<div className="max-w-3xl mx-auto px-4 py-8">
 			<title>{title}</title>
-			<div className="max-w-3xl mx-auto px-4 py-8">
-				{commentPage && <CommentHeader commentPage={commentPage} url={url} />}
-				<CommentList comments={commentPage?.comments} />
-			</div>
-		</>
+			{commentPage && <CommentHeader commentPage={commentPage} url={url} />}
+			<CommentList comments={commentPage?.comments} />
+		</div>
 	);
 }
