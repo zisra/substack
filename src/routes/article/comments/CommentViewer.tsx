@@ -55,12 +55,18 @@ function CommentView({
 		<div className="max-w-3xl mt-2">
 			<div className="flex gap-2.5">
 				<div className="flex flex-col items-center">
-					<a href={substackUrl} target="_blank" rel="noreferrer">
+					{handle ? (
+						<a href={substackUrl} target="_blank" rel="noreferrer">
+							<Avatar className="size-6 flex-shrink-0">
+								<AvatarImage src={photo_url} alt={name} />
+								<AvatarFallback>{name?.charAt(0)}</AvatarFallback>
+							</Avatar>
+						</a>
+					) : (
 						<Avatar className="size-6 flex-shrink-0">
-							<AvatarImage src={photo_url} alt={name} />
-							<AvatarFallback>{name?.charAt(0)}</AvatarFallback>
+							<AvatarFallback />
 						</Avatar>
-					</a>
+					)}
 
 					{!isCollapsed && (
 						<div
@@ -75,14 +81,18 @@ function CommentView({
 
 				<div className="flex-1 space-y-1.5 max-w-full overflow-hidden">
 					<div>
-						<a
-							href={substackUrl}
-							target="_blank"
-							rel="noreferrer"
-							className="text-sm font-medium hover:underline"
-						>
-							{name ? name : 'Comment deleted'}
-						</a>
+						{name ? (
+							<a
+								href={substackUrl}
+								target="_blank"
+								rel="noreferrer"
+								className="text-sm font-medium hover:underline"
+							>
+								{name}
+							</a>
+						) : (
+							<span className="text-sm font-medium">Comment deleted</span>
+						)}
 					</div>
 
 					{!isCollapsed &&

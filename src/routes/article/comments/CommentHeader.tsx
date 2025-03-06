@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import type { CommentPage } from '@/lib/types';
-import { ArrowRightIcon, DotIcon } from 'lucide-react';
+import { ArrowLeftIcon, DotIcon } from 'lucide-react';
 import { Link } from 'react-router';
 
 export function CommentHeader({
@@ -30,7 +30,8 @@ export function CommentHeader({
 			</p>
 			<Button asChild variant="outline">
 				<Link to={`/article?url=${url}`}>
-					Read <ArrowRightIcon className="h-3 w-3" />
+					<ArrowLeftIcon className="h-3 w-3" />
+					Read
 				</Link>
 			</Button>
 			<Separator className="my-2" />

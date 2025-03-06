@@ -41,7 +41,7 @@ export async function scrapeComments(url: string) {
 				name: c.name,
 				photo_url: c.photo_url,
 				handle: c.handle,
-				body: c.body,
+				body: c.body?.trim(),
 				children: parseComments(c.children || []),
 			};
 		});
