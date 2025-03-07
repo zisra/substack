@@ -86,7 +86,7 @@ export function ArticleViewer() {
 					const articleResponse = await saveArticle(db, url);
 
 					if (articleResponse) {
-						navigate(`/article?url=${encodeURIComponent(articleResponse.url)}`);
+						navigate(`/article/?url=${encodeURIComponent(articleResponse.url)}`);
 						setArticle(articleResponse);
 						scrollTo(0);
 					}
@@ -128,6 +128,7 @@ export function ArticleViewer() {
 						timestamp: article.timestamp,
 						imagesSaved: article.imagesSaved,
 						scrollLocation: 0,
+						comments: article.comments,
 					});
 				} catch (error) {
 					setFailed(true);

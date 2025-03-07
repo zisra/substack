@@ -79,7 +79,7 @@ export default function Comment({
 	avatar: string;
 }) {
 	return (
-		<Link to={`/note?url=${encodeURIComponent(`https://substack.com/@${handle}/note/${id}`)}`}>
+		<Link to={`/note/?url=${encodeURIComponent(`https://substack.com/@${handle}/note/${id}`)}`}>
 			<Card className='flex items-center space-x-4 p-4 duration-200 ease-in-out hover:bg-accent/50 cursor-pointer'>
 				<img src={avatar} alt={author} className='w-10 h-10 rounded-full' />
 				<div>

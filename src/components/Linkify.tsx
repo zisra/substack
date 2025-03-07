@@ -8,7 +8,7 @@ export function Linkify({
 } & HTMLAttributes<HTMLDivElement>) {
 	const linkifyText = (text: string) => {
 		// URL Regex that excludes some special characters
-		const urlPattern = /https?:\/\/[^\s.,;:!?()\[\]{}"']+/g;
+		const urlPattern = /https?:\/\/[^\s]+/g;
 
 		const parts = text.split(urlPattern);
 		const links = text.match(urlPattern);
@@ -18,7 +18,7 @@ export function Linkify({
 				return (
 					<Fragment>
 						{part}
-						<a href={links[index]} target="_blank" rel="noopener noreferrer">
+						<a href={links[index]} target='_blank' rel='noopener noreferrer'>
 							{links[index]}
 						</a>
 					</Fragment>

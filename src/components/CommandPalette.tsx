@@ -105,7 +105,7 @@ export function CommandPalette({
 						<CommandItem
 							key={article.url}
 							onSelect={() => {
-								navigate(`/article?url=${encodeURIComponent(article.url)}`);
+								navigate(`/article/?url=${encodeURIComponent(article.url)}`);
 								handleClose(false);
 							}}
 							className='flex items-center space-x-2 py-2 cursor-pointer duration-100'
@@ -138,7 +138,7 @@ export function CommandPalette({
 					{!checkUrlValid(searchTerm) && !offline && (
 						<CommandItem
 							onSelect={() => {
-								navigate(`/article?url=${encodeURIComponent(searchTerm)}`);
+								navigate(`/article/?url=${encodeURIComponent(searchTerm)}`);
 								handleClose(false);
 							}}
 						>

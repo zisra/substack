@@ -67,7 +67,6 @@ export function NoteViewer() {
 		fetchData();
 	}, [url, navigate]);
 
-	// Fetch settings
 	useEffect(() => {
 		const fetchSettings = async () => {
 			try {

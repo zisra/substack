@@ -1,4 +1,4 @@
-import type { Article, ArticleSaved, Settings } from '@/lib/types';
+import type { Article, ArticleSaved, Comment, Settings } from '@/lib/types';
 import { HtmlRenderer, Parser } from 'commonmark';
 import { type DBSchema, type IDBPDatabase, openDB } from 'idb';
 
@@ -59,6 +59,7 @@ export class Database {
 			imagesSaved: [article.authorImg, article.image, ...[...images].map((img) => img.src)],
 			archived: false,
 			scrollLocation: 0,
+			comments: [],
 		};
 
 		const existingArticle = await store.get(article.url);
@@ -134,6 +135,7 @@ export class Database {
 
 		if (article && settings?.saveArchivedContent === false) {
 			article.archived = true;
+			article.comments = [];
 			article.markdown = false;
 
 			const image = article.image;
@@ -146,6 +148,8 @@ export class Database {
 			await store.put(article);
 		} else if (article) {
 			article.archived = true;
+			article.comments = [];
+
 			await store.put(article);
 			return tx.done;
 		}
@@ -258,6 +262,30 @@ export class Database {
 
 		if (article) {
 			article.scrollLocation = scrollLocation;
+			await store.put(article);
+		}
+	}
+
+	async saveComments(url: string, comments: Comment[]) {
+		if (!this.db) return;
+		const tx = this.db.transaction('articles', 'readwrite');
+		const store = tx.objectStore('articles');
+		const article = await store.get(url);
+
+		if (article) {
+			article.comments = comments;
+			await store.put(article);
+		}
+	}
+
+	async deleteComments(url: string) {
+		if (!this.db) return;
+		const tx = this.db.transaction('articles', 'readwrite');
+		const store = tx.objectStore('articles');
+		const article = await store.get(url);
+
+		if (article) {
+			article.comments = [];
 			await store.put(article);
 		}
 	}

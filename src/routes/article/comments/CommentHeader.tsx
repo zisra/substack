@@ -1,15 +1,24 @@
-import { Button } from '@/components/ui/button';
+import { Formatting } from '@/components/modals/Formatting';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import type { CommentPage } from '@/lib/types';
+import type { CommentPage, Settings } from '@/lib/types';
 import { ArrowLeftIcon, DotIcon } from 'lucide-react';
 import { Link } from 'react-router';
 
 export function CommentHeader({
 	commentPage,
 	url,
+	onSave,
+	onDelete,
+	isSaved,
+	onSettingsChange,
 }: {
 	commentPage: CommentPage;
 	url: string | null;
+	isSaved: boolean;
+	onSave: () => void;
+	onDelete: () => void;
+	onSettingsChange: (settings: Settings) => void;
 }) {
 	return (
 		<header className='mb-4'>
@@ -28,12 +37,28 @@ export function CommentHeader({
 				<DotIcon className='px-0 mx-0 inline-block' />
 				{commentPage.subtitle}
 			</p>
-			<Button asChild variant='outline'>
-				<Link to={`/article?url=${url}`}>
-					<ArrowLeftIcon className='h-3 w-3' />
-					Read
-				</Link>
-			</Button>
+			<div className='flex items-center justify-between'>
+				<div className='space-x-4'>
+					<Link to={`/article/?url=${url}`} className={buttonVariants({ variant: 'outline' })}>
+						<ArrowLeftIcon />
+						Read
+					</Link>
+					<Formatting onSettingsChange={onSettingsChange} />
+				</div>
+
+				<div className='flex items-center space-x-4'>
+					{isSaved ? null : (
+						<>
+							<Button onClick={onSave} variant='outline'>
+								Save
+							</Button>
+							<Button onClick={onDelete} variant='destructive'>
+								Delete
+							</Button>
+						</>
+					)}
+				</div>
+			</div>
 			<Separator className='my-2' />
 		</header>
 	);

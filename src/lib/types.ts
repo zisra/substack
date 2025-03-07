@@ -18,12 +18,14 @@ export type ArticleSaved = BaseArticle & {
 	archived: boolean;
 	markdown: string | boolean;
 	scrollLocation: number;
+	comments: Comment[];
 };
 
 export type Settings = {
 	saveArchivedContent: boolean;
 	version: number;
 	scrollArticles: boolean;
+	saveComments: boolean;
 	formatting: {
 		fontSize: 'sm' | 'base' | 'dynamic' | 'lg' | 'xl';
 		fontFamily: 'sans' | 'serif' | 'mono';

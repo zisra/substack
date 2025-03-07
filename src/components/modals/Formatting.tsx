@@ -42,6 +42,7 @@ export function Formatting({
 	const [includeImages, setIncludeImages] = useState<boolean | null>(null);
 	const [saveArchivedContent, setSaveArchivedContent] = useState<boolean | null>(null);
 	const [scrollArticles, setScrollArticles] = useState<boolean | null>(null);
+	const [saveComments, setSaveComments] = useState<boolean | null>(null);
 
 	useEffect(() => {
 		const fetchSettings = async () => {
@@ -54,6 +55,7 @@ export function Formatting({
 				setIncludeImages(settings.formatting.printImages);
 				setSaveArchivedContent(settings.saveArchivedContent);
 				setScrollArticles(settings.scrollArticles);
+				setSaveComments(settings.saveComments);
 			} else {
 				resetSettings();
 			}
@@ -87,6 +89,7 @@ export function Formatting({
 			},
 			saveArchivedContent: saveArchivedContent !== null ? saveArchivedContent : true,
 			scrollArticles: scrollArticles !== null ? scrollArticles : true,
+			saveComments: saveComments !== null ? saveComments : true,
 		};
 
 		if (onSettingsChange) onSettingsChange(settings);
@@ -224,6 +227,20 @@ export function Formatting({
 									<Switch
 										checked={scrollArticles}
 										onCheckedChange={(event) => setScrollArticles(event.valueOf())}
+									/>
+								)}
+							</div>
+							<div className='flex items-center justify-between gap-4'>
+								<div className='grid gap-1.5'>
+									<Label>Save Comments</Label>
+									<p className='text-sm text-neutral-500 dark:text-neutral-400'>
+										Whether to save comments offline automatically
+									</p>
+								</div>
+								{saveComments !== null && (
+									<Switch
+										checked={saveComments}
+										onCheckedChange={(event) => setSaveComments(event.valueOf())}
 									/>
 								)}
 							</div>
