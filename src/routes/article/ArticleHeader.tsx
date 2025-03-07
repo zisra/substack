@@ -23,7 +23,7 @@ export function ArticleHeader({
 			<h1
 				className={cn(
 					fontFormatting(settings),
-					'text-4xl font-bold mb-2 text-slate-950 dark:text-slate-50',
+					'mb-2 font-bold text-4xl text-slate-950 dark:text-slate-50',
 				)}
 			>
 				{article?.title}
@@ -31,7 +31,7 @@ export function ArticleHeader({
 			<p
 				className={cn(
 					fontFormatting(settings),
-					'text-xl text-neutral-500 dark:text-neutral-400 mb-4',
+					'mb-4 text-neutral-500 text-xl dark:text-neutral-400',
 				)}
 			>
 				{article?.subtitle}

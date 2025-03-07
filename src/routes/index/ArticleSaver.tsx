@@ -65,7 +65,7 @@ export function ArticleSaver({ openCommand }: { openCommand: () => void }) {
 	}, []);
 
 	return (
-		<div className='container mx-auto p-4 max-w-3xl'>
+		<div className='container mx-auto max-w-3xl p-4'>
 			{offline ? null : (
 				<Card className='mb-8'>
 					<CardHeader>
@@ -93,7 +93,7 @@ export function ArticleSaver({ openCommand }: { openCommand: () => void }) {
 							<Button
 								onClick={handleSave}
 								disabled={isSaving || checkUrlValid(url)}
-								className='w-28 max-w-28 min-w-28'
+								className='w-28 min-w-28 max-w-28'
 							>
 								{isSaving ? (
 									<>
@@ -115,14 +115,14 @@ export function ArticleSaver({ openCommand }: { openCommand: () => void }) {
 				</AlertCard>
 			)}
 
-			<div className='flex justify-between items-center text-2xl font-bold mb-4'>
+			<div className='mb-4 flex items-center justify-between font-bold text-2xl'>
 				<h2>Saved Articles</h2>
 				<Button variant='outline' size='icon' onClick={() => openCommand()}>
 					<SearchIcon />
 				</Button>
 			</div>
 			<Card className='mb-6 p-0 py-0 transition-all duration-200 ease-in-out hover:bg-accent/50'>
-				<Link to='/archived' className='flex justify-between items-center p-4'>
+				<Link to='/archived' className='flex items-center justify-between p-4'>
 					<span>View Archived Articles</span>
 					<ChevronRightIcon className='size-4 text-neutral-500 dark:text-neutral-400' />
 				</Link>

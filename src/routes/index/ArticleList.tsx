@@ -59,31 +59,31 @@ export function ArticleList({
 				key={article.url}
 				className='transition-all duration-200 ease-in-out hover:bg-accent/50 hover:shadow-xs'
 			>
-				<CardContent className='pl-4 py-4 pr-2'>
-					<div className='flex justify-between items-start'>
+				<CardContent className='py-4 pr-2 pl-4'>
+					<div className='flex items-start justify-between'>
 						<Link to={`/article/?url=${encodeURIComponent(article.url)}`} className='grow'>
 							<div className='flex grow pr-2'>
 								<div className='grow'>
-									<div className='flex items-center mb-2'>
-										<Avatar className='size-6 mr-2'>
+									<div className='mb-2 flex items-center'>
+										<Avatar className='mr-2 size-6'>
 											<AvatarImage src={article.authorImg} alt={article.author} />
 											<AvatarFallback>{article.author.charAt(0)}</AvatarFallback>
 										</Avatar>
-										<span className='text-sm text-neutral-500 dark:text-neutral-400'>
+										<span className='text-neutral-500 text-sm dark:text-neutral-400'>
 											{article.author}
 										</span>
 									</div>
-									<h3 className='font-bold text-lg mb-2'>{article.title}</h3>
-									<p className='text-sm text-neutral-500 dark:text-neutral-400'>
+									<h3 className='mb-2 font-bold text-lg'>{article.title}</h3>
+									<p className='text-neutral-500 text-sm dark:text-neutral-400'>
 										{article.subtitle}
 									</p>
 								</div>
 								{article.image && (
-									<div className='shrink-0 ml-4'>
+									<div className='ml-4 shrink-0'>
 										<img
 											src={article.image}
 											alt={article.title}
-											className='size-24 object-cover rounded-md pointer-events-none'
+											className='pointer-events-none size-24 rounded-md object-cover'
 										/>
 									</div>
 								)}

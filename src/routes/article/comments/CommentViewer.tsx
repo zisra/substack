@@ -22,7 +22,7 @@ export default function CommentList({ comments }: { comments?: Comment[] }) {
 	const maxPage = Math.ceil(comments.length / 10);
 
 	return (
-		<div className='max-w-3xl mx-auto'>
+		<div className='mx-auto max-w-3xl'>
 			{comments.slice(0, commentPage * 10).map((comment) => (
 				<CommentView key={comment.handle} comment={comment} />
 			))}
@@ -53,7 +53,7 @@ function CommentView({
 	};
 
 	return (
-		<div className='max-w-3xl mt-2'>
+		<div className='mt-2 max-w-3xl'>
 			<div className='flex gap-2.5'>
 				<div className='flex flex-col items-center'>
 					{handle ? (
@@ -73,26 +73,26 @@ function CommentView({
 						<div
 							onClick={toggleCollapse}
 							onKeyDown={toggleCollapse}
-							className='relative h-full bg-neutral-200 dark:bg-neutral-700 mt-2 hover:bg-neutral-400 dark:hover:bg-neutral-500 hover:cursor-pointer transition-all transition-50 w-px'
+							className='relative mt-2 h-full w-px bg-neutral-200 transition-50 transition-all hover:cursor-pointer hover:bg-neutral-400 dark:bg-neutral-700 dark:hover:bg-neutral-500'
 						>
-							<div className='absolute -left-3 -right-3 top-0 bottom-0 h-full' />
+							<div className='-left-3 -right-3 absolute top-0 bottom-0 h-full' />
 						</div>
 					)}
 				</div>
 
-				<div className='flex-1 space-y-1.5 max-w-full overflow-hidden'>
+				<div className='max-w-full flex-1 space-y-1.5 overflow-hidden'>
 					<div>
 						{name ? (
 							<a
 								href={substackUrl}
 								target='_blank'
 								rel='noreferrer'
-								className='text-sm font-medium hover:underline'
+								className='font-medium text-sm hover:underline'
 							>
 								{name}
 							</a>
 						) : (
-							<span className='text-sm font-medium'>Comment deleted</span>
+							<span className='font-medium text-sm'>Comment deleted</span>
 						)}
 					</div>
 
@@ -100,7 +100,7 @@ function CommentView({
 						(body ? (
 							<Linkify
 								text={body}
-								className='prose prose-sm dark:prose-invert whitespace-pre-line break-words max-w-full'
+								className='prose prose-sm dark:prose-invert max-w-full whitespace-pre-line break-words'
 							/>
 						) : (
 							<div className='prose prose-sm dark:prose-invert'>
@@ -109,7 +109,7 @@ function CommentView({
 						))}
 
 					{!isCollapsed && children.length !== 0 && (
-						<div className='space-y-0 mt-3 pl-1 max-w-full'>
+						<div className='mt-3 max-w-full space-y-0 pl-1'>
 							{children.map((childComment) => (
 								<CommentView key={childComment.handle} comment={childComment} />
 							))}
@@ -197,7 +197,7 @@ export function CommentViewer() {
 	}, [url, navigate]);
 
 	return (
-		<div className='max-w-3xl mx-auto px-4 py-8'>
+		<div className='mx-auto max-w-3xl px-4 py-8'>
 			<title>{title}</title>
 			{commentPage && (
 				<CommentHeader

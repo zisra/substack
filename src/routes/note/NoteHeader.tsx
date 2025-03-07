@@ -15,7 +15,7 @@ export function NoteHeader({
 }) {
 	return (
 		<header>
-			<div className='flex items-center space-x-2 justify-between'>
+			<div className='flex items-center justify-between space-x-2'>
 				<div className='flex items-center space-x-2'>
 					<a target='_blank' href={note.authorUrl} rel='noreferrer'>
 						<Avatar className='pointer-events-none size-6'>

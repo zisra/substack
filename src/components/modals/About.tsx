@@ -42,7 +42,7 @@ export function About() {
 					</CredenzaDescription>
 				</CredenzaHeader>
 				<CredenzaBody>
-					<div className='space-y-4 mb-2'>
+					<div className='mb-2 space-y-4'>
 						<div className='grid gap-1.5'>
 							<Label>Install iOS Shortcut</Label>
 							<p className='text-sm'>
@@ -72,10 +72,10 @@ export function About() {
 							</div>
 						</div>
 						{dataStored && (
-							<div className='flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4'>
+							<div className='flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center'>
 								<div className='grid gap-1.5'>
 									<Label>Manage Storage</Label>
-									<p className='text-sm text-neutral-500 dark:text-neutral-400'>
+									<p className='text-neutral-500 text-sm dark:text-neutral-400'>
 										Data stored: {dataStored} MB
 									</p>
 								</div>

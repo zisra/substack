@@ -135,10 +135,10 @@ export function Formatting({
 					</CredenzaHeader>
 					<CredenzaBody>
 						<div className='space-y-4'>
-							<div className='flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4'>
+							<div className='flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center'>
 								<div className='grid gap-1.5'>
 									<Label>Font Family</Label>
-									<p className='text-sm text-neutral-500 dark:text-neutral-400'>
+									<p className='text-neutral-500 text-sm dark:text-neutral-400'>
 										Change the font family of the article
 									</p>
 								</div>
@@ -159,10 +159,10 @@ export function Formatting({
 									</SelectContent>
 								</Select>
 							</div>
-							<div className='flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4'>
+							<div className='flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center'>
 								<div className='grid gap-1.5'>
 									<Label>Font Size</Label>
-									<p className='text-sm text-neutral-500 dark:text-neutral-400'>
+									<p className='text-neutral-500 text-sm dark:text-neutral-400'>
 										Change the font size of the article
 									</p>
 								</div>
@@ -175,7 +175,7 @@ export function Formatting({
 									>
 										<MinusIcon />
 									</Button>
-									<Card className='w-26 h-9 flex items-center justify-center text-sm shadow-none select-none rounded-md'>
+									<Card className='flex h-9 w-26 select-none items-center justify-center rounded-md text-sm shadow-none'>
 										{fontSize ? fontSizes[fontSize] : null}
 									</Card>
 									<Button
@@ -191,7 +191,7 @@ export function Formatting({
 							<div className='flex items-center justify-between gap-4'>
 								<div className='grid gap-1.5'>
 									<Label>Print Images</Label>
-									<p className='text-sm text-neutral-500 dark:text-neutral-400'>
+									<p className='text-neutral-500 text-sm dark:text-neutral-400'>
 										Whether to include images when printing
 									</p>
 								</div>
@@ -205,7 +205,7 @@ export function Formatting({
 							<div className='flex items-center justify-between gap-4'>
 								<div className='grid gap-1.5'>
 									<Label>Save Archived Content</Label>
-									<p className='text-sm text-neutral-500 dark:text-neutral-400'>
+									<p className='text-neutral-500 text-sm dark:text-neutral-400'>
 										Whether to save archived articles offline
 									</p>
 								</div>
@@ -219,7 +219,7 @@ export function Formatting({
 							<div className='flex items-center justify-between gap-4'>
 								<div className='grid gap-1.5'>
 									<Label>Save Article Location</Label>
-									<p className='text-sm text-neutral-500 dark:text-neutral-400'>
+									<p className='text-neutral-500 text-sm dark:text-neutral-400'>
 										Whether to save and the last position in the article
 									</p>
 								</div>
@@ -233,7 +233,7 @@ export function Formatting({
 							<div className='flex items-center justify-between gap-4'>
 								<div className='grid gap-1.5'>
 									<Label>Save Comments</Label>
-									<p className='text-sm text-neutral-500 dark:text-neutral-400'>
+									<p className='text-neutral-500 text-sm dark:text-neutral-400'>
 										Whether to save comments offline automatically
 									</p>
 								</div>

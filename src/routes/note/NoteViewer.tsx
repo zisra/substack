@@ -97,7 +97,7 @@ export function NoteViewer() {
 	}
 
 	return (
-		<div className='max-w-3xl mx-auto px-4 py-8'>
+		<div className='mx-auto max-w-3xl px-4 py-8'>
 			<NoteHeader onSettingsChange={onSettingsChange} note={note} settings={settings} />
 			<Separator className='my-6' />
 

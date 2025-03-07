@@ -6,7 +6,7 @@ export function Embeds({ note }: { note: Note }) {
 
 	return (
 		<div>
-			<div className='justify-center flex items-center gap-x-2 m-2'>
+			<div className='m-2 flex items-center justify-center gap-x-2'>
 				{note.attachments
 					.filter((attachment) => attachment?.type === 'image')
 					.map((attachment) => (
@@ -20,7 +20,7 @@ export function Embeds({ note }: { note: Note }) {
 							<img
 								alt={'Post'}
 								src={`https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/${attachment.imageUrl}`}
-								className='max-h-96 display-inline-block'
+								className='display-inline-block max-h-96'
 							/>
 						</a>
 					))}

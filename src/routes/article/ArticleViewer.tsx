@@ -171,7 +171,7 @@ export function ArticleViewer() {
 	}
 
 	return (
-		<div className='max-w-3xl mx-auto px-4 py-8'>
+		<div className='mx-auto max-w-3xl px-4 py-8'>
 			<title>{title}</title>
 
 			<ArticleHeader

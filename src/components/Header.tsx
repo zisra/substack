@@ -11,7 +11,7 @@ export function Header() {
 	const useHeader = location.pathname === '/' || location.pathname === '/archived';
 
 	return (
-		<header className='md:sticky top-0 z-50 w-full border-b border-neutral-200 dark:border-neutral-800 p-2 dark:bg-neutral-950 bg-white print:hidden'>
+		<header className='top-0 z-50 w-full border-neutral-200 border-b bg-white p-2 md:sticky dark:border-neutral-800 dark:bg-neutral-950 print:hidden'>
 			<div className='flex justify-between'>
 				<div className='flex gap-4'>
 					<Link

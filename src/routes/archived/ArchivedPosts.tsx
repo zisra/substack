@@ -28,15 +28,15 @@ export function ArchivedPosts() {
 	}, []);
 
 	return (
-		<div className='container mx-auto p-4 max-w-3xl'>
-			<div className='flex justify-between items-center mb-4'>
-				<h2 className='text-2xl font-bold'>Archived Articles</h2>
+		<div className='container mx-auto max-w-3xl p-4'>
+			<div className='mb-4 flex items-center justify-between'>
+				<h2 className='font-bold text-2xl'>Archived Articles</h2>
 				<DeleteArchivedPosts db={db} articles={articles} setArticles={setArticles} />
 			</div>
 			<Card className='mb-6 p-0 py-0'>
 				<Link
 					to='/'
-					className='flex items-center p-4 gap-2 transition-all duration-200 ease-in-out hover:bg-accent/50 cursor-pointer'
+					className='flex cursor-pointer items-center gap-2 p-4 transition-all duration-200 ease-in-out hover:bg-accent/50'
 				>
 					<ChevronLeftIcon className='size-4 text-neutral-500 dark:text-neutral-400' />
 					<span>View All Articles</span>

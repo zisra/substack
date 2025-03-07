@@ -22,10 +22,10 @@ export function CommentHeader({
 }) {
 	return (
 		<header className='mb-4'>
-			<h1 className='text-xl font-bold mb-2 text-slate-950 dark:text-slate-50'>
+			<h1 className='mb-2 font-bold text-slate-950 text-xl dark:text-slate-50'>
 				{commentPage.title}
 			</h1>
-			<p className='text-neutral-500 dark:text-neutral-400 mb-4'>
+			<p className='mb-4 text-neutral-500 dark:text-neutral-400'>
 				<a
 					target='_blank'
 					href={commentPage.authorUrl}
@@ -34,7 +34,7 @@ export function CommentHeader({
 				>
 					{commentPage.author}
 				</a>
-				<DotIcon className='px-0 mx-0 inline-block' />
+				<DotIcon className='mx-0 inline-block px-0' />
 				{commentPage.subtitle}
 			</p>
 			<div className='flex items-center justify-between'>

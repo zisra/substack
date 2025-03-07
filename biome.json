@@ -5,7 +5,7 @@
 		"clientKind": "git",
 		"useIgnoreFile": false
 	},
-	"files": { "ignoreUnknown": false, "ignore": [] },
+	"files": { "ignoreUnknown": false, "ignore": ["src/components/ui/*"] },
 	"formatter": { "enabled": true, "indentStyle": "tab", "lineWidth": 100 },
 	"organizeImports": { "enabled": true },
 	"linter": {
@@ -17,10 +17,12 @@
 			},
 			"correctness": {
 				"useExhaustiveDependencies": "off"
+			},
+			"nursery": {
+				"useSortedClasses": "error"
 			}
 		}
 	},
-
 	"javascript": {
 		"formatter": { "quoteStyle": "single", "jsxQuoteStyle": "single" }
 	}

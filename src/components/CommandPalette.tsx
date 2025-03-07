@@ -98,7 +98,7 @@ export function CommandPalette({
 			/>
 			<CommandList className='py-2'>
 				<CommandEmpty>
-					<div className='text-center my-8'>No results found.</div>
+					<div className='my-8 text-center'>No results found.</div>
 				</CommandEmpty>
 				<CommandGroup>
 					{filteredArticles.map((article) => (
@@ -108,28 +108,28 @@ export function CommandPalette({
 								navigate(`/article/?url=${encodeURIComponent(article.url)}`);
 								handleClose(false);
 							}}
-							className='flex items-center space-x-2 py-2 cursor-pointer duration-100'
+							className='flex cursor-pointer items-center space-x-2 py-2 duration-100'
 						>
 							<div className='flex-shrink-0'>
 								{article.image ? (
 									<img
 										src={article.image}
 										alt={article.title}
-										className='size-8 object-cover rounded-md pointer-events-none'
+										className='pointer-events-none size-8 rounded-md object-cover'
 									/>
 								) : (
 									<img
 										src={article.authorImg}
 										alt={article.title}
-										className='size-8 object-cover rounded-md pointer-events-none'
+										className='pointer-events-none size-8 rounded-md object-cover'
 									/>
 								)}
 							</div>
 							<div className='flex-grow'>
-								<h3 className='text-sm font-medium'>{article.title}</h3>
-								<p className='text-xs text-muted-foreground line-clamp-1'>
+								<h3 className='font-medium text-sm'>{article.title}</h3>
+								<p className='line-clamp-1 text-muted-foreground text-xs'>
 									{article.author}
-									<DotIcon className='px-0 mx-0 inline-block' />
+									<DotIcon className='mx-0 inline-block px-0' />
 									{article.subtitle}
 								</p>
 							</div>
@@ -143,7 +143,7 @@ export function CommandPalette({
 							}}
 						>
 							<GlobeIcon className='size-8 text-muted-foreground' />
-							<span className='text-sm text-muted-foreground truncate line-clamp-1 overflow-hidden'>
+							<span className='line-clamp-1 overflow-hidden truncate text-muted-foreground text-sm'>
 								Open URL
 							</span>
 						</CommandItem>
