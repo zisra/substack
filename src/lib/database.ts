@@ -72,15 +72,19 @@ export class Database {
 
 		if ('serviceWorker' in navigator) {
 			navigator.serviceWorker.ready.then((registration) => {
-				registration.active?.postMessage({
-					type: 'CACHE_IMAGE',
-					url: dbArticle.image,
-				});
+				if (dbArticle.image) {
+					registration.active?.postMessage({
+						type: 'CACHE_IMAGE',
+						url: dbArticle.image,
+					});
+				}
 
-				registration.active?.postMessage({
-					type: 'CACHE_IMAGE',
-					url: dbArticle.authorImg,
-				});
+				if (dbArticle.authorImg) {
+					registration.active?.postMessage({
+						type: 'CACHE_IMAGE',
+						url: dbArticle.authorImg,
+					});
+				}
 
 				for (const image of images) {
 					registration.active?.postMessage({

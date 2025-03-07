@@ -79,6 +79,7 @@ export type Note = {
 	authorUrl: string;
 	markdown: string;
 	attachments?: Embed[];
+	redirect?: string;
 };
 
 export type Comment = {

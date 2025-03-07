@@ -1,4 +1,5 @@
 import { AlertCard } from '@/components/AlertCard';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import {
@@ -64,11 +65,10 @@ export function ArticleList({
 							<div className='flex grow pr-2'>
 								<div className='grow'>
 									<div className='flex items-center mb-2'>
-										<img
-											src={article.authorImg}
-											alt={article.author}
-											className='size-6 rounded-full mr-2 pointer-events-none'
-										/>
+										<Avatar className='size-6 mr-2'>
+											<AvatarImage src={article.authorImg} alt={article.author} />
+											<AvatarFallback>{article.author.charAt(0)}</AvatarFallback>
+										</Avatar>
 										<span className='text-sm text-neutral-500 dark:text-neutral-400'>
 											{article.author}
 										</span>

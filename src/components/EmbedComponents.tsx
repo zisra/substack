@@ -1,3 +1,4 @@
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
 import { QuoteIcon } from 'lucide-react';
 import { Link } from 'react-router';
@@ -81,7 +82,10 @@ export default function Comment({
 	return (
 		<Link to={`/note/?url=${encodeURIComponent(`https://substack.com/@${handle}/note/${id}`)}`}>
 			<Card className='flex items-center space-x-4 p-4 duration-200 ease-in-out hover:bg-accent/50 cursor-pointer'>
-				<img src={avatar} alt={author} className='w-10 h-10 rounded-full' />
+				<Avatar className='size-10'>
+					<AvatarImage src={avatar} alt={author} />
+					<AvatarFallback>{author.charAt(0)}</AvatarFallback>
+				</Avatar>
 				<div>
 					<p className='font-bold'>Comment by {author}</p>
 				</div>

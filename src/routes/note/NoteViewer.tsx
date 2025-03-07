@@ -45,6 +45,10 @@ export function NoteViewer() {
 
 				const data: Note = await response.json();
 
+				if (data?.redirect) {
+					return navigate(`/article/?url=${encodeURIComponent(data.redirect)}`);
+				}
+
 				// Parse markdown to HTML
 				const reader = new Parser();
 				const writer = new HtmlRenderer();

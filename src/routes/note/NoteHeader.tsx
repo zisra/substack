@@ -1,8 +1,8 @@
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
+import { AvatarFallback } from '@/components/ui/avatar';
 import type { Note, Settings } from '@/lib/types';
 import { cn, fontFormatting } from '@/lib/utils';
 import { NoteControls } from '@/routes/note/NoteControls';
-import { AvatarFallback } from '@radix-ui/react-avatar';
 
 export function NoteHeader({
 	note,

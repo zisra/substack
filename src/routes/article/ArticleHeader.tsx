@@ -1,9 +1,9 @@
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
+import { AvatarFallback } from '@/components/ui/avatar';
 import type { Database } from '@/lib/database';
 import type { ArticleSaved, Settings } from '@/lib/types';
 import { cn, fontFormatting } from '@/lib/utils';
 import { ArticleControls } from '@/routes/article/ArticleControls';
-import { AvatarFallback } from '@radix-ui/react-avatar';
 
 export function ArticleHeader({
 	article,

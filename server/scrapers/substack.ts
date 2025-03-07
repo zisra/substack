@@ -7,13 +7,14 @@ const selectorsToRemove = [
 	'.subscription-widget',
 	'[data-component-name="ButtonCreateButton"]',
 	'[data-component-name="AudioEmbedPlayer"]',
-	'[data-component-name="SubscribeWidget"]',
+	'[data-component-name="SubscribeWidget"]',	
 	'[data-component-name="DigestPostEmbed"]',
 	'[data-component-name="EmbeddedPublicationToDOMWithSubscribe"]',
 	'.embedded-post-wrap',
 	'.image-link-expand',
 	'.poll-embed',
 	'audio',
+	'.hide-text',
 ];
 
 export function scrapeSubstackMeta(html: string) {
