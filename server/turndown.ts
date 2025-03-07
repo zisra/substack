@@ -95,11 +95,13 @@ turndownService.addRule('wikipedia-image', {
 
 turndownService.addRule('iframe', {
 	filter(node) {
-		return node.nodeName === 'IFRAME';
+		return (
+			node.nodeName === 'IFRAME' &&
+			Boolean(node.parentElement?.classList.contains('youtube-inner'))
+		);
 	},
 	replacement: (_content, node) => {
-		const link = (node as HTMLElement).getAttribute('src');
-		return `<iframe src="${link}" frameborder="0" allowfullscreen></iframe>`;
+		return (node as HTMLElement).outerHTML;
 	},
 });
 
