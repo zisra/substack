@@ -133,6 +133,8 @@
 iframe {
 	margin: 0 auto;
 	display: block;
+	margin-top: 1rem;
+	border-radius: 15px;
 	width: 560px;
 	height: 315px;
 }
