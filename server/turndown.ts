@@ -93,6 +93,16 @@ turndownService.addRule('wikipedia-image', {
 	},
 });
 
+turndownService.addRule('iframe', {
+	filter(node) {
+		return node.nodeName === 'IFRAME';
+	},
+	replacement: (_content, node) => {
+		const link = (node as HTMLElement).getAttribute('src');
+		return `<iframe src="${link}" frameborder="0" allowfullscreen></iframe>`;
+	},
+});
+
 export function htmlToMarkdown(html: string) {
 	const markdown = turndownService.turndown(html);
 

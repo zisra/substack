@@ -43,7 +43,7 @@ export function ArticleViewer() {
 		setTimeout(() => {
 			window.scrollTo({
 				top,
-				behavior: 'smooth',
+				behavior: 'instant',
 			});
 		}, 10);
 	};
