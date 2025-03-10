@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 /*
   ---break---
 */
@@ -112,7 +112,7 @@
 		@apply bg-background text-foreground;
 	}
 	button:not(:disabled),
-	[role='button']:not(:disabled) {
+	[role="button"]:not(:disabled) {
 		cursor: pointer;
 	}
 }
@@ -128,13 +128,4 @@
 	body {
 		@apply bg-background text-foreground;
 	}
-}
-
-iframe {
-	margin: 0 auto;
-	display: block;
-	margin-top: 1rem;
-	border-radius: 15px;
-	width: 560px;
-	height: 315px;
 }

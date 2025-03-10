@@ -15,9 +15,7 @@ export function IncrementalButton({
 	value: string | null;
 	onValueChange: (value: string | null) => void;
 }) {
-	const [localValue, setLocalValue] = useState<keyof typeof options | null>(
-		value || null
-	);
+	const [localValue, setLocalValue] = useState<keyof typeof options | null>(value || null);
 
 	const decreaseFontSize = () => {
 		setLocalValue((prev) => {
@@ -39,26 +37,26 @@ export function IncrementalButton({
 		if (localValue) {
 			onValueChange(localValue);
 		}
-	}, [localValue]);
+	}, [localValue, onValueChange]);
 
 	return (
 		<div className={cn('flex items-center space-x-2', className)}>
 			<Button
-				variant="outline"
-				size="icon"
+				variant='outline'
+				size='icon'
 				onClick={decreaseFontSize}
-				disabled={value === Object.keys(options)[0]}
+				disabled={localValue === Object.keys(options)[0]}
 			>
 				<MinusIcon />
 			</Button>
-			<Card className="flex h-9 w-26 select-none items-center justify-center rounded-md text-sm shadow-none">
+			<Card className='flex h-9 w-26 select-none items-center justify-center rounded-md text-sm shadow-none'>
 				{localValue ? options[localValue] : null}
 			</Card>
 			<Button
-				variant="outline"
-				size="icon"
+				variant='outline'
+				size='icon'
 				onClick={increaseFontSize}
-				disabled={value === Object.keys(options).slice(-1)[0]}
+				disabled={localValue === Object.keys(options).slice(-1)[0]}
 			>
 				<PlusIcon />
 			</Button>

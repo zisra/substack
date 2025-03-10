@@ -1,4 +1,3 @@
-import { Hono } from 'hono';
 import { html } from 'hono/html';
 
 export const scraperUserAgents = [
