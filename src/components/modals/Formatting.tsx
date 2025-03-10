@@ -1,5 +1,5 @@
+import { IncrementalButton } from '@/components/IncrementalButton';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import {
 	Credenza,
 	CredenzaBody,
@@ -21,7 +21,7 @@ import {
 import { Switch } from '@/components/ui/switch';
 import { Database } from '@/lib/database';
 import type { Settings } from '@/lib/types';
-import { ALargeSmallIcon, MinusIcon, PlusIcon } from 'lucide-react';
+import { ALargeSmallIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 export function Formatting({
@@ -40,7 +40,9 @@ export function Formatting({
 	const [fontSize, setFontSize] = useState<keyof typeof fontSizes | null>(null);
 	const [fontFamily, setFontFamily] = useState<keyof typeof fonts | null>(null);
 	const [includeImages, setIncludeImages] = useState<boolean | null>(null);
-	const [saveArchivedContent, setSaveArchivedContent] = useState<boolean | null>(null);
+	const [saveArchivedContent, setSaveArchivedContent] = useState<
+		boolean | null
+	>(null);
 	const [scrollArticles, setScrollArticles] = useState<boolean | null>(null);
 	const [saveComments, setSaveComments] = useState<boolean | null>(null);
 
@@ -63,22 +65,6 @@ export function Formatting({
 		fetchSettings();
 	}, []);
 
-	const decreaseFontSize = () => {
-		setFontSize((prev) => {
-			const sizes = Object.keys(fontSizes);
-			const index = sizes.indexOf(prev || 'base');
-			return sizes[index - 1] as keyof typeof fontSizes;
-		});
-	};
-
-	const increaseFontSize = () => {
-		setFontSize((prev) => {
-			const sizes = Object.keys(fontSizes);
-			const index = sizes.indexOf(prev || 'dynamic');
-			return sizes[index + 1] as keyof typeof fontSizes;
-		});
-	};
-
 	const saveSettings = async () => {
 		const settings = {
 			version: 1,
@@ -87,7 +73,8 @@ export function Formatting({
 				fontFamily: fontFamily || 'sans',
 				printImages: includeImages !== null ? includeImages : true,
 			},
-			saveArchivedContent: saveArchivedContent !== null ? saveArchivedContent : true,
+			saveArchivedContent:
+				saveArchivedContent !== null ? saveArchivedContent : true,
 			scrollArticles: scrollArticles !== null ? scrollArticles : true,
 			saveComments: saveComments !== null ? saveComments : true,
 		};
@@ -122,33 +109,37 @@ export function Formatting({
 
 	return (
 		<>
-			<Button onClick={handleOpen} variant='outline' size='icon'>
+			<Button onClick={handleOpen} variant="outline" size="icon">
 				<ALargeSmallIcon />
 			</Button>
 			<Credenza open={open} onOpenChange={setOpen}>
 				<CredenzaContent>
 					<CredenzaHeader>
 						<CredenzaTitle>Customize Formatting</CredenzaTitle>
-						<CredenzaDescription className='text-neutral-500 dark:text-neutral-400'>
+						<CredenzaDescription className="text-neutral-500 dark:text-neutral-400">
 							Customize the formatting of the article
 						</CredenzaDescription>
 					</CredenzaHeader>
 					<CredenzaBody>
-						<div className='space-y-4'>
-							<div className='flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center'>
-								<div className='grid gap-1.5'>
+						<div className="space-y-4">
+							<div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+								<div className="grid gap-1.5">
 									<Label>Font Family</Label>
-									<p className='text-neutral-500 text-sm dark:text-neutral-400'>
+									<p className="text-neutral-500 text-sm dark:text-neutral-400">
 										Change the font family of the article
 									</p>
 								</div>
 								<Select
 									value={fontFamily || 'sans'}
-									defaultValue='sans'
-									onValueChange={(value) => setFontFamily(value as keyof typeof fonts)}
+									defaultValue="sans"
+									onValueChange={(value) =>
+										setFontFamily(value as keyof typeof fonts)
+									}
 								>
-									<SelectTrigger className='max-w-[192px]'>
-										{fontFamily && <SelectValue placeholder={fonts[fontFamily]} />}
+									<SelectTrigger className="max-w-[192px]">
+										{fontFamily && (
+											<SelectValue placeholder={fonts[fontFamily]} />
+										)}
 									</SelectTrigger>
 									<SelectContent>
 										{Object.entries(fonts).map(([key, value]) => (
@@ -159,95 +150,91 @@ export function Formatting({
 									</SelectContent>
 								</Select>
 							</div>
-							<div className='flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center'>
-								<div className='grid gap-1.5'>
+							<div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+								<div className="grid gap-1.5">
 									<Label>Font Size</Label>
-									<p className='text-neutral-500 text-sm dark:text-neutral-400'>
+									<p className="text-neutral-500 text-sm dark:text-neutral-400">
 										Change the font size of the article
 									</p>
 								</div>
-								<div className='flex items-center space-x-2'>
-									<Button
-										variant='outline'
-										size='icon'
-										onClick={decreaseFontSize}
-										disabled={fontSize === 'sm'}
-									>
-										<MinusIcon />
-									</Button>
-									<Card className='flex h-9 w-26 select-none items-center justify-center rounded-md text-sm shadow-none'>
-										{fontSize ? fontSizes[fontSize] : null}
-									</Card>
-									<Button
-										variant='outline'
-										size='icon'
-										onClick={increaseFontSize}
-										disabled={fontSize === 'xl'}
-									>
-										<PlusIcon />
-									</Button>
+								<div className="flex items-center space-x-2">
+									<IncrementalButton
+										options={fontSizes}
+										value={fontSize}
+										onValueChange={(value) =>
+											setFontSize(value as keyof typeof fontSizes)
+										}
+									/>
 								</div>
 							</div>
-							<div className='flex items-center justify-between gap-4'>
-								<div className='grid gap-1.5'>
+							<div className="flex items-center justify-between gap-4">
+								<div className="grid gap-1.5">
 									<Label>Print Images</Label>
-									<p className='text-neutral-500 text-sm dark:text-neutral-400'>
+									<p className="text-neutral-500 text-sm dark:text-neutral-400">
 										Whether to include images when printing
 									</p>
 								</div>
 								{includeImages !== null && (
 									<Switch
 										checked={includeImages}
-										onCheckedChange={(event) => setIncludeImages(event.valueOf())}
+										onCheckedChange={(event) =>
+											setIncludeImages(event.valueOf())
+										}
 									/>
 								)}
 							</div>
-							<div className='flex items-center justify-between gap-4'>
-								<div className='grid gap-1.5'>
+							<div className="flex items-center justify-between gap-4">
+								<div className="grid gap-1.5">
 									<Label>Save Archived Content</Label>
-									<p className='text-neutral-500 text-sm dark:text-neutral-400'>
+									<p className="text-neutral-500 text-sm dark:text-neutral-400">
 										Whether to save archived articles offline
 									</p>
 								</div>
 								{saveArchivedContent !== null && (
 									<Switch
 										checked={saveArchivedContent}
-										onCheckedChange={(event) => setSaveArchivedContent(event.valueOf())}
+										onCheckedChange={(event) =>
+											setSaveArchivedContent(event.valueOf())
+										}
 									/>
 								)}
 							</div>
-							<div className='flex items-center justify-between gap-4'>
-								<div className='grid gap-1.5'>
+							<div className="flex items-center justify-between gap-4">
+								<div className="grid gap-1.5">
 									<Label>Save Article Location</Label>
-									<p className='text-neutral-500 text-sm dark:text-neutral-400'>
+									<p className="text-neutral-500 text-sm dark:text-neutral-400">
 										Whether to save and the last position in the article
 									</p>
 								</div>
 								{scrollArticles !== null && (
 									<Switch
 										checked={scrollArticles}
-										onCheckedChange={(event) => setScrollArticles(event.valueOf())}
+										onCheckedChange={(event) =>
+											setScrollArticles(event.valueOf())
+										}
 									/>
 								)}
 							</div>
-							<div className='flex items-center justify-between gap-4'>
-								<div className='grid gap-1.5'>
+							<div className="flex items-center justify-between gap-4">
+								<div className="grid gap-1.5">
 									<Label>Save Comments</Label>
-									<p className='text-neutral-500 text-sm dark:text-neutral-400'>
+									<p className="text-neutral-500 text-sm dark:text-neutral-400">
 										Whether to save comments offline automatically
 									</p>
 								</div>
 								{saveComments !== null && (
 									<Switch
 										checked={saveComments}
-										onCheckedChange={(event) => setSaveComments(event.valueOf())}
+										onCheckedChange={(event) =>
+											setSaveComments(event.valueOf())
+										}
 									/>
 								)}
 							</div>
 						</div>
 					</CredenzaBody>
-					<CredenzaFooter className='gap-x-2'>
-						<Button onClick={resetSettings} variant='secondary'>
+					<CredenzaFooter className="gap-x-2">
+						<Button onClick={resetSettings} variant="secondary">
 							Reset
 						</Button>
 						<CredenzaClose asChild>
@@ -255,7 +242,7 @@ export function Formatting({
 								onClick={() => {
 									saveSettings();
 								}}
-								type='submit'
+								type="submit"
 							>
 								Save
 							</Button>
