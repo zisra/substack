@@ -19,7 +19,9 @@ export function Embeds({ note }: { note: Note }) {
 						>
 							<img
 								alt={'Post'}
-								src={`https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/${attachment.imageUrl}`}
+								src={`https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/${encodeURIComponent(
+									attachment.imageUrl,
+								)}`}
 								className='display-inline-block max-h-96'
 							/>
 						</a>

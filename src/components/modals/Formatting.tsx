@@ -5,7 +5,6 @@ import {
 	CredenzaBody,
 	CredenzaClose,
 	CredenzaContent,
-	CredenzaDescription,
 	CredenzaFooter,
 	CredenzaHeader,
 	CredenzaTitle,

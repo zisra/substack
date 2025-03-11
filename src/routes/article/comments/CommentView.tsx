@@ -16,6 +16,15 @@ export function CommentView({
 		setIsCollapsed((prev) => !prev);
 	};
 
+	if (photo_url) {
+		photo_url = `https://substackcdn.com/image/fetch/w_64,h_64,c_fill,f_webp,q_auto:good,fl_progressive:steep/${encodeURIComponent(
+			photo_url,
+		)}`;
+	} else {
+		photo_url =
+			'https://substackcdn.com/image/fetch/w_64,h_64,c_fill,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Fimg%2Favatars%2Fpurple.png';
+	}
+
 	return (
 		<div className='mt-2 max-w-3xl'>
 			<div className='flex gap-2.5'>
