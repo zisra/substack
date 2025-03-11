@@ -1,8 +1,21 @@
 import { Formatting } from '@/components/modals/Formatting';
 import { Button, buttonVariants } from '@/components/ui/button';
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { Separator } from '@/components/ui/separator';
 import type { CommentPage, Settings } from '@/lib/types';
-import { ArrowLeftIcon, DotIcon } from 'lucide-react';
+import {
+	ArrowLeftIcon,
+	DotIcon,
+	DownloadIcon,
+	MoreVerticalIcon,
+	SaveIcon,
+	TrashIcon,
+} from 'lucide-react';
 import { Link } from 'react-router';
 
 export function CommentHeader({
@@ -10,15 +23,15 @@ export function CommentHeader({
 	url,
 	onSave,
 	onDelete,
-	isSaved,
 	onSettingsChange,
+	downloaded,
 }: {
 	commentPage: CommentPage;
 	url: string | null;
-	isSaved: boolean;
 	onSave: () => void;
 	onDelete: () => void;
 	onSettingsChange: (settings: Settings) => void;
+	downloaded: boolean;
 }) {
 	return (
 		<header className='mb-4'>
@@ -32,31 +45,49 @@ export function CommentHeader({
 					rel='noreferrer'
 					className='hover:underline'
 				>
-					{commentPage.author}
+					<span>{commentPage.author}</span>
 				</a>
 				<DotIcon className='mx-0 inline-block px-0' />
-				{commentPage.subtitle}
+				<span>{commentPage.subtitle}</span>
 			</p>
 			<div className='flex items-center justify-between'>
-				<div className='space-x-4'>
+				<div className='flex items-center space-x-4'>
 					<Link to={`/article/?url=${url}`} className={buttonVariants({ variant: 'outline' })}>
 						<ArrowLeftIcon />
 						Read
 					</Link>
 					<Formatting onSettingsChange={onSettingsChange} />
-				</div>
-
-				<div className='flex items-center space-x-4'>
-					{isSaved ? null : (
-						<>
-							<Button onClick={onSave} variant='outline'>
-								Save
-							</Button>
-							<Button onClick={onDelete} variant='destructive'>
-								Delete
-							</Button>
-						</>
+					{downloaded && (
+						<Button size='sm' variant='secondary' disabled>
+							<DownloadIcon className='mr-2 size-4' />
+							Downloaded
+						</Button>
 					)}
+				</div>
+				<div className='flex items-center space-x-4'>
+					<DropdownMenu>
+						<DropdownMenuTrigger asChild>
+							<Button variant='outline' size='icon'>
+								<MoreVerticalIcon />
+							</Button>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent align='end'>
+							<DropdownMenuItem className='cursor-pointer' onClick={onSave}>
+								<SaveIcon className='mr-2 size-4' />
+								Save
+							</DropdownMenuItem>
+							{downloaded && (
+								<DropdownMenuItem
+									onClick={onDelete}
+									className='cursor-pointer'
+									variant='destructive'
+								>
+									<TrashIcon className='mr-2 size-4' />
+									Delete
+								</DropdownMenuItem>
+							)}
+						</DropdownMenuContent>
+					</DropdownMenu>
 				</div>
 			</div>
 			<Separator className='my-2' />

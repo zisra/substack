@@ -95,5 +95,5 @@ export type CommentPage = {
 	subtitle: string;
 	author: string;
 	authorUrl: string;
-	comments: Comment[];
+	comments?: Comment[];
 };

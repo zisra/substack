@@ -43,7 +43,9 @@ const CredenzaContext = React.createContext<{ isDesktop: boolean }>({
 const useCredenzaContext = () => {
 	const context = React.useContext(CredenzaContext);
 	if (!context) {
-		throw new Error('Credenza components cannot be rendered outside the Credenza Context');
+		throw new Error(
+			'Credenza components cannot be rendered outside the Credenza Context'
+		);
 	}
 	return context;
 };
@@ -94,7 +96,11 @@ const CredenzaContent = ({ className, children, ...props }: CredenzaProps) => {
 	);
 };
 
-const CredenzaDescription = ({ className, children, ...props }: CredenzaProps) => {
+const CredenzaDescription = ({
+	className,
+	children,
+	...props
+}: CredenzaProps) => {
 	const { isDesktop } = useCredenzaContext();
 	const CredenzaDescription = isDesktop ? DialogDescription : DrawerDescription;
 
@@ -141,7 +147,10 @@ const CredenzaFooter = ({ className, children, ...props }: CredenzaProps) => {
 
 	return (
 		<CredenzaFooter
-			className={cn('flex flex-col sm:flex-row justify-end gap-y-2 gap-x-1', className)}
+			className={cn(
+				'flex flex-col sm:flex-row justify-end gap-y-2 gap-x-1',
+				className
+			)}
 			{...props}
 		>
 			{children}
