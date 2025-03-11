@@ -2,6 +2,7 @@ import { Linkify } from '@/components/Linkify';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import type { Comment } from '@/lib/types';
+import { cn } from '@/lib/utils';
 import { useState } from 'react';
 
 export function CommentView({
@@ -10,10 +11,15 @@ export function CommentView({
 	comment: Comment;
 }) {
 	const [isCollapsed, setIsCollapsed] = useState(false);
+	const [isExpanded, setIsExpanded] = useState(body.length < 1200);
 	const substackUrl = `https://substack.com/@${handle}`;
 
 	const toggleCollapse = () => {
 		setIsCollapsed((prev) => !prev);
+	};
+
+	const toggleExpand = () => {
+		setIsExpanded((prev) => !prev);
 	};
 
 	if (photo_url) {
@@ -71,10 +77,23 @@ export function CommentView({
 
 					{!isCollapsed &&
 						(body ? (
-							<Linkify
-								text={body}
-								className='prose prose-sm dark:prose-invert max-w-full whitespace-pre-line break-words'
-							/>
+							<div className={cn('relative max-w-full', !isExpanded && 'max-h-60 overflow-hidden')}>
+								<Linkify
+									text={body}
+									className='prose prose-sm dark:prose-invert max-w-full whitespace-pre-line break-words'
+								/>
+								{!isExpanded && (
+									<div className='absolute bottom-0 left-0 w-full bg-gradient-to-t from-white to-transparent pt-12 text-center dark:from-black'>
+										<button
+											type='button'
+											onClick={toggleExpand}
+											className='font-bold text-neutral-700 text-xs transition-100 transition-all hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-neutral-100'
+										>
+											Expand full comment
+										</button>
+									</div>
+								)}
+							</div>
 						) : (
 							<div className='prose prose-sm dark:prose-invert'>
 								<em>Comment deleted</em>
