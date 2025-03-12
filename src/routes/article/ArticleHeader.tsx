@@ -9,13 +9,11 @@ export function ArticleHeader({
 	article,
 	db,
 	setArticle,
-	onSettingsChange,
 	settings,
 }: {
 	article: ArticleSaved;
 	db: Database;
 	setArticle: React.Dispatch<React.SetStateAction<ArticleSaved | null>>;
-	onSettingsChange: (settings: Settings) => void;
 	settings: Settings | null;
 }) {
 	return (
@@ -61,12 +59,7 @@ export function ArticleHeader({
 					</p>
 				</div>
 			</div>
-			<ArticleControls
-				onSettingsChange={onSettingsChange}
-				db={db}
-				setArticle={setArticle}
-				article={article}
-			/>
+			<ArticleControls db={db} setArticle={setArticle} article={article} />
 		</header>
 	);
 }

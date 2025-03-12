@@ -1,4 +1,3 @@
-import { Preferences } from '@/components/modals/Preferences';
 import { Button } from '@/components/ui/button';
 import {
 	DropdownMenu,
@@ -6,20 +5,13 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import type { Note, Settings } from '@/lib/types';
+import type { Note } from '@/lib/types';
 import { ExternalLinkIcon, LinkIcon, MoreVerticalIcon } from 'lucide-react';
 
-export function NoteControls({
-	note,
-	onSettingsChange,
-}: {
-	note: Note;
-	onSettingsChange: (settings: Settings) => void;
-}) {
+export function NoteControls({ note }: { note: Note }) {
 	return (
 		<div className='flex items-center justify-between print:hidden'>
 			<div className='flex items-center space-x-4'>
-				<Preferences onSettingsChange={onSettingsChange} />
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
 						<Button variant='outline' size='icon'>

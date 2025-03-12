@@ -1,4 +1,5 @@
 import { AlertCard } from '@/components/AlertCard';
+import { Header } from '@/components/Header';
 import { NoteSkeleton } from '@/components/NoteSkeleton';
 import { Separator } from '@/components/ui/separator';
 import { Database } from '@/lib/database';
@@ -88,41 +89,40 @@ export function NoteViewer() {
 		fetchSettings();
 	}, []);
 
-	const onSettingsChange = async (settings: Settings) => {
-		setSettings(settings);
-	};
-
 	if (!note) {
 		return <NoteSkeleton />;
 	}
 
 	return (
-		<div className='mx-auto max-w-3xl px-4 py-8'>
-			<NoteHeader onSettingsChange={onSettingsChange} note={note} settings={settings} />
-			<Separator className='my-6' />
-
-			{failed ? (
-				<AlertCard
-					title='Archived article'
-					icon={<ArchiveIcon className='size-16' aria-hidden='true' />}
-				>
-					This article has been archived and is no longer available without an internet connection.
-				</AlertCard>
-			) : (
-				<>
-					<article className={articleFormatting(settings)}>
-						{markdown && (
-							<div
-								// biome-ignore lint/security/noDangerouslySetInnerHtml: Markdown content
-								dangerouslySetInnerHTML={{
-									__html: sanitizeDom(markdown),
-								}}
-							/>
-						)}
-					</article>
-					<Embeds note={note} />
-				</>
-			)}
-		</div>
+		<>
+			<Header onSettingsChange={setSettings} />
+			<div className='mx-auto max-w-3xl px-4 py-8'>
+				<NoteHeader note={note} settings={settings} />
+				<Separator className='my-6' />
+				{failed ? (
+					<AlertCard
+						title='Archived article'
+						icon={<ArchiveIcon className='size-16' aria-hidden='true' />}
+					>
+						This article has been archived and is no longer available without an internet
+						connection.
+					</AlertCard>
+				) : (
+					<>
+						<article className={articleFormatting(settings)}>
+							{markdown && (
+								<div
+									// biome-ignore lint/security/noDangerouslySetInnerHtml: Markdown content
+									dangerouslySetInnerHTML={{
+										__html: sanitizeDom(markdown),
+									}}
+								/>
+							)}
+						</article>
+						<Embeds note={note} />
+					</>
+				)}
+			</div>
+		</>
 	);
 }

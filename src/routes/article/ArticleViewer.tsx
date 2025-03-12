@@ -1,11 +1,12 @@
 import { AlertCard } from '@/components/AlertCard';
 import { ArticleSkeleton, ArticleTextSkeleton } from '@/components/ArticleSkeleton';
+import { FinishedReadingButton } from '@/components/FinishedReadingButton';
+import { Header } from '@/components/Header';
 import { Separator } from '@/components/ui/separator';
 import { Database } from '@/lib/database';
 import type { Article, ArticleSaved, Settings } from '@/lib/types';
 import { articleFormatting, sanitizeDom } from '@/lib/utils';
 import { ArticleHeader } from '@/routes/article/ArticleHeader';
-import { FinishedReadingButton } from '@/routes/article/FinishedReadingButton';
 import { HtmlRenderer, Parser } from 'commonmark';
 import { ArchiveIcon } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
@@ -162,50 +163,44 @@ export function ArticleViewer() {
 		};
 	}, [saveScrollPosition]);
 
-	const onSettingsChange = async (settings: Settings) => {
-		setSettings(settings);
-	};
-
 	if (!article) {
 		return <ArticleSkeleton />;
 	}
 
 	return (
-		<div className='mx-auto max-w-3xl px-4 py-8'>
-			<title>{title}</title>
+		<>
+			<Header onSettingsChange={setSettings} />
+			<div className='mx-auto max-w-3xl px-4 py-8'>
+				<title>{title}</title>
 
-			<ArticleHeader
-				onSettingsChange={onSettingsChange}
-				article={article}
-				db={db}
-				setArticle={setArticle}
-				settings={settings}
-			/>
-			<Separator className='my-2' />
+				<ArticleHeader article={article} db={db} setArticle={setArticle} settings={settings} />
+				<Separator className='my-2' />
 
-			{failed ? (
-				<AlertCard
-					title='Archived article'
-					icon={<ArchiveIcon className='size-16' aria-hidden='true' />}
-				>
-					This article has been archived and is no longer available without an internet connection.
-				</AlertCard>
-			) : (
-				<article className={articleFormatting(settings)}>
-					{markdown ? (
-						<div
-							// biome-ignore lint/security/noDangerouslySetInnerHtml: Markdown content
-							dangerouslySetInnerHTML={{
-								__html: sanitizeDom(markdown),
-							}}
-						/>
-					) : (
-						<ArticleTextSkeleton />
-					)}
-				</article>
-			)}
+				{failed ? (
+					<AlertCard
+						title='Archived article'
+						icon={<ArchiveIcon className='size-16' aria-hidden='true' />}
+					>
+						This article has been archived and is no longer available without an internet
+						connection.
+					</AlertCard>
+				) : (
+					<article className={articleFormatting(settings)}>
+						{markdown ? (
+							<div
+								// biome-ignore lint/security/noDangerouslySetInnerHtml: Markdown content
+								dangerouslySetInnerHTML={{
+									__html: sanitizeDom(markdown),
+								}}
+							/>
+						) : (
+							<ArticleTextSkeleton />
+						)}
+					</article>
+				)}
 
-			{markdown && <FinishedReadingButton db={db} setArticle={setArticle} article={article} />}
-		</div>
+				{markdown && <FinishedReadingButton db={db} setArticle={setArticle} article={article} />}
+			</div>
+		</>
 	);
 }

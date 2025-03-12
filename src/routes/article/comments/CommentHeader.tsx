@@ -1,4 +1,3 @@
-import { Preferences } from '@/components/modals/Preferences';
 import { Button, buttonVariants } from '@/components/ui/button';
 import {
 	DropdownMenu,
@@ -7,7 +6,7 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Separator } from '@/components/ui/separator';
-import type { CommentPage, Settings } from '@/lib/types';
+import type { CommentPage } from '@/lib/types';
 import {
 	ArrowLeftIcon,
 	DotIcon,
@@ -23,14 +22,12 @@ export function CommentHeader({
 	url,
 	onSave,
 	onDelete,
-	onSettingsChange,
 	downloaded,
 }: {
 	commentPage: CommentPage;
 	url: string | null;
 	onSave: () => void;
 	onDelete: () => void;
-	onSettingsChange: (settings: Settings) => void;
 	downloaded: boolean;
 }) {
 	return (
@@ -56,7 +53,6 @@ export function CommentHeader({
 						<ArrowLeftIcon />
 						Read
 					</Link>
-					<Preferences onSettingsChange={onSettingsChange} />
 					{downloaded && (
 						<Button size='sm' variant='secondary' disabled>
 							<DownloadIcon className='mr-2 size-4' />

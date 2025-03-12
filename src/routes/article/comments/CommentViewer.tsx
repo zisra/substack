@@ -1,4 +1,5 @@
 import { AlertCard } from '@/components/AlertCard';
+import { Header } from '@/components/Header';
 import { Button } from '@/components/ui/button';
 import { Database } from '@/lib/database';
 import type { Comment, CommentPage, Settings } from '@/lib/types';
@@ -142,29 +143,31 @@ export function CommentViewer() {
 	}, [url, navigate]);
 
 	return (
-		<div className='mx-auto max-w-3xl px-4 py-8'>
-			<title>{title}</title>
-			{commentPage && (
-				<CommentHeader
-					downloaded={settings?.saveComments === true}
-					onDelete={() => {
-						if (url) {
-							db.open();
-							db.deleteComments(url);
-						}
-					}}
-					onSave={() => {
-						if (url && commentPage.comments) {
-							db.open();
-							db.saveComments(url, commentPage.comments);
-						}
-					}}
-					commentPage={commentPage}
-					url={url}
-					onSettingsChange={setSettings}
-				/>
-			)}
-			<CommentList url={url} comments={commentPage?.comments} />
-		</div>
+		<>
+			<Header onSettingsChange={setSettings} />
+			<div className='mx-auto max-w-3xl px-4 py-8'>
+				<title>{title}</title>
+				{commentPage && (
+					<CommentHeader
+						downloaded={settings?.saveComments === true}
+						onDelete={() => {
+							if (url) {
+								db.open();
+								db.deleteComments(url);
+							}
+						}}
+						onSave={() => {
+							if (url && commentPage.comments) {
+								db.open();
+								db.saveComments(url, commentPage.comments);
+							}
+						}}
+						commentPage={commentPage}
+						url={url}
+					/>
+				)}
+				<CommentList url={url} comments={commentPage?.comments} />
+			</div>
+		</>
 	);
 }

@@ -7,10 +7,8 @@ import { NoteControls } from '@/routes/note/NoteControls';
 export function NoteHeader({
 	note,
 	settings,
-	onSettingsChange,
 }: {
 	note: Note;
-	onSettingsChange: (settings: Settings) => void;
 	settings: Settings | null;
 }) {
 	return (
@@ -31,7 +29,7 @@ export function NoteHeader({
 						</p>
 					</p>
 				</div>
-				<NoteControls onSettingsChange={onSettingsChange} note={note} />
+				<NoteControls note={note} />
 			</div>
 		</header>
 	);

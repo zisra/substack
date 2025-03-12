@@ -88,6 +88,7 @@ export function Preferences({
 		setIncludeImages(true);
 		setSaveArchivedContent(true);
 		setScrollArticles(true);
+		setSaveComments(true);
 	};
 
 	const fonts = {
