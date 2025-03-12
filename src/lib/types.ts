@@ -86,7 +86,9 @@ export type Comment = {
 	name: string;
 	photo_url: string;
 	handle: string;
+	incompleteProfile?: boolean;
 	body: string;
+	id: number;
 	children: Comment[];
 };
 

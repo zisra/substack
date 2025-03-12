@@ -37,13 +37,25 @@ export async function scrapeComments(url: string) {
 
 	function parseComments(comments) {
 		return comments.map((c) => {
-			return {
+			const profile = {
+				id: c.id,
 				name: c.name,
 				photo_url: c.photo_url,
 				handle: c.handle,
 				body: c.body?.trim(),
 				children: parseComments(c.children || []),
 			};
+
+			if (!c.handle) {
+				profile.handle = c.user_slug;
+				(
+					profile as typeof profile & {
+						incompleteProfile: boolean;
+					}
+				).incompleteProfile = true;
+			}
+
+			return profile;
 		});
 	}
 

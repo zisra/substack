@@ -8,7 +8,13 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
 import { CommentView } from './CommentView';
 
-export default function CommentList({ comments }: { comments?: Comment[] }) {
+export default function CommentList({
+	comments,
+	url,
+}: {
+	comments?: Comment[];
+	url: string | null;
+}) {
 	if (!comments) {
 		return <LoaderIcon className='mx-auto mt-8 animate-spin' />;
 	}
@@ -27,7 +33,7 @@ export default function CommentList({ comments }: { comments?: Comment[] }) {
 	return (
 		<div className='mx-auto max-w-3xl'>
 			{comments.slice(0, commentPage * 10).map((comment) => (
-				<CommentView key={comment.handle} comment={comment} />
+				<CommentView url={url} key={comment.handle} comment={comment} />
 			))}
 			{commentPage < maxPage && (
 				<Button
@@ -158,7 +164,7 @@ export function CommentViewer() {
 					onSettingsChange={setSettings}
 				/>
 			)}
-			<CommentList comments={commentPage?.comments} />
+			<CommentList url={url} comments={commentPage?.comments} />
 		</div>
 	);
 }

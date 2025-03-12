@@ -44,8 +44,6 @@ export async function scrapeSubstackNote(url: string) {
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	const attachments: any[] = [];
 
-	console.log(data);
-
 	if (data?.entity_key) {
 		return {
 			redirect: `https://substack.com/home/post/${data.entity_key}`,
