@@ -1,4 +1,4 @@
-import { Formatting } from '@/components/modals/Formatting';
+import { Preferences } from '@/components/modals/Preferences';
 import { Button } from '@/components/ui/button';
 import {
 	DropdownMenu,
@@ -19,7 +19,7 @@ export function NoteControls({
 	return (
 		<div className='flex items-center justify-between print:hidden'>
 			<div className='flex items-center space-x-4'>
-				<Formatting onSettingsChange={onSettingsChange} />
+				<Preferences onSettingsChange={onSettingsChange} />
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
 						<Button variant='outline' size='icon'>

@@ -1,4 +1,4 @@
-import { Formatting } from '@/components/modals/Formatting';
+import { Preferences } from '@/components/modals/Preferences';
 import { Button, buttonVariants } from '@/components/ui/button';
 import {
 	DropdownMenu,
@@ -56,7 +56,7 @@ export function CommentHeader({
 						<ArrowLeftIcon />
 						Read
 					</Link>
-					<Formatting onSettingsChange={onSettingsChange} />
+					<Preferences onSettingsChange={onSettingsChange} />
 					{downloaded && (
 						<Button size='sm' variant='secondary' disabled>
 							<DownloadIcon className='mr-2 size-4' />

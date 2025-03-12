@@ -21,10 +21,10 @@ import {
 import { Switch } from '@/components/ui/switch';
 import { Database } from '@/lib/database';
 import type { Settings } from '@/lib/types';
-import { ALargeSmallIcon } from 'lucide-react';
+import { SettingsIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
-export function Formatting({
+export function Preferences({
 	onSettingsChange,
 }: {
 	onSettingsChange?: (settings: Settings) => void;
@@ -107,12 +107,12 @@ export function Formatting({
 	return (
 		<>
 			<Button onClick={handleOpen} variant='outline' size='icon'>
-				<ALargeSmallIcon />
+				<SettingsIcon />
 			</Button>
 			<Credenza open={open} onOpenChange={setOpen}>
 				<CredenzaContent>
 					<CredenzaHeader>
-						<CredenzaTitle>Customize Formatting</CredenzaTitle>
+						<CredenzaTitle>Preferences</CredenzaTitle>
 					</CredenzaHeader>
 					<ScrollArea className='overflow-auto'>
 						<CredenzaBody>
