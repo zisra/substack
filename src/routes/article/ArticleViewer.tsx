@@ -1,5 +1,8 @@
 import { AlertCard } from '@/components/AlertCard';
-import { ArticleSkeleton, ArticleTextSkeleton } from '@/components/ArticleSkeleton';
+import {
+	ArticleSkeleton,
+	ArticleTextSkeleton,
+} from '@/components/ArticleSkeleton';
 import { FinishedReadingButton } from '@/components/FinishedReadingButton';
 import { Header } from '@/components/Header';
 import { Separator } from '@/components/ui/separator';
@@ -14,7 +17,9 @@ import { useBlocker, useNavigate, useSearchParams } from 'react-router';
 
 async function saveArticle(db: Database, url: string) {
 	try {
-		const response = await fetch(`/download-article/?url=${encodeURIComponent(url)}`);
+		const response = await fetch(
+			`/download-article/?url=${encodeURIComponent(url)}`
+		);
 
 		if (!response.ok) {
 			throw new Error('Failed to download article');
@@ -87,7 +92,9 @@ export function ArticleViewer() {
 					const articleResponse = await saveArticle(db, url);
 
 					if (articleResponse) {
-						navigate(`/article/?url=${encodeURIComponent(articleResponse.url)}`);
+						navigate(
+							`/article/?url=${encodeURIComponent(articleResponse.url)}`
+						);
 						setArticle(articleResponse);
 						scrollTo(0);
 					}
@@ -114,7 +121,9 @@ export function ArticleViewer() {
 				setMarkdown(result);
 			} else if (url && article.markdown === false) {
 				try {
-					const response = await fetch(`/download-article/?url=${encodeURIComponent(url)}`);
+					const response = await fetch(
+						`/download-article/?url=${encodeURIComponent(url)}`
+					);
 
 					if (!response.ok) {
 						navigate('/');
@@ -170,36 +179,45 @@ export function ArticleViewer() {
 	return (
 		<>
 			<Header onSettingsChange={setSettings} />
-			<div className='mx-auto max-w-3xl px-4 py-8'>
+			<div className="mx-auto max-w-3xl px-4 py-8">
 				<title>{title}</title>
 
-				<ArticleHeader article={article} db={db} setArticle={setArticle} settings={settings} />
-				<Separator className='my-2' />
+				<ArticleHeader
+					article={article}
+					db={db}
+					setArticle={setArticle}
+					settings={settings}
+				/>
+				<Separator className="my-2" />
 
 				{failed ? (
 					<AlertCard
-						title='Archived article'
-						icon={<ArchiveIcon className='size-16' aria-hidden='true' />}
+						title="Archived article"
+						icon={<ArchiveIcon className="size-16" aria-hidden="true" />}
 					>
-						This article has been archived and is no longer available without an internet
-						connection.
+						This article has been archived and is no longer available without an
+						internet connection.
 					</AlertCard>
-				) : (
+				) : markdown ? (
 					<article className={articleFormatting(settings)}>
-						{markdown ? (
-							<div
-								// biome-ignore lint/security/noDangerouslySetInnerHtml: Markdown content
-								dangerouslySetInnerHTML={{
-									__html: sanitizeDom(markdown),
-								}}
-							/>
-						) : (
-							<ArticleTextSkeleton />
-						)}
+						<div
+							// biome-ignore lint/security/noDangerouslySetInnerHtml: Markdown content
+							dangerouslySetInnerHTML={{
+								__html: sanitizeDom(markdown),
+							}}
+						/>
 					</article>
+				) : (
+					<ArticleTextSkeleton />
 				)}
 
-				{markdown && <FinishedReadingButton db={db} setArticle={setArticle} article={article} />}
+				{markdown && (
+					<FinishedReadingButton
+						db={db}
+						setArticle={setArticle}
+						article={article}
+					/>
+				)}
 			</div>
 		</>
 	);
