@@ -2,14 +2,30 @@ import { Linkify } from '@/components/Linkify';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from '@/components/ui/dialog';
+import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import type { Comment } from '@/lib/types';
 import { cn } from '@/lib/utils';
-import { ExternalLinkIcon, LinkIcon, MoreHorizontalIcon } from 'lucide-react';
+import {
+	Edit2Icon,
+	ExternalLinkIcon,
+	LinkIcon,
+	MoreHorizontalIcon,
+} from 'lucide-react';
 import { useState } from 'react';
 
 export function CommentView({
@@ -21,6 +37,8 @@ export function CommentView({
 }) {
 	const [isCollapsed, setIsCollapsed] = useState(false);
 	const [isExpanded, setIsExpanded] = useState(body?.length < 1200);
+	const [editedName, setEditedName] = useState<string | ''>('');
+
 	const commentUrl = `${url}/comment/${id}`;
 	let substackUrl = `https://substack.com/@${handle}`;
 
@@ -69,42 +87,89 @@ export function CommentView({
 				<div className="max-w-full flex-1 space-y-1.5 overflow-hidden">
 					<div className="flex items-center justify-between">
 						{name ? (
-							<a
-								href={substackUrl}
-								target="_blank"
-								rel="noreferrer"
-								className="font-medium text-sm hover:underline"
-							>
-								{name}
-							</a>
+							<span>
+								<a
+									href={substackUrl}
+									target="_blank"
+									rel="noreferrer"
+									className="font-medium text-sm hover:underline"
+								>
+									{editedName ? editedName : name}
+								</a>{' '}
+								{editedName && (
+									<span className="text-neutral-500 dark:text-neutral-400">
+										({name})
+									</span>
+								)}
+							</span>
 						) : (
 							<span className="font-medium text-sm">Comment deleted</span>
 						)}
 
-						<DropdownMenu>
-							<DropdownMenuTrigger asChild>
-								<div className="hover:cursor-pointer">
-									<MoreHorizontalIcon className="size-4" />
-								</div>
-							</DropdownMenuTrigger>
-							<DropdownMenuContent align="end">
-								<a href={commentUrl} target="_blank" rel="noreferrer">
-									<DropdownMenuItem className="cursor-pointer">
-										<ExternalLinkIcon className="mr-2 size-4" />
-										<span>Open</span>
+						<Dialog>
+							<DropdownMenu>
+								<DropdownMenuTrigger asChild>
+									<div className="hover:cursor-pointer">
+										<MoreHorizontalIcon className="size-4" />
+									</div>
+								</DropdownMenuTrigger>
+								<DropdownMenuContent align="end">
+									<a href={commentUrl} target="_blank" rel="noreferrer">
+										<DropdownMenuItem className="cursor-pointer">
+											<ExternalLinkIcon className="mr-2 size-4" />
+											<span>Open</span>
+										</DropdownMenuItem>
+									</a>
+									<DropdownMenuItem
+										onClick={() => {
+											navigator.clipboard.writeText(commentUrl);
+										}}
+										className="cursor-pointer"
+									>
+										<LinkIcon className="mr-2 size-4" />
+										<span>Copy link</span>
 									</DropdownMenuItem>
-								</a>
-								<DropdownMenuItem
-									onClick={() => {
-										navigator.clipboard.writeText(commentUrl);
-									}}
-									className="cursor-pointer"
-								>
-									<LinkIcon className="mr-2 size-4" />
-									<span>Copy link</span>
-								</DropdownMenuItem>
-							</DropdownMenuContent>
-						</DropdownMenu>
+									<DialogTrigger asChild>
+										<DropdownMenuItem className="cursor-pointer">
+											<Edit2Icon className="mr-2 size-4" />
+											<span>Edit name</span>
+										</DropdownMenuItem>
+									</DialogTrigger>
+								</DropdownMenuContent>
+							</DropdownMenu>
+
+							<DialogContent>
+								<DialogHeader>
+									<DialogTitle>Edit name</DialogTitle>
+									<DialogDescription>
+										You can edit the name of the user who posted this comment.
+										What would you like to change it to?
+									</DialogDescription>
+								</DialogHeader>
+								<div className="grid flex-1 gap-2">
+									<Label htmlFor="name" className="sr-only">
+										Name
+									</Label>
+									<Input
+										id="name"
+										value={editedName}
+										maxLength={50}
+										placeholder={name}
+										onChange={(e) => setEditedName(e.target.value)}
+									/>
+								</div>
+								<DialogFooter>
+									<Button
+										variant="secondary"
+										type="button"
+										onClick={() => setEditedName(name)}
+									>
+										Reset
+									</Button>
+									<Button type="submit">Confirm</Button>
+								</DialogFooter>
+							</DialogContent>
+						</Dialog>
 					</div>
 
 					{!isCollapsed &&
