@@ -121,7 +121,7 @@ export function Preferences({
 								<div className='flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center'>
 									<div className='grid gap-1.5'>
 										<Label>Font Family</Label>
-										<p className='text-neutral-500 text-sm dark:text-neutral-400'>
+										<p className='text-muted-foreground text-sm'>
 											Change the font family of the article
 										</p>
 									</div>
@@ -145,7 +145,7 @@ export function Preferences({
 								<div className='flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center'>
 									<div className='grid gap-1.5'>
 										<Label>Font Size</Label>
-										<p className='text-neutral-500 text-sm dark:text-neutral-400'>
+										<p className='text-muted-foreground text-sm'>
 											Change the font size of the article
 										</p>
 									</div>
@@ -160,7 +160,7 @@ export function Preferences({
 								<div className='flex items-center justify-between gap-4'>
 									<div className='grid gap-1.5'>
 										<Label>Print Images</Label>
-										<p className='text-neutral-500 text-sm dark:text-neutral-400'>
+										<p className='text-muted-foreground text-sm'>
 											Whether to include images when printing
 										</p>
 									</div>
@@ -174,7 +174,7 @@ export function Preferences({
 								<div className='flex items-center justify-between gap-4'>
 									<div className='grid gap-1.5'>
 										<Label>Save Archived Content</Label>
-										<p className='text-neutral-500 text-sm dark:text-neutral-400'>
+										<p className='text-muted-foreground text-sm'>
 											Whether to save archived articles offline
 										</p>
 									</div>
@@ -188,7 +188,7 @@ export function Preferences({
 								<div className='flex items-center justify-between gap-4'>
 									<div className='grid gap-1.5'>
 										<Label>Save Article Location</Label>
-										<p className='text-neutral-500 text-sm dark:text-neutral-400'>
+										<p className='text-muted-foreground text-sm'>
 											Whether to save and the last position in the article
 										</p>
 									</div>
@@ -202,7 +202,7 @@ export function Preferences({
 								<div className='flex items-center justify-between gap-4'>
 									<div className='grid gap-1.5'>
 										<Label>Save Comments</Label>
-										<p className='text-neutral-500 text-sm dark:text-neutral-400'>
+										<p className='text-muted-foreground text-sm'>
 											Whether to save comments offline automatically
 										</p>
 									</div>

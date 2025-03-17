@@ -22,7 +22,7 @@ export function NoteHeader({
 						</Avatar>
 					</a>
 					<p className={cn(fontFormatting(settings), 'text-slate-950 dark:text-slate-50')}>
-						<p className='text-neutral-500 dark:text-neutral-400'>
+						<p className='text-muted-foreground'>
 							<a target='_blank' href={note.authorUrl} rel='noreferrer' className='hover:underline'>
 								{note?.author}
 							</a>

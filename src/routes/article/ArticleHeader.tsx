@@ -26,12 +26,7 @@ export function ArticleHeader({
 			>
 				{article?.title}
 			</h1>
-			<p
-				className={cn(
-					fontFormatting(settings),
-					'mb-4 text-neutral-500 text-xl dark:text-neutral-400',
-				)}
-			>
+			<p className={cn(fontFormatting(settings), 'mb-4 text-muted-foreground text-xl')}>
 				{article?.subtitle}
 			</p>
 			<div className='flex items-center space-x-2'>
@@ -42,12 +37,7 @@ export function ArticleHeader({
 					</Avatar>
 				</a>
 				<div>
-					<p
-						className={cn(
-							fontFormatting(settings),
-							'text-md text-neutral-500 dark:text-neutral-400',
-						)}
-					>
+					<p className={cn(fontFormatting(settings), 'text-md text-muted-foreground')}>
 						<a
 							target='_blank'
 							href={article.authorUrl}

@@ -35,7 +35,7 @@ export function CommentHeader({
 			<h1 className='mb-2 font-bold text-slate-950 text-xl dark:text-slate-50'>
 				{commentPage.title}
 			</h1>
-			<p className='mb-4 text-neutral-500 dark:text-neutral-400'>
+			<p className='mb-4 text-muted-foreground'>
 				<a
 					target='_blank'
 					href={commentPage.authorUrl}

@@ -4,8 +4,7 @@
 	"version": "1.0.0",
 	"type": "module",
 	"scripts": {
-		"start-dev": "node --import=tsx --watch ./server/index.ts",
-		"dev": "vite build --watch --sourcemap true --minify false",
+		"dev": "vite build --watch --sourcemap true --minify false & node --import=tsx --watch ./server/index.ts",
 		"start": "tsx ./server/index.ts",
 		"build": "tsc && vite build",
 		"preview": "vite preview",

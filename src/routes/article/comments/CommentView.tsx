@@ -91,9 +91,7 @@ export function CommentView({
 								>
 									{editedName ? editedName : name}
 								</a>{' '}
-								{editedName && (
-									<span className='text-neutral-500 text-sm dark:text-neutral-400'>({name})</span>
-								)}
+								{editedName && <span className='text-muted-foreground text-sm'>({name})</span>}
 							</span>
 						) : (
 							<span className='font-medium text-sm'>Comment deleted</span>

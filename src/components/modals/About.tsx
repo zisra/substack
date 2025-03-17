@@ -33,7 +33,7 @@ export function About() {
 			<CredenzaContent>
 				<CredenzaHeader>
 					<CredenzaTitle>Info</CredenzaTitle>
-					<CredenzaDescription className='text-neutral-500 dark:text-neutral-400'>
+					<CredenzaDescription className='text-muted-foreground'>
 						Use this application to save{' '}
 						<a className='underline' href='https://substack.com' target='_blank' rel='noreferrer'>
 							Substack
@@ -75,9 +75,7 @@ export function About() {
 							<div className='flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center'>
 								<div className='grid gap-1.5'>
 									<Label>Manage Storage</Label>
-									<p className='text-neutral-500 text-sm dark:text-neutral-400'>
-										Data stored: {dataStored} MB
-									</p>
+									<p className='text-muted-foreground text-sm'>Data stored: {dataStored} MB</p>
 								</div>
 								<Button
 									variant='destructive'

@@ -30,7 +30,7 @@ export function ArticleCard({
 								src={authorImg}
 								alt={author}
 							/>
-							<span className='text-neutral-500 text-sm dark:text-neutral-400'>{author}</span>
+							<span className='text-muted-foreground text-sm'>{author}</span>
 						</div>
 						<h2 className='mt-2 font-bold text-lg'>{title}</h2>
 					</div>

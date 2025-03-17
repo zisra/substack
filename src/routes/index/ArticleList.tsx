@@ -69,14 +69,10 @@ export function ArticleList({
 											<AvatarImage src={article.authorImg} alt={article.author} />
 											<AvatarFallback>{article.author.charAt(0)}</AvatarFallback>
 										</Avatar>
-										<span className='text-neutral-500 text-sm dark:text-neutral-400'>
-											{article.author}
-										</span>
+										<span className='text-muted-foreground text-sm'>{article.author}</span>
 									</div>
 									<h3 className='mb-2 font-bold text-lg'>{article.title}</h3>
-									<p className='text-neutral-500 text-sm dark:text-neutral-400'>
-										{article.subtitle}
-									</p>
+									<p className='text-muted-foreground text-sm'>{article.subtitle}</p>
 								</div>
 								{article.image && (
 									<div className='ml-4 shrink-0'>
@@ -127,7 +123,7 @@ function ArticleListDropdown({
 			<DropdownMenuTrigger asChild>
 				<Button variant='ghost' className='size-8 p-0'>
 					<span className='sr-only'>Open menu</span>
-					<MoreVerticalIcon className='size-4 text-neutral-500 dark:text-neutral-400' />
+					<MoreVerticalIcon className='size-4 text-muted-foreground' />
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align='end' className='w-40'>
