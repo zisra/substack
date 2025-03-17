@@ -15,7 +15,7 @@ export function Header({
 	const location = useLocation();
 
 	return (
-		<header className='top-0 z-50 w-full border-neutral-200 border-b bg-white p-2 md:sticky dark:border-neutral-800 dark:bg-neutral-950 print:hidden'>
+		<header className='top-0 z-50 w-full border-b bg-background p-2 md:sticky print:hidden'>
 			<div className='flex justify-between'>
 				<div className='flex gap-4'>
 					<Link

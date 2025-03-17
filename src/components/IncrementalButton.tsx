@@ -55,7 +55,7 @@ export function IncrementalButton({
 			>
 				<MinusIcon />
 			</Button>
-			<Card className='flex h-9 w-26 select-none items-center justify-center rounded-md text-sm shadow-none'>
+			<Card className='flex h-9 w-26 select-none items-center justify-center rounded-md text-sm'>
 				{localValue ? options[localValue] : null}
 			</Card>
 			<Button
