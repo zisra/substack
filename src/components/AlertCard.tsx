@@ -10,7 +10,7 @@ export function AlertCard({
 	icon: React.ReactNode;
 }) {
 	return (
-		<Card className='mb-8'>
+		<Card className='mb-8 shadow-xs'>
 			<CardContent className='flex flex-col items-center space-y-4 p-6'>
 				{icon}
 				<h3 className='text-md'>{title}</h3>

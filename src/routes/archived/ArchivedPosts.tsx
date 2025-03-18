@@ -36,11 +36,8 @@ export function ArchivedPosts() {
 					<h2 className='font-bold text-2xl'>Archived Articles</h2>
 					<DeleteArchivedPosts db={db} articles={articles} setArticles={setArticles} />
 				</div>
-				<Card className='mb-6 p-0 py-0'>
-					<Link
-						to='/'
-						className='flex cursor-pointer items-center gap-2 p-4 transition-all duration-200 ease-in-out hover:bg-accent/50'
-					>
+				<Card className='mb-6 p-0 py-0 shadow-xs transition-all duration-200 hover:bg-accent/50'>
+					<Link to='/' className='flex items-center gap-2 p-4 '>
 						<ChevronLeftIcon className='size-4 text-muted-foreground' />
 						<span>View All Articles</span>
 					</Link>

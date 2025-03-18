@@ -17,7 +17,7 @@ export function ArticleCard({
 	authorImg: string;
 }) {
 	return (
-		<Card className='mx-auto w-full max-w-md cursor-pointer transition-all duration-200 ease-in-out hover:bg-accent/50 hover:shadow-xs'>
+		<Card className='mx-auto w-full max-w-md cursor-pointer shadow-xs transition-all duration-200 hover:bg-accent/50'>
 			<Link to={`/article/?url=${encodeURIComponent(url)}`} className='grow'>
 				<div className='mx-auto max-w-xl overflow-hidden'>
 					{image && (
@@ -50,7 +50,7 @@ export function Quote({
 	author: string;
 }) {
 	return (
-		<Card className='mx-auto w-full max-w-2xl cursor-pointer duration-200 ease-in-out hover:bg-accent/50'>
+		<Card className='mx-auto w-full max-w-2xl cursor-pointer shadow-xs duration-200 hover:bg-accent/50'>
 			<Link to={`/article/?url=${encodeURIComponent(url)}`} className='grow'>
 				<CardContent className='pt-6'>
 					<div className='relative'>
@@ -81,7 +81,7 @@ export default function Comment({
 }) {
 	return (
 		<Link to={`/note/?url=${encodeURIComponent(`https://substack.com/@${handle}/note/${id}`)}`}>
-			<Card className='flex cursor-pointer items-center space-x-4 p-4 duration-200 ease-in-out hover:bg-accent/50'>
+			<Card className='flex cursor-pointer items-center space-x-4 p-4 shadow-xs duration-200 hover:bg-accent/50'>
 				<Avatar className='size-10'>
 					<AvatarImage src={avatar} alt={author} />
 					<AvatarFallback>{author.charAt(0)}</AvatarFallback>

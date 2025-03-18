@@ -55,10 +55,7 @@ export function ArticleList({
 
 	return articles.map((article) => {
 		return (
-			<Card
-				key={article.url}
-				className='transition-all duration-200 ease-in-out hover:bg-accent/50 hover:shadow-xs'
-			>
+			<Card key={article.url} className='shadow-xs transition-all duration-200 hover:bg-accent/50'>
 				<CardContent className='py-4 pr-2 pl-4'>
 					<div className='flex items-start justify-between'>
 						<Link to={`/article/?url=${encodeURIComponent(article.url)}`} className='grow'>
