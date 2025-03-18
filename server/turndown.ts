@@ -1,4 +1,5 @@
 import TurndownService from 'turndown';
+import { extractStatusId } from './utils';
 
 const turndownService = new TurndownService({
 	headingStyle: 'atx',
@@ -71,7 +72,7 @@ turndownService.addRule('tweet-substack', {
 		const link = node.querySelector('a')?.getAttribute('href');
 		const name = node.querySelector('.tweet-author-name')?.textContent;
 
-		return `<div class="center"><a target="_blank" rel="noreferrer" href="${link}">Tweet by ${name}</a></div>`;
+		return `<blockquote class="twitter-tweet"><a href="${link}">Tweet by ${name}</a></blockquote>`;
 	},
 });
 
