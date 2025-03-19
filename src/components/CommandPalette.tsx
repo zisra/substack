@@ -86,7 +86,7 @@ export function CommandPalette({
 
 	return (
 		<CommandDialog
-			shouldFilter={false}
+			// filter={false} TO-DO: Fix this
 			open={isOpen}
 			onOpenChange={handleClose} // Use the new handler
 		>

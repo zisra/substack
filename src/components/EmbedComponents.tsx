@@ -17,13 +17,11 @@ export function ArticleCard({
 	authorImg: string;
 }) {
 	return (
-		<Card className='mx-auto w-full max-w-md cursor-pointer shadow-xs transition-all duration-200 hover:bg-accent/50'>
+		<Card className='mx-auto w-full max-w-lg cursor-pointer p-2 shadow-xs transition-all duration-200 hover:bg-accent/50'>
 			<Link to={`/article/?url=${encodeURIComponent(url)}`} className='grow'>
 				<div className='mx-auto max-w-xl overflow-hidden'>
-					{image && (
-						<img className='h-56 w-full rounded-t-md object-cover' src={image} alt={title} />
-					)}
-					<div className='p-4'>
+					{image && <img className='h-56 w-full rounded-md object-cover' src={image} alt={title} />}
+					<div className='p-2 pt-4'>
 						<div className='flex items-center'>
 							<img
 								className='pointer-events-none mr-2 aspect-16/9 size-6 rounded-full'
@@ -50,7 +48,7 @@ export function Quote({
 	author: string;
 }) {
 	return (
-		<Card className='mx-auto w-full max-w-2xl cursor-pointer shadow-xs duration-200 hover:bg-accent/50'>
+		<Card className='mx-auto w-full max-w-2xl cursor-pointer px-2 py-4 shadow-xs duration-200 hover:bg-accent/50'>
 			<Link to={`/article/?url=${encodeURIComponent(url)}`} className='grow'>
 				<CardContent className='pt-6'>
 					<div className='relative'>

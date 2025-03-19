@@ -1,5 +1,4 @@
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { MinusIcon, PlusIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -51,19 +50,17 @@ export function IncrementalButton({
 				variant='outline'
 				size='icon'
 				onClick={decreaseFontSize}
-				className='[&:not(:hover)]:bg-transparent'
 				disabled={localValue === Object.keys(options)[0]}
 			>
 				<MinusIcon />
 			</Button>
-			<Card className='flex h-9 w-26 select-none items-center justify-center rounded-md text-sm shadow-xs'>
+			<Button className='pointer-events-none w-26' variant='outline'>
 				{localValue ? options[localValue] : null}
-			</Card>
+			</Button>
 			<Button
 				variant='outline'
 				size='icon'
 				onClick={increaseFontSize}
-				className='[&:not(:hover)]:bg-transparent'
 				disabled={localValue === Object.keys(options).slice(-1)[0]}
 			>
 				<PlusIcon />

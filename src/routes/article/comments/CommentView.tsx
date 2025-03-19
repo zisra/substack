@@ -171,7 +171,7 @@ export function CommentView({
 										<button
 											type='button'
 											onClick={toggleExpand}
-											className='font-bold text-neutral-700 text-xs hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-neutral-100'
+											className='font-bold text-neutral-700 text-xs transition-50 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-neutral-100'
 										>
 											Expand full comment
 										</button>

@@ -1,5 +1,5 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
+@import "tailwindcss";
+@import "tw-animate-css";
 
 @config '../tailwind.config.ts';
 
@@ -69,7 +69,7 @@
 		@apply bg-background text-foreground;
 	}
 	button:not(:disabled),
-	[role='button']:not(:disabled) {
+	[role="button"]:not(:disabled) {
 		cursor: pointer;
 	}
 }
