@@ -29,12 +29,13 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 @media print {
-	body {
-		background-color: white;
-	}
-
 	.footnote-content {
 		margin-top: -5px;
+	}
+
+	iframe,
+	.twitter-tweet {
+		display: none !important;
 	}
 }
 
