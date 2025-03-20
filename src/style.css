@@ -37,6 +37,15 @@ input[type="number"]::-webkit-outer-spin-button {
 	.twitter-tweet {
 		display: none !important;
 	}
+
+	hr {
+		display: block;
+		height: 1px;
+		background: transparent;
+		width: 100%;
+		border: none;
+		border-top: solid 1px oklch(0.928 0.006 264.531);
+	}
 }
 
 @media (min-width: 768px) {
