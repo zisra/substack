@@ -72,6 +72,18 @@
 	--sidebar-ring: oklch(0.556 0 0);
 }
 
+.theme-mono {
+	--font-sans: var(--font-mono);
+	--primary: var(--color-neutral-600);
+	--primary-foreground: var(--color-neutral-50);
+	--radius: 0.2rem;
+
+	@variant dark {
+		--primary: var(--color-neutral-500);
+		--primary-foreground: var(--color-neutral-50);
+	}
+}
+
 @theme inline {
 	--radius-sm: calc(var(--radius) - 4px);
 	--radius-md: calc(var(--radius) - 2px);
