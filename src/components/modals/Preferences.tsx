@@ -130,7 +130,7 @@ export function Preferences({
 										defaultValue='sans'
 										onValueChange={(value) => setFontFamily(value as keyof typeof fonts)}
 									>
-										<SelectTrigger className='max-w-[192px]'>
+										<SelectTrigger className='w-[192px]'>
 											{fontFamily && <SelectValue placeholder={fonts[fontFamily]} />}
 										</SelectTrigger>
 										<SelectContent>

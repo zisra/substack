@@ -54,7 +54,7 @@ export function IncrementalButton({
 			>
 				<MinusIcon />
 			</Button>
-			<Button className='pointer-events-none w-26' variant='outline'>
+			<Button className='pointer-events-none w-26 font-normal' variant='outline'>
 				{localValue ? options[localValue] : null}
 			</Button>
 			<Button
