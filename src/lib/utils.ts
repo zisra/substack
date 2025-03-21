@@ -25,8 +25,8 @@ export function articleFormatting(settings: Settings | null) {
 		settings?.formatting.fontSize === 'lg' && 'prose-lg',
 		settings?.formatting.fontSize === 'xl' && 'prose-xl',
 		settings?.formatting.printImages === false &&
-			'print:prose-img:hidden print:prose-figcaption:hidden',
-		'print:prose-sm! prose space-y-4 prose-img:mx-auto prose-img:max-h-[650px] prose-figcaption:text-center dark:prose-invert prose-figcaption:mt-[-18px] prose-blockquote:font-normal prose-blockquote:not-italic prose-hr:border-input max-w-none break-words',
+			'print:prose-figcaption:hidden print:prose-img:hidden',
+		'print:prose-sm! prose dark:prose-invert prose-img:mx-auto prose-figcaption:mt-[-20px]! prose-img:max-h-[650px] max-w-none space-y-4 break-words prose-hr:border-input prose-figcaption:text-center prose-blockquote:font-normal prose-blockquote:not-italic print:prose-figcaption:mt-[-20px]!',
 	);
 }
 

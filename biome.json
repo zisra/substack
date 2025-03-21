@@ -19,7 +19,13 @@
 				"useExhaustiveDependencies": "off"
 			},
 			"nursery": {
-				"useSortedClasses": "error"
+				"useSortedClasses": {
+					"level": "error",
+					"options": {
+						"attributes": ["classList"],
+						"functions": ["clsx", "cva", "cn"]
+					}
+				}
 			}
 		}
 	},

@@ -21,7 +21,7 @@ export function ArticleHeader({
 			<h1
 				className={cn(
 					fontFormatting(settings),
-					'mb-2 font-bold text-4xl text-slate-950 dark:text-slate-50 print:tracking-tighter',
+					'mb-2 font-bold text-4xl text-slate-950 dark:text-slate-50',
 				)}
 			>
 				{article?.title}
