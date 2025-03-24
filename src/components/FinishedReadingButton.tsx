@@ -18,8 +18,8 @@ export function FinishedReadingButton({
 
 	return (
 		<>
-			<Separator className="print:hidden! my-2" />
-			<div className="pt-4 text-center print:hidden">
+			<Separator className='print:hidden! my-2' />
+			<div className='pt-4 text-center print:hidden'>
 				{!article.archived ? (
 					<Button
 						onClick={async () => {
