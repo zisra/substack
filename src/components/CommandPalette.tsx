@@ -66,7 +66,8 @@ export function CommandPalette({
 					(article) =>
 						article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
 						article.subtitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
-						article.author.toLowerCase().includes(searchTerm.toLowerCase()),
+						article.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
+						article.url.toLowerCase().includes(searchTerm.toLowerCase()),
 				),
 			);
 		}
@@ -98,7 +99,7 @@ export function CommandPalette({
 			/>
 			<CommandList className='py-2'>
 				<CommandEmpty>
-					<div className='my-8 text-center'>No results found.</div>
+					<div className='my-8 text-center'>No results found</div>
 				</CommandEmpty>
 				<CommandGroup>
 					{filteredArticles.map((article) => (

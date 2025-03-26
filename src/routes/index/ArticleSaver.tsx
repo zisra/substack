@@ -124,7 +124,7 @@ export function ArticleSaver({ openCommand }: { openCommand: () => void }) {
 						<SearchIcon />
 					</Button>
 				</div>
-				<Card className='mb-6 p-0 py-0 shadow-xs transition-all duration-200 hover:bg-card-hover'>
+				<Card className='mb-6 p-0 py-0 shadow-xs transition-all duration-200 hover:bg-background hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:hover:bg-input/50'>
 					<Link to='/archived' className='flex items-center justify-between p-4'>
 						<span>View Archived Articles</span>
 						<ChevronRightIcon className='size-4 text-muted-foreground' />

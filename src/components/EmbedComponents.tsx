@@ -17,7 +17,7 @@ export function ArticleCard({
 	authorImg: string;
 }) {
 	return (
-		<Card className='mx-auto w-full max-w-lg cursor-pointer p-2 shadow-xs transition-all duration-200 hover:bg-card-hover'>
+		<Card className='mx-auto w-full max-w-lg cursor-pointer p-2 shadow-xs transition-all duration-200 hover:bg-background hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:hover:bg-input/50'>
 			<Link to={`/article/?url=${encodeURIComponent(url)}`} className='grow'>
 				<div className='mx-auto max-w-xl overflow-hidden'>
 					{image && <img className='h-56 w-full rounded-md object-cover' src={image} alt={title} />}
@@ -48,7 +48,7 @@ export function Quote({
 	author: string;
 }) {
 	return (
-		<Card className='mx-auto w-full max-w-2xl cursor-pointer px-2 py-4 shadow-xs duration-200 hover:bg-card-hover'>
+		<Card className='mx-auto w-full max-w-2xl cursor-pointer px-2 py-4 shadow-xs duration-200 hover:bg-background hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:hover:bg-input/50'>
 			<Link to={`/article/?url=${encodeURIComponent(url)}`} className='grow'>
 				<CardContent className='pt-4'>
 					<div className='relative'>
@@ -79,7 +79,7 @@ export default function Comment({
 }) {
 	return (
 		<Link to={`/note/?url=${encodeURIComponent(`https://substack.com/@${handle}/note/${id}`)}`}>
-			<Card className='flex cursor-pointer items-center space-x-4 p-4 shadow-xs duration-200 hover:bg-card-hover'>
+			<Card className='flex cursor-pointer items-center space-x-4 p-4 shadow-xs duration-200 hover:bg-background hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:hover:bg-input/50'>
 				<Avatar className='size-10'>
 					<AvatarImage src={avatar} alt={author} />
 					<AvatarFallback>{author.charAt(0)}</AvatarFallback>
