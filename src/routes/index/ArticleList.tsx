@@ -57,7 +57,7 @@ export function ArticleList({
 		return (
 			<Card
 				key={article.url}
-				className='shadow-xs transition-all duration-200 hover:bg-background hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:hover:bg-input/50'
+				className='shadow-xs transition-all duration-200 hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:hover:bg-input/50'
 			>
 				<CardContent className='py-4 pr-2 pl-4'>
 					<div className='flex items-start justify-between'>
