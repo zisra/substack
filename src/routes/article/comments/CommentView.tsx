@@ -72,7 +72,7 @@ export function CommentView({
 						<div
 							onClick={toggleCollapse}
 							onKeyDown={toggleCollapse}
-							className='relative mt-2 h-full w-px transition-50 transition-all hover:cursor-pointer hover:bg-neutral-400 dark:hover:bg-neutral-500'
+							className='relative mt-2 h-full w-px bg-input transition-50 transition-all hover:cursor-pointer hover:bg-neutral-400 dark:hover:bg-neutral-600'
 						>
 							<div className='-left-3 -right-3 absolute top-0 bottom-0 h-full' />
 						</div>

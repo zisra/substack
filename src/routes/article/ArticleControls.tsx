@@ -1,5 +1,6 @@
 import { Button, buttonVariants } from '@/components/ui/button';
 import {
+	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
@@ -8,7 +9,6 @@ import { Separator } from '@/components/ui/separator';
 import { useIsOffline } from '@/hooks/useIsOffline';
 import type { Database } from '@/lib/database';
 import type { ArticleSaved } from '@/lib/types';
-import { DropdownMenu } from '@radix-ui/react-dropdown-menu';
 import {
 	ArchiveIcon,
 	ArchiveRestoreIcon,
