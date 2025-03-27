@@ -40,7 +40,10 @@ export class Database {
 	}
 
 	async saveArticle(article: Article) {
-		if (!this.db) return;
+		if (!this.db) {
+			await this.open();
+			if (!this.db) return;
+		}
 		const tx = this.db.transaction('articles', 'readwrite');
 		const store = tx.objectStore('articles');
 
@@ -99,7 +102,11 @@ export class Database {
 	}
 
 	async getArticles(includeAll?: true) {
-		if (!this.db) return;
+		if (!this.db) {
+			await this.open();
+			if (!this.db) return;
+		}
+
 		const tx = this.db.transaction('articles', 'readonly');
 		const store = tx.objectStore('articles');
 		const articles = await store.getAll();
@@ -114,7 +121,11 @@ export class Database {
 	}
 
 	async getArchivedArticles() {
-		if (!this.db) return;
+		if (!this.db) {
+			await this.open();
+			if (!this.db) return;
+		}
+
 		const tx = this.db.transaction('articles', 'readonly');
 		const store = tx.objectStore('articles');
 		const articles = await store.getAll();
@@ -123,14 +134,21 @@ export class Database {
 	}
 
 	async getArticle(url: string) {
-		if (!this.db) return;
+		if (!this.db) {
+			await this.open();
+			if (!this.db) return;
+		}
+
 		const tx = this.db.transaction('articles', 'readonly');
 		const store = tx.objectStore('articles');
 		return store.get(url);
 	}
 
 	async archiveArticle(url: string) {
-		if (!this.db) return;
+		if (!this.db) {
+			await this.open();
+			if (!this.db) return;
+		}
 		const settings = await this.getSettings();
 
 		const tx = this.db.transaction('articles', 'readwrite');
@@ -160,7 +178,14 @@ export class Database {
 	}
 
 	async unArchiveArticle(url: string) {
-		if (!this.db) return;
+		if (!this.db) {
+			await this.open();
+			if (!this.db) {
+				await this.open();
+				if (!this.db) return;
+			}
+		}
+
 		const tx = this.db.transaction('articles', 'readwrite');
 		const store = tx.objectStore('articles');
 		const article = await store.get(url);
@@ -185,7 +210,11 @@ export class Database {
 	}
 
 	async deleteArticle(url: string) {
-		if (!this.db) return;
+		if (!this.db) {
+			await this.open();
+			if (!this.db) return;
+		}
+
 		const tx = this.db.transaction('articles', 'readwrite');
 		const store = tx.objectStore('articles');
 		const article = await store.get(url);
@@ -207,21 +236,32 @@ export class Database {
 	}
 
 	async getImage(url: string) {
-		if (!this.db) return;
+		if (!this.db) {
+			await this.open();
+			if (!this.db) return;
+		}
+
 		const tx = this.db.transaction('images', 'readonly');
 		const store = tx.objectStore('images');
 		return store.get(url);
 	}
 
 	async deleteImage(url: string) {
-		if (!this.db) return;
+		if (!this.db) {
+			await this.open();
+			if (!this.db) return;
+		}
+
 		const tx = this.db.transaction('images', 'readwrite');
 		const store = tx.objectStore('images');
 		return store.delete(url);
 	}
 
 	async saveImage(url: string) {
-		if (!this.db) return;
+		if (!this.db) {
+			await this.open();
+			if (!this.db) return;
+		}
 
 		const imageResponse = await fetch(`/image-proxy/?url=${encodeURIComponent(url)}`);
 		const imageBlob = await imageResponse.blob();
@@ -233,22 +273,35 @@ export class Database {
 	}
 
 	async getSettings() {
-		if (!this.db) return;
+		if (!this.db) {
+			await this.open();
+			if (!this.db) return;
+		}
+
 		const tx = this.db.transaction('settings', 'readonly');
 		const store = tx.objectStore('settings');
 		return store.get(1);
 	}
 
 	async saveSettings(settings: Settings) {
-		if (!this.db) return;
+		if (!this.db) {
+			await this.open();
+			if (!this.db) return;
+		}
+
 		const tx = this.db.transaction('settings', 'readwrite');
 		const store = tx.objectStore('settings');
 		await store.put(settings);
 	}
 
 	async clearAll() {
-		if (!this.db) return;
+		if (!this.db) {
+			await this.open();
+			if (!this.db) return;
+		}
+
 		const tx = this.db.transaction(['articles', 'images', 'settings'], 'readwrite');
+
 		const articlesStore = tx.objectStore('articles');
 		const imagesStore = tx.objectStore('images');
 		const settingsStore = tx.objectStore('settings');
@@ -259,7 +312,11 @@ export class Database {
 	}
 
 	async saveScrollLocation(url: string, scrollLocation: number) {
-		if (!this.db) return;
+		if (!this.db) {
+			await this.open();
+			if (!this.db) return;
+		}
+
 		const tx = this.db.transaction('articles', 'readwrite');
 		const store = tx.objectStore('articles');
 		const article = await store.get(url);
@@ -271,7 +328,11 @@ export class Database {
 	}
 
 	async saveComments(url: string, comments: Comment[]) {
-		if (!this.db) return;
+		if (!this.db) {
+			await this.open();
+			if (!this.db) return;
+		}
+
 		const tx = this.db.transaction('articles', 'readwrite');
 		const store = tx.objectStore('articles');
 		const article = await store.get(url);
@@ -283,7 +344,11 @@ export class Database {
 	}
 
 	async deleteComments(url: string) {
-		if (!this.db) return;
+		if (!this.db) {
+			await this.open();
+			if (!this.db) return;
+		}
+
 		const tx = this.db.transaction('articles', 'readwrite');
 		const store = tx.objectStore('articles');
 		const article = await store.get(url);

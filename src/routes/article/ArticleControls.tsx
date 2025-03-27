@@ -84,7 +84,6 @@ export function ArticleControls({
 							<DropdownMenuItem
 								className='cursor-pointer'
 								onClick={async () => {
-									await db.open();
 									db.unArchiveArticle(article.url);
 									setArticle({ ...article, archived: false });
 								}}
@@ -97,7 +96,6 @@ export function ArticleControls({
 							<DropdownMenuItem
 								className='cursor-pointer'
 								onClick={async () => {
-									await db.open();
 									db.archiveArticle(article.url);
 									setArticle({ ...article, archived: true });
 								}}
@@ -112,7 +110,6 @@ export function ArticleControls({
 							variant='destructive'
 							onClick={async () => {
 								navigate('/');
-								await db.open();
 								db.deleteArticle(article.url);
 							}}
 						>

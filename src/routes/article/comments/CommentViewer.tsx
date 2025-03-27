@@ -1,7 +1,7 @@
 import { AlertCard } from '@/components/AlertCard';
 import { Header } from '@/components/Header';
 import { Button } from '@/components/ui/button';
-import { Database } from '@/lib/database';
+import { useDatabase } from '@/lib/DatabaseContext';
 import type { Comment, CommentPage, Settings } from '@/lib/types';
 import { CommentHeader } from '@/routes/article/comments/CommentHeader';
 import { LoaderIcon, MessageCircleOffIcon } from 'lucide-react';
@@ -59,7 +59,7 @@ export function CommentViewer() {
 	const navigate = useNavigate();
 
 	const url = searchParams.get('url');
-	const db = new Database();
+	const db = useDatabase();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -69,7 +69,6 @@ export function CommentViewer() {
 			}
 
 			try {
-				await db.open();
 				const article = await db.getArticle(url);
 				const settings = await db.getSettings();
 
@@ -152,13 +151,11 @@ export function CommentViewer() {
 						downloaded={settings?.saveComments === true}
 						onDelete={() => {
 							if (url) {
-								db.open();
 								db.deleteComments(url);
 							}
 						}}
 						onSave={() => {
 							if (url && commentPage.comments) {
-								db.open();
 								db.saveComments(url, commentPage.comments);
 							}
 						}}

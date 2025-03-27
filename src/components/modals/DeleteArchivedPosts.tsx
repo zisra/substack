@@ -43,7 +43,6 @@ export function DeleteArchivedPosts({
 						<Button
 							variant='destructive'
 							onClick={async () => {
-								await db.open();
 								await Promise.all(articles.map((article) => db.deleteArticle(article.url)));
 								setArticles([]);
 							}}

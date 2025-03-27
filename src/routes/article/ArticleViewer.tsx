@@ -3,7 +3,8 @@ import { ArticleSkeleton, ArticleTextSkeleton } from '@/components/ArticleSkelet
 import { FinishedReadingButton } from '@/components/FinishedReadingButton';
 import { Header } from '@/components/Header';
 import { Separator } from '@/components/ui/separator';
-import { Database } from '@/lib/database';
+import { useDatabase } from '@/lib/DatabaseContext';
+import type { Database } from '@/lib/database';
 import type { Article, ArticleSaved, Settings } from '@/lib/types';
 import { articleFormatting, sanitizeDom } from '@/lib/utils';
 import { ArticleHeader } from '@/routes/article/ArticleHeader';
@@ -38,7 +39,7 @@ export function ArticleViewer() {
 	const [searchParams] = useSearchParams();
 	const navigate = useNavigate();
 	const url = searchParams.get('url');
-	const db = new Database();
+	const db = useDatabase();
 
 	const scrollTo = (top: number) => {
 		setTimeout(() => {
@@ -46,10 +47,9 @@ export function ArticleViewer() {
 				top,
 				behavior: 'smooth',
 			});
-		}, 10);
+		}, 25);
 	};
 
-	db.open();
 	const saveScrollPosition = useCallback(() => {
 		if (article) {
 			db.saveScrollLocation(article.url, window.scrollY);
@@ -60,7 +60,6 @@ export function ArticleViewer() {
 	useEffect(() => {
 		const loadArticles = async () => {
 			try {
-				await db.open();
 				const settings = await db.getSettings();
 
 				if (settings) {

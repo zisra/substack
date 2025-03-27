@@ -2,7 +2,7 @@ import { AlertCard } from '@/components/AlertCard';
 import { Header } from '@/components/Header';
 import { NoteSkeleton } from '@/components/NoteSkeleton';
 import { Separator } from '@/components/ui/separator';
-import { Database } from '@/lib/database';
+import { useDatabase } from '@/lib/DatabaseContext';
 import type { Note, Settings } from '@/lib/types';
 import { articleFormatting, sanitizeDom } from '@/lib/utils';
 import { Embeds } from '@/routes/note/Embeds';
@@ -21,7 +21,7 @@ export function NoteViewer() {
 
 	const [searchParams] = useSearchParams();
 	const url = searchParams.get('url');
-	const db = new Database();
+	const db = useDatabase();
 
 	// Fetch note data
 	useEffect(() => {
@@ -75,7 +75,6 @@ export function NoteViewer() {
 	useEffect(() => {
 		const fetchSettings = async () => {
 			try {
-				await db.open();
 				const settings = await db.getSettings();
 
 				if (settings) {

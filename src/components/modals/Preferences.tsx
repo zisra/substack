@@ -19,7 +19,7 @@ import {
 	SelectValue,
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
-import { Database } from '@/lib/database';
+import { useDatabase } from '@/lib/DatabaseContext';
 import type { Settings } from '@/lib/types';
 import { SettingsIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -29,7 +29,7 @@ export function Preferences({
 }: {
 	onSettingsChange?: (settings: Settings) => void;
 }) {
-	const db = new Database();
+	const db = useDatabase();
 
 	const [open, setOpen] = useState(false);
 
@@ -46,7 +46,6 @@ export function Preferences({
 
 	useEffect(() => {
 		const fetchSettings = async () => {
-			await db.open();
 			const settings = await db.getSettings();
 
 			if (settings) {
@@ -78,7 +77,6 @@ export function Preferences({
 
 		if (onSettingsChange) onSettingsChange(settings);
 
-		await db.open();
 		db.saveSettings(settings);
 	};
 

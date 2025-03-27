@@ -1,6 +1,6 @@
 import { CommandDialog, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { useIsOffline } from '@/hooks/useIsOffline';
-import { Database } from '@/lib/database';
+import { useDatabase } from '@/lib/DatabaseContext';
 import type { ArticleSaved } from '@/lib/types';
 import { checkUrlValid } from '@/lib/utils';
 import { CommandEmpty, CommandGroup } from 'cmdk';
@@ -22,10 +22,9 @@ export function CommandPalette({
 	const [articles, setArticles] = useState<ArticleSaved[]>([]);
 	const navigate = useNavigate();
 	const offline = useIsOffline();
+	const db = useDatabase();
 
 	const fetchArticles = useCallback(async () => {
-		const db = new Database();
-		await db.open();
 		const allArticles = await db.getArticles(true);
 		if (allArticles) {
 			setArticles(allArticles);
@@ -67,7 +66,8 @@ export function CommandPalette({
 						article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
 						article.subtitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
 						article.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
-						article.url.toLowerCase().includes(searchTerm.toLowerCase()),
+						(searchTerm.includes('https://') &&
+							article.url.toLowerCase().includes(searchTerm.toLowerCase())),
 				),
 			);
 		}

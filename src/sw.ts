@@ -16,7 +16,6 @@ clientsClaim();
 
 // Open database
 const db = new Database();
-db.open();
 
 // Intercept image requests
 registerRoute(

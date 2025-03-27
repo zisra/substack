@@ -24,10 +24,10 @@ export function ArticleHeader({
 					'mb-2 font-bold text-4xl text-slate-950 dark:text-slate-50',
 				)}
 			>
-				{article?.title}
+				{article.title}
 			</h1>
 			<p className={cn(fontFormatting(settings), 'mb-4 text-muted-foreground text-xl')}>
-				{article?.subtitle}
+				{article.subtitle}
 			</p>
 			<div className='flex items-center space-x-2'>
 				<a target='_blank' href={article.authorUrl} rel='noreferrer'>
@@ -44,7 +44,7 @@ export function ArticleHeader({
 							rel='noreferrer'
 							className='hover:underline'
 						>
-							{article?.author}
+							{article.author}
 						</a>
 					</p>
 				</div>

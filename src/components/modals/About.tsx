@@ -9,7 +9,7 @@ import {
 	CredenzaTrigger,
 } from '@/components/ui/credenza';
 import { Label } from '@/components/ui/label';
-import { Database } from '@/lib/database';
+import { useDatabase } from '@/lib/DatabaseContext';
 import { getDataStored } from '@/lib/utils';
 import { InfoIcon } from 'lucide-react';
 import { useState } from 'react';
@@ -17,7 +17,7 @@ import { useState } from 'react';
 export function About() {
 	const [dataStored, setDataStored] = useState<string | null>(null);
 
-	const db = new Database();
+	const db = useDatabase();
 
 	function updateDataStored() {
 		getDataStored().then((data) => setDataStored(data));
@@ -82,7 +82,6 @@ export function About() {
 									size='sm'
 									className='mb-2 sm:mb-0'
 									onClick={async () => {
-										await db.open();
 										await db.clearAll();
 
 										window.location.href = '/';

@@ -1,7 +1,7 @@
 import { Header } from '@/components/Header';
 import { DeleteArchivedPosts } from '@/components/modals/DeleteArchivedPosts';
 import { Card } from '@/components/ui/card';
-import { Database } from '@/lib/database';
+import { useDatabase } from '@/lib/DatabaseContext';
 import type { ArticleSaved } from '@/lib/types';
 import { ArticleList } from '@/routes/index/ArticleList';
 import { ChevronLeftIcon } from 'lucide-react';
@@ -11,11 +11,10 @@ import { Link } from 'react-router';
 export function ArchivedPosts() {
 	const [articles, setArticles] = useState<ArticleSaved[]>([]);
 
-	const db = new Database();
+	const db = useDatabase();
 
 	useEffect(() => {
 		const loadArticles = async () => {
-			await db.open();
 			const articles = await db.getArchivedArticles();
 
 			if (articles) {
@@ -50,13 +49,11 @@ export function ArchivedPosts() {
 							navigator.clipboard.writeText(url);
 						}}
 						onDelete={async (url) => {
-							await db.open();
 							await db.deleteArticle(url);
 							setArticles(articles.filter((i) => i.url !== url));
 						}}
 						onUnArchive={async (url) => {
 							setArticles(articles.filter((i) => i.url !== url));
-							await db.open();
 							await db.unArchiveArticle(url);
 						}}
 						archivedView={true}

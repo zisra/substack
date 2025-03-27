@@ -21,7 +21,7 @@ import {
 import { Link } from 'react-router';
 
 interface ArticleListProps {
-	articles: ArticleSaved[];
+	articles: ArticleSaved[] | null;
 	onDelete: (url: string) => void;
 	onCopyLink: (url: string) => void;
 	onArchive?: (url: string) => void;
@@ -37,6 +37,10 @@ export function ArticleList({
 	archivedView = false,
 }: ArticleListProps) {
 	const offline = useIsOffline();
+
+	if (articles === null) {
+		return null;
+	}
 
 	if (articles.length === 0) {
 		if (archivedView) {

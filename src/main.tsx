@@ -1,4 +1,5 @@
 import { ThemeProvider } from '@/components/ThemeProvider';
+import { DatabaseProvider } from '@/lib/DatabaseContext';
 import { Archived } from '@/routes/archived';
 import { Article } from '@/routes/article';
 import { Comment } from '@/routes/article/comments';
@@ -50,7 +51,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(root).render(
 	<div vaul-drawer-wrapper=''>
 		<ThemeProvider defaultTheme='dark' storageKey='vite-ui-theme'>
-			<RouterProvider router={router} />
+			<DatabaseProvider>
+				<RouterProvider router={router} />
+			</DatabaseProvider>
 		</ThemeProvider>
 	</div>,
 );

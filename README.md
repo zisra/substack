@@ -6,7 +6,7 @@ Fix:
 
 - [ ] More robust strategy to save location in article
 - [ ] Brush up comments loading
-- [ ] No more `db.open()`
+- [ ] 
 
 Add:
 

@@ -23,7 +23,6 @@ export function FinishedReadingButton({
 				{!article.archived ? (
 					<Button
 						onClick={async () => {
-							await db.open();
 							db.archiveArticle(article.url);
 							setArticle({ ...article, archived: true });
 						}}
@@ -33,7 +32,6 @@ export function FinishedReadingButton({
 				) : (
 					<Button
 						onClick={async () => {
-							await db.open();
 							db.unArchiveArticle(article.url);
 							setArticle({ ...article, archived: false });
 						}}

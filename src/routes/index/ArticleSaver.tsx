@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { useIsOffline } from '@/hooks/useIsOffline';
-import { Database } from '@/lib/database';
+import { useDatabase } from '@/lib/DatabaseContext';
 import type { Article, ArticleSaved } from '@/lib/types';
 import { checkUrlValid } from '@/lib/utils';
 import { ArticleList } from '@/routes/index/ArticleList';
@@ -14,11 +14,11 @@ import { Link } from 'react-router';
 
 export function ArticleSaver({ openCommand }: { openCommand: () => void }) {
 	const [url, setUrl] = useState('');
-	const [articles, setArticles] = useState<ArticleSaved[]>([]);
+	const [articles, setArticles] = useState<ArticleSaved[] | null>(null);
 	const [isSaving, setIsSaving] = useState(false);
 	const offline = useIsOffline();
 
-	const db = new Database();
+	const db = useDatabase();
 
 	const handleSave = async () => {
 		if (!url) return;
@@ -31,8 +31,6 @@ export function ArticleSaver({ openCommand }: { openCommand: () => void }) {
 				setUrl('');
 				throw new Error('Failed to download article');
 			}
-
-			await db.open();
 
 			const data: Article = await response.json();
 			await db.saveArticle(data);
@@ -52,7 +50,6 @@ export function ArticleSaver({ openCommand }: { openCommand: () => void }) {
 
 	useEffect(() => {
 		const loadArticles = async () => {
-			await db.open();
 			const articles = await db.getArticles();
 
 			if (articles) {
@@ -138,12 +135,12 @@ export function ArticleSaver({ openCommand }: { openCommand: () => void }) {
 							navigator.clipboard.writeText(url);
 						}}
 						onDelete={async (url) => {
-							await db.open();
+							if (!articles) return;
 							await db.deleteArticle(url);
 							setArticles(articles.filter((i) => i.url !== url));
 						}}
 						onArchive={async (url) => {
-							await db.open();
+							if (!articles) return;
 							await db.archiveArticle(url);
 							setArticles(articles.filter((i) => i.url !== url));
 						}}
