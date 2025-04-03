@@ -1,5 +1,6 @@
 import { AlertCard } from '@/components/AlertCard';
 import { Header } from '@/components/Header';
+import { LinkCard } from '@/components/LinkCard';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -67,7 +68,7 @@ export function ArticleSaver({ openCommand }: { openCommand: () => void }) {
 			<Header />
 			<div className='container mx-auto max-w-3xl p-4'>
 				{offline ? null : (
-					<Card className='mb-8 py-6 shadow-xs'>
+					<Card className='mb-8 py-6 shadow-xs dark:bg-input/30'>
 						<CardHeader>
 							<CardTitle>Save Substack Articles Offline</CardTitle>
 							<CardDescription>Enter a URL to save an article for offline reading</CardDescription>
@@ -111,7 +112,7 @@ export function ArticleSaver({ openCommand }: { openCommand: () => void }) {
 
 				{offline && (
 					<AlertCard title='Offline' icon={<WifiOffIcon className='size-16' />}>
-						Please connect to the internet to save articles.
+						Please connect to the internet to save articles
 					</AlertCard>
 				)}
 
@@ -121,12 +122,12 @@ export function ArticleSaver({ openCommand }: { openCommand: () => void }) {
 						<SearchIcon />
 					</Button>
 				</div>
-				<Card className='mb-6 p-0 py-0 shadow-xs transition-all duration-200 hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:hover:bg-input/50'>
+				<LinkCard>
 					<Link to='/archived' className='flex items-center justify-between p-4'>
 						<span>View Archived Articles</span>
 						<ChevronRightIcon className='size-4 text-muted-foreground' />
 					</Link>
-				</Card>
+				</LinkCard>
 
 				<div className='grid gap-4'>
 					<ArticleList

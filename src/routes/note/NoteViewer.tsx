@@ -97,14 +97,13 @@ export function NoteViewer() {
 			<Header onSettingsChange={setSettings} />
 			<div className='mx-auto max-w-3xl px-4 py-8'>
 				<NoteHeader note={note} settings={settings} />
-				<Separator className='my-6' />
+				<Separator className='my-4' />
 				{failed ? (
 					<AlertCard
 						title='Archived article'
 						icon={<ArchiveIcon className='size-16' aria-hidden='true' />}
 					>
-						This article has been archived and is no longer available without an internet
-						connection.
+						This article has been archived and is no longer available without an internet connection
 					</AlertCard>
 				) : (
 					<>

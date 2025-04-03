@@ -46,13 +46,13 @@ export function ArticleList({
 		if (archivedView) {
 			return (
 				<AlertCard title='No archived articles' icon={<ArchiveIcon className='size-16' />}>
-					Go back and archive some articles that you finished reading.
+					Go back and archive some articles that you finished reading
 				</AlertCard>
 			);
 		}
 		return (
 			<AlertCard title='No articles saved' icon={<BookOpenTextIcon className='size-16' />}>
-				Get started by saving your first article.
+				Get started by saving your first article
 			</AlertCard>
 		);
 	}

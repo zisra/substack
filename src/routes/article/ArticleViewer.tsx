@@ -180,8 +180,7 @@ export function ArticleViewer() {
 						title='Archived article'
 						icon={<ArchiveIcon className='size-16' aria-hidden='true' />}
 					>
-						This article has been archived and is no longer available without an internet
-						connection.
+						This article has been archived and is no longer available without an internet connection
 					</AlertCard>
 				) : markdown ? (
 					<article className={articleFormatting(settings)}>
