@@ -1,11 +1,10 @@
 import { AlertCard } from '@/components/AlertCard';
-import { Header } from '@/components/Header';
 import { LinkCard } from '@/components/LinkCard';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { useIsOffline } from '@/hooks/useIsOffline';
-import { useDatabase } from '@/lib/DatabaseContext';
+import { useDatabase } from '@/lib/context/DatabaseContext';
 import type { Article, ArticleSaved } from '@/lib/types';
 import { checkUrlValid } from '@/lib/utils';
 import { ArticleList } from '@/routes/index/ArticleList';
@@ -65,7 +64,6 @@ export function ArticleSaver({ openCommand }: { openCommand: () => void }) {
 
 	return (
 		<>
-			<Header />
 			<div className='container mx-auto max-w-3xl p-4'>
 				{offline ? null : (
 					<Card className='mb-8 py-6 shadow-xs dark:bg-input/30'>

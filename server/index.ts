@@ -2,6 +2,7 @@ import { readFile } from 'node:fs/promises';
 import { serve } from '@hono/node-server';
 import { serveStatic } from '@hono/node-server/serve-static';
 import { Hono } from 'hono';
+import { compress } from 'hono/compress';
 import { isScraper, renderHtml } from './metaTags';
 import { downloadArticle } from './routes/download-article';
 import { downloadComments } from './routes/download-comments';
@@ -10,6 +11,9 @@ import { imageProxy } from './routes/image-proxy';
 import { scrapeSubstackMeta } from './scrapers/substack';
 
 const app = new Hono();
+
+// Compress responses
+app.use(compress());
 
 // Send index.html for all other routes
 app.notFound(async (c) => {

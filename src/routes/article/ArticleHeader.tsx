@@ -1,7 +1,8 @@
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { AvatarFallback } from '@/components/ui/avatar';
+import { useSettings } from '@/lib/context/SettingsContext';
 import type { Database } from '@/lib/database';
-import type { ArticleSaved, Settings } from '@/lib/types';
+import type { ArticleSaved } from '@/lib/types';
 import { cn, fontFormatting } from '@/lib/utils';
 import { ArticleControls } from '@/routes/article/ArticleControls';
 
@@ -9,13 +10,13 @@ export function ArticleHeader({
 	article,
 	db,
 	setArticle,
-	settings,
 }: {
 	article: ArticleSaved;
 	db: Database;
 	setArticle: React.Dispatch<React.SetStateAction<ArticleSaved | null>>;
-	settings: Settings | null;
 }) {
+	const { settings } = useSettings();
+
 	return (
 		<header className='mb-4'>
 			<h1

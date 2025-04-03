@@ -1,5 +1,5 @@
 import { ThemeProvider } from '@/components/ThemeProvider';
-import { DatabaseProvider } from '@/lib/DatabaseContext';
+import { DatabaseProvider } from '@/lib/context/DatabaseContext';
 import { Archived } from '@/routes/archived';
 import { Article } from '@/routes/article';
 import { Comment } from '@/routes/article/comments';
@@ -11,6 +11,7 @@ import { Navigate, RouterProvider, createBrowserRouter } from 'react-router';
 
 import './index.css';
 import './style.css';
+import { SettingsProvider } from './lib/context/SettingsContext';
 
 const root = document.getElementById('root');
 if (!root) {
@@ -52,7 +53,9 @@ ReactDOM.createRoot(root).render(
 	<div vaul-drawer-wrapper=''>
 		<ThemeProvider defaultTheme='dark' storageKey='vite-ui-theme'>
 			<DatabaseProvider>
-				<RouterProvider router={router} />
+				<SettingsProvider>
+					<RouterProvider router={router} />
+				</SettingsProvider>
 			</DatabaseProvider>
 		</ThemeProvider>
 	</div>,

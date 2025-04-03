@@ -1,6 +1,6 @@
 import { CommandDialog, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { useIsOffline } from '@/hooks/useIsOffline';
-import { useDatabase } from '@/lib/DatabaseContext';
+import { useDatabase } from '@/lib/context/DatabaseContext';
 import type { ArticleSaved } from '@/lib/types';
 import { checkUrlValid } from '@/lib/utils';
 import { CommandEmpty, CommandGroup } from 'cmdk';

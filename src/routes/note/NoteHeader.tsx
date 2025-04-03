@@ -1,16 +1,17 @@
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { AvatarFallback } from '@/components/ui/avatar';
-import type { Note, Settings } from '@/lib/types';
+import { useSettings } from '@/lib/context/SettingsContext';
+import type { Note } from '@/lib/types';
 import { cn, fontFormatting } from '@/lib/utils';
 import { NoteControls } from '@/routes/note/NoteControls';
 
 export function NoteHeader({
 	note,
-	settings,
 }: {
 	note: Note;
-	settings: Settings | null;
 }) {
+	const { settings } = useSettings();
+
 	return (
 		<header>
 			<div className='flex items-center justify-between space-x-2'>

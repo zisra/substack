@@ -19,19 +19,13 @@ import {
 	SelectValue,
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
-import { useDatabase } from '@/lib/DatabaseContext';
-import type { Settings } from '@/lib/types';
+import { useSettings } from '@/lib/context/SettingsContext';
 import { SettingsIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
-export function Preferences({
-	onSettingsChange,
-}: {
-	onSettingsChange?: (settings: Settings) => void;
-}) {
-	const db = useDatabase();
-
+export function Preferences() {
 	const [open, setOpen] = useState(false);
+	const { settings, updateSettings } = useSettings();
 
 	const handleOpen = () => {
 		setOpen(true);
@@ -46,8 +40,6 @@ export function Preferences({
 
 	useEffect(() => {
 		const fetchSettings = async () => {
-			const settings = await db.getSettings();
-
 			if (settings) {
 				setFontSize(settings.formatting.fontSize);
 				setFontFamily(settings.formatting.fontFamily);
@@ -60,7 +52,7 @@ export function Preferences({
 			}
 		};
 		fetchSettings();
-	}, []);
+	}, [settings]);
 
 	const saveSettings = async () => {
 		const settings = {
@@ -75,9 +67,7 @@ export function Preferences({
 			saveComments: saveComments !== null ? saveComments : true,
 		};
 
-		if (onSettingsChange) onSettingsChange(settings);
-
-		db.saveSettings(settings);
+		updateSettings(settings);
 	};
 
 	const resetSettings = () => {

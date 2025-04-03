@@ -9,7 +9,7 @@ import {
 	CredenzaTrigger,
 } from '@/components/ui/credenza';
 import { Label } from '@/components/ui/label';
-import { useDatabase } from '@/lib/DatabaseContext';
+import { useDatabase } from '@/lib/context/DatabaseContext';
 import { getDataStored } from '@/lib/utils';
 import { InfoIcon } from 'lucide-react';
 import { useState } from 'react';

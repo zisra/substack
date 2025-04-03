@@ -1,9 +1,8 @@
 import { AlertCard } from '@/components/AlertCard';
-import { Header } from '@/components/Header';
 import { NoteSkeleton } from '@/components/NoteSkeleton';
 import { Separator } from '@/components/ui/separator';
-import { useDatabase } from '@/lib/DatabaseContext';
-import type { Note, Settings } from '@/lib/types';
+import { useSettings } from '@/lib/context/SettingsContext';
+import type { Note } from '@/lib/types';
 import { articleFormatting, sanitizeDom } from '@/lib/utils';
 import { Embeds } from '@/routes/note/Embeds';
 import { NoteHeader } from '@/routes/note/NoteHeader';
@@ -14,14 +13,14 @@ import { useNavigate, useSearchParams } from 'react-router';
 
 export function NoteViewer() {
 	const [note, setNote] = useState<Note | null>(null);
-	const [settings, setSettings] = useState<Settings | null>(null);
+
 	const [markdown, setMarkdown] = useState<string | null>(null);
 	const [failed, setFailed] = useState(false);
 	const navigate = useNavigate();
+	const { settings } = useSettings();
 
 	const [searchParams] = useSearchParams();
 	const url = searchParams.get('url');
-	const db = useDatabase();
 
 	// Fetch note data
 	useEffect(() => {
@@ -72,31 +71,14 @@ export function NoteViewer() {
 		fetchData();
 	}, [url, navigate]);
 
-	useEffect(() => {
-		const fetchSettings = async () => {
-			try {
-				const settings = await db.getSettings();
-
-				if (settings) {
-					setSettings(settings);
-				}
-			} catch (error) {
-				console.error('Error fetching settings:', error);
-			}
-		};
-
-		fetchSettings();
-	}, []);
-
 	if (!note) {
 		return <NoteSkeleton />;
 	}
 
 	return (
 		<>
-			<Header onSettingsChange={setSettings} />
 			<div className='mx-auto max-w-3xl px-4 py-8'>
-				<NoteHeader note={note} settings={settings} />
+				<NoteHeader note={note} />
 				<Separator className='my-4' />
 				{failed ? (
 					<AlertCard

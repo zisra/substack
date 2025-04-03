@@ -1,11 +1,11 @@
 import { AlertCard } from '@/components/AlertCard';
 import { ArticleSkeleton, ArticleTextSkeleton } from '@/components/ArticleSkeleton';
 import { FinishedReadingButton } from '@/components/FinishedReadingButton';
-import { Header } from '@/components/Header';
 import { Separator } from '@/components/ui/separator';
-import { useDatabase } from '@/lib/DatabaseContext';
+import { useDatabase } from '@/lib/context/DatabaseContext';
+import { useSettings } from '@/lib/context/SettingsContext';
 import type { Database } from '@/lib/database';
-import type { Article, ArticleSaved, Settings } from '@/lib/types';
+import type { Article, ArticleSaved } from '@/lib/types';
 import { articleFormatting, sanitizeDom } from '@/lib/utils';
 import { ArticleHeader } from '@/routes/article/ArticleHeader';
 import { HtmlRenderer, Parser } from 'commonmark';
@@ -31,7 +31,6 @@ async function saveArticle(db: Database, url: string) {
 
 export function ArticleViewer() {
 	const [article, setArticle] = useState<ArticleSaved | null>(null);
-	const [settings, setSettings] = useState<Settings | null>(null);
 	const [title, setTitle] = useState<string>('');
 	const [markdown, setMarkdown] = useState<string | null>(null);
 	const [failed, setFailed] = useState(false);
@@ -40,6 +39,7 @@ export function ArticleViewer() {
 	const navigate = useNavigate();
 	const url = searchParams.get('url');
 	const db = useDatabase();
+	const { settings } = useSettings();
 
 	const scrollTo = (top: number) => {
 		setTimeout(() => {
@@ -60,12 +60,6 @@ export function ArticleViewer() {
 	useEffect(() => {
 		const loadArticles = async () => {
 			try {
-				const settings = await db.getSettings();
-
-				if (settings) {
-					setSettings(settings);
-				}
-
 				if (!url) {
 					navigate('/');
 					console.error('No URL provided');
@@ -162,17 +156,18 @@ export function ArticleViewer() {
 		};
 	}, [saveScrollPosition]);
 
+	if (!settings) return;
+
 	if (!article) {
 		return <ArticleSkeleton />;
 	}
 
 	return (
 		<>
-			<Header onSettingsChange={setSettings} />
 			<div className='mx-auto max-w-3xl px-4 py-8'>
 				<title>{title}</title>
 
-				<ArticleHeader article={article} db={db} setArticle={setArticle} settings={settings} />
+				<ArticleHeader article={article} db={db} setArticle={setArticle} />
 				<Separator className='my-2' />
 
 				{failed ? (
