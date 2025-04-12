@@ -2,11 +2,16 @@ import { ToggleMode } from '@/components/ToggleMode';
 import { About } from '@/components/modals/About';
 import { Preferences } from '@/components/modals/Preferences';
 import { buttonVariants } from '@/components/ui/button';
+import type { Settings } from '@/lib/types';
 import { HomeIcon } from 'lucide-react';
 import { Link } from 'react-router';
 import { useLocation } from 'react-router';
 
-export function Header() {
+export function Header({
+	onSettingsChange,
+}: {
+	onSettingsChange?: (settings: Settings) => void;
+}) {
 	const location = useLocation();
 
 	return (
@@ -27,7 +32,7 @@ export function Header() {
 				</div>
 				<div className='flex gap-4'>
 					<ToggleMode />
-					<Preferences />
+					<Preferences onSettingsChange={onSettingsChange} />
 					<About />
 				</div>
 			</div>

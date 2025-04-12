@@ -32,15 +32,6 @@ registerRoute(
 	},
 );
 
-// Intercept iframe requests
-registerRoute(
-	({ request }) => request.destination === 'iframe',
-	async ({ request }) => {
-		console.log('Intercepted iframe request:', request.url);
-		return fetch(request.url);
-	},
-);
-
 const handler = createHandlerBoundToURL('/index.html');
 registerRoute(({ request }) => request.mode === 'navigate', handler);
 

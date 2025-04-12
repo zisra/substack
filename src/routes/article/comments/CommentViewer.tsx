@@ -1,8 +1,8 @@
 import { AlertCard } from '@/components/AlertCard';
+import { Header } from '@/components/Header';
 import { Button } from '@/components/ui/button';
-import { useDatabase } from '@/lib/context/DatabaseContext';
-import { useSettings } from '@/lib/context/SettingsContext';
-import type { Comment, CommentPage } from '@/lib/types';
+import { useDatabase } from '@/lib/DatabaseContext';
+import type { Comment, CommentPage, Settings } from '@/lib/types';
 import { CommentHeader } from '@/routes/article/comments/CommentHeader';
 import { LoaderIcon, MessageCircleOffIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -52,8 +52,8 @@ export default function CommentList({
 
 export function CommentViewer() {
 	const [commentPage, setCommentPage] = useState<CommentPage | null>(null);
+	const [settings, setSettings] = useState<Settings | null>(null);
 	const [title, setTitle] = useState<string>('');
-	const { settings } = useSettings();
 
 	const [searchParams] = useSearchParams();
 	const navigate = useNavigate();
@@ -70,6 +70,11 @@ export function CommentViewer() {
 
 			try {
 				const article = await db.getArticle(url);
+				const settings = await db.getSettings();
+
+				if (settings) {
+					setSettings(settings);
+				}
 
 				if (article) {
 					if ((article?.comments?.length ?? 0) > 0) {
@@ -138,6 +143,7 @@ export function CommentViewer() {
 
 	return (
 		<>
+			<Header onSettingsChange={setSettings} />
 			<div className='mx-auto max-w-3xl px-4 py-8'>
 				<title>{title}</title>
 				{commentPage && (
