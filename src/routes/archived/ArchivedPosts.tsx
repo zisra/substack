@@ -1,4 +1,3 @@
-import { Header } from '@/components/Header';
 import { LinkCard } from '@/components/LinkCard';
 import { DeleteArchivedPosts } from '@/components/modals/DeleteArchivedPosts';
 import { useDatabase } from '@/lib/DatabaseContext';
@@ -29,7 +28,6 @@ export function ArchivedPosts() {
 
 	return (
 		<>
-			<Header />
 			<div className='container mx-auto max-w-3xl p-4'>
 				<div className='mb-4 flex items-center justify-between'>
 					<h2 className='font-bold text-2xl'>Archived Articles</h2>

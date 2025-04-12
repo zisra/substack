@@ -163,7 +163,12 @@ export function ArticleViewer() {
 	}, [saveScrollPosition]);
 
 	if (!article) {
-		return <ArticleSkeleton />;
+		return (
+			<>
+				<Header onSettingsChange={setSettings} />
+				<ArticleSkeleton />
+			</>
+		);
 	}
 
 	return (

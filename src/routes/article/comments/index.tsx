@@ -5,7 +5,6 @@ import { CommentViewer } from '@/routes/article/comments/CommentViewer';
 export function Comment() {
 	return (
 		<>
-			<Header />
 			<CommandPalette />
 			<CommentViewer />
 		</>

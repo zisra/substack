@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { useIsOffline } from '@/hooks/useIsOffline';
-import { useDatabase } from '@/lib/context/DatabaseContext';
+import { useDatabase } from '@/lib/DatabaseContext';
 import type { Article, ArticleSaved } from '@/lib/types';
 import { checkUrlValid } from '@/lib/utils';
 import { ArticleList } from '@/routes/index/ArticleList';

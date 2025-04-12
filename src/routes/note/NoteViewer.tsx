@@ -89,7 +89,12 @@ export function NoteViewer() {
 	}, []);
 
 	if (!note) {
-		return <NoteSkeleton />;
+		return (
+			<>
+				<Header onSettingsChange={setSettings} />
+				<NoteSkeleton />
+			</>
+		);
 	}
 
 	return (
