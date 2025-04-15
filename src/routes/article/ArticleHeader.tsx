@@ -10,11 +10,13 @@ export function ArticleHeader({
 	db,
 	setArticle,
 	settings,
+	markdown,
 }: {
 	article: ArticleSaved;
 	db: Database;
 	setArticle: React.Dispatch<React.SetStateAction<ArticleSaved | null>>;
 	settings: Settings | null;
+	markdown: string | null;
 }) {
 	return (
 		<header className='mb-4'>
@@ -49,7 +51,7 @@ export function ArticleHeader({
 					</p>
 				</div>
 			</div>
-			<ArticleControls db={db} setArticle={setArticle} article={article} />
+			<ArticleControls markdown={markdown} db={db} setArticle={setArticle} article={article} />
 		</header>
 	);
 }

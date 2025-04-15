@@ -20,15 +20,18 @@ import {
 	TrashIcon,
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router';
+import { Summarizer } from './Summarizer';
 
 export function ArticleControls({
 	db,
 	setArticle,
 	article,
+	markdown,
 }: {
 	db: Database;
 	setArticle: React.Dispatch<React.SetStateAction<ArticleSaved | null>>;
 	article: ArticleSaved;
+	markdown: string | null;
 }) {
 	const navigate = useNavigate();
 	const offline = useIsOffline();
@@ -47,6 +50,9 @@ export function ArticleControls({
 					>
 						<PrinterIcon />
 					</Button>
+
+					<Summarizer content={markdown} />
+
 					<a
 						href={article.url}
 						target='_blank'

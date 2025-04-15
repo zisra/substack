@@ -33,6 +33,7 @@ export function ArticleViewer() {
 	const [article, setArticle] = useState<ArticleSaved | null>(null);
 	const [settings, setSettings] = useState<Settings | null>(null);
 	const [title, setTitle] = useState<string>('');
+	const [html, setHtml] = useState<string | null>(null);
 	const [markdown, setMarkdown] = useState<string | null>(null);
 	const [failed, setFailed] = useState(false);
 
@@ -110,7 +111,8 @@ export function ArticleViewer() {
 				const writer = new HtmlRenderer();
 				const parsed = reader.parse(article.markdown || '');
 				const result = writer.render(parsed);
-				setMarkdown(result);
+				setHtml(result);
+				setMarkdown(article.markdown);
 			} else if (url && article.markdown === false) {
 				try {
 					const response = await fetch(`/download-article/?url=${encodeURIComponent(url)}`);
@@ -177,7 +179,13 @@ export function ArticleViewer() {
 			<div className='mx-auto max-w-3xl px-4 py-8'>
 				<title>{title}</title>
 
-				<ArticleHeader article={article} db={db} setArticle={setArticle} settings={settings} />
+				<ArticleHeader
+					markdown={markdown}
+					article={article}
+					db={db}
+					setArticle={setArticle}
+					settings={settings}
+				/>
 				<Separator className='my-2' />
 
 				{failed ? (
@@ -187,12 +195,12 @@ export function ArticleViewer() {
 					>
 						This article has been archived and is no longer available without an internet connection
 					</AlertCard>
-				) : markdown ? (
+				) : html ? (
 					<article className={articleFormatting(settings)}>
 						<div
 							// biome-ignore lint/security/noDangerouslySetInnerHtml: Markdown content
 							dangerouslySetInnerHTML={{
-								__html: sanitizeDom(markdown),
+								__html: sanitizeDom(html),
 							}}
 						/>
 					</article>
@@ -200,7 +208,7 @@ export function ArticleViewer() {
 					<ArticleTextSkeleton />
 				)}
 
-				{markdown && <FinishedReadingButton db={db} setArticle={setArticle} article={article} />}
+				{html && <FinishedReadingButton db={db} setArticle={setArticle} article={article} />}
 			</div>
 		</>
 	);
