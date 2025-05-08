@@ -169,7 +169,7 @@ export function CommentView({
 							>
 								<Linkify
 									text={body}
-									className='prose prose-sm dark:prose-invert max-w-full whitespace-pre-line break-words'
+									className='prose prose-neutral prose-sm dark:prose-invert max-w-full whitespace-pre-line break-words'
 								/>
 								{!isExpanded && (
 									<div className='absolute bottom-0 left-0 w-full bg-gradient-to-t from-background to-transparent pt-12 text-center print:hidden'>

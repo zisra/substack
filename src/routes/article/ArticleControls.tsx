@@ -51,7 +51,9 @@ export function ArticleControls({
 						<PrinterIcon />
 					</Button>
 
-					<Summarizer content={markdown} />
+					{article.title && article.subtitle && (
+						<Summarizer title={article.title} subtitle={article.subtitle} content={markdown} />
+					)}
 
 					<a
 						href={article.url}

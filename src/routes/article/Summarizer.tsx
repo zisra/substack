@@ -40,7 +40,7 @@ function Message({ message }: { message: Message }) {
 		>
 			<div className='mb-2 font-bold'>{message.role === MessageRole.ASSISTANT ? 'AI' : 'User'}</div>
 			<div
-				className='prose prose-sm dark:prose-invert max-w-full break-words'
+				className='prose prose-neutral prose-sm dark:prose-invert max-w-full break-words'
 				// biome-ignore lint/security/noDangerouslySetInnerHtml: Markdown content
 				dangerouslySetInnerHTML={{
 					__html: sanitizeDom(markdownToHtml(message.content)),
@@ -52,9 +52,14 @@ function Message({ message }: { message: Message }) {
 
 const BASE_URL = 'http://localhost:11434/api';
 
-export function Summarizer({ content }: { content: string | null }) {
+export function Summarizer({
+	content,
+	title,
+	subtitle,
+}: { content: string | null; title: string; subtitle: string }) {
 	const [isLoading, setIsLoading] = useState(false);
 	const [isStreaming, setIsStreaming] = useState(false);
+	const [hasSummarized, setHasSummarized] = useState(false);
 	const [models, setModels] = useState<{ name: string; model: string }[]>([]);
 	const [selectedModel, setSelectedModel] = useState<string>('');
 	const [isOpen, setIsOpen] = useState(false);
@@ -91,17 +96,18 @@ export function Summarizer({ content }: { content: string | null }) {
 		if (!content || isStreaming) return;
 
 		setIsLoading(true);
+		setHasSummarized(true);
 		setIsStreaming(true);
 
 		const systemPrompt = {
 			role: MessageRole.SYSTEM,
 			content:
-				'You are a helpful assistant that summarizes articles. You will be provided with an article and you need to summarize it extensively. Do not add any personal opinions or interpretations, just describe the article as if it is true. ALWAYS capture the tone, perspective and POV of the author. NEVER come up with additional information. Do not output any markdown outside of commonmark.',
+				'You are a helpful assistant that summarizes articles. You will be provided with an article and you need to summarize it extensively. Do not add any personal opinions or interpretations, just describe the article as if it is true. ALWAYS capture the tone, perspective and POV of the author. NEVER come up with additional information. Do not output any markdown outside of commonmark. Follow-up questions may be asked later, answer them as best as you can.',
 		};
 
 		const userPrompt = {
 			role: MessageRole.USER,
-			content: `Summarize the following article:\n\n${content}`,
+			content: `Summarize the following article. Title: ${title}\nSubtitle: ${subtitle}\nContent: ${content}`,
 		};
 
 		const initialMessages = [systemPrompt, userPrompt];
@@ -162,7 +168,7 @@ export function Summarizer({ content }: { content: string | null }) {
 					<TextIcon />
 				</Button>
 			</SheetTrigger>
-			<SheetContent className='flex w-full flex-col p-0 sm:max-w-md md:max-w-lg' side='right'>
+			<SheetContent className='flex w-full flex-col p-0 md:w-2xl' side='right'>
 				<div className='border-b'>
 					<SheetHeader>
 						<SheetTitle>Summarize Article</SheetTitle>
@@ -186,7 +192,7 @@ export function Summarizer({ content }: { content: string | null }) {
 							</SelectContent>
 						</Select>
 					</div>
-					<Button onClick={handleSubmit} disabled={isStreaming || isLoading}>
+					<Button onClick={handleSubmit} disabled={isStreaming || hasSummarized}>
 						{isLoading ? 'Summarizing...' : 'Summarize'}
 					</Button>
 				</div>
@@ -220,7 +226,7 @@ export function Summarizer({ content }: { content: string | null }) {
 						<Button
 							size='icon'
 							variant='ghost'
-							className='absolute top-0 right-0 h-full rounded-l-none hover:bg-none!'
+							className='absolute top-0 right-0 h-full rounded-l-none hover:bg-transparent!'
 							onClick={handleSendFollowUp}
 							disabled={messages.length === 0 || !followUpQuestion.trim() || isStreaming}
 						>
