@@ -1,5 +1,4 @@
 import TurndownService from 'turndown';
-import { extractStatusId } from './utils';
 
 const turndownService = new TurndownService({
 	headingStyle: 'atx',
