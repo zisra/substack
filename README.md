@@ -6,6 +6,7 @@ Fix:
 
 - [ ] More robust strategy to save location in article
 - [ ] Brush up comments loading
+- [ ] Brush up AI mode
 
 Add:
 

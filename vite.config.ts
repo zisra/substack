@@ -15,6 +15,7 @@ export default defineConfig({
 			registerType: 'autoUpdate',
 			includeAssets: ['vite.svg'],
 			injectManifest: {
+				maximumFileSizeToCacheInBytes: 3000000,
 				swDest: 'dist/sw.js',
 			},
 			manifest: {

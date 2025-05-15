@@ -1,5 +1,3 @@
-'use client';
-
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -11,12 +9,19 @@ import {
 	SelectValue,
 } from '@/components/ui/select';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { fetchAllModels } from '@/lib/fetchModels';
+import { getModel } from '@/lib/models';
 import { cn, sanitizeDom } from '@/lib/utils';
 import { streamText } from 'ai';
 import { HtmlRenderer, Parser } from 'commonmark';
 import { Send, TextIcon } from 'lucide-react';
-import { createOllama } from 'ollama-ai-provider';
 import { useEffect, useRef, useState } from 'react';
+
+type ModelInfo = {
+	name: string;
+	model: string;
+	provider: string;
+};
 
 function markdownToHtml(markdown: string) {
 	const reader = new Parser();
@@ -50,8 +55,6 @@ function Message({ message }: { message: Message }) {
 	);
 }
 
-const BASE_URL = 'http://localhost:11434/api';
-
 export function Summarizer({
 	content,
 	title,
@@ -60,36 +63,20 @@ export function Summarizer({
 	const [isLoading, setIsLoading] = useState(false);
 	const [isStreaming, setIsStreaming] = useState(false);
 	const [hasSummarized, setHasSummarized] = useState(false);
-	const [models, setModels] = useState<{ name: string; model: string }[]>([]);
+	const [models, setModels] = useState<ModelInfo[]>([]);
 	const [selectedModel, setSelectedModel] = useState<string>('');
 	const [isOpen, setIsOpen] = useState(false);
 	const [followUpQuestion, setFollowUpQuestion] = useState('');
 	const [messages, setMessages] = useState<Message[]>([]);
 	const chatContainerRef = useRef<HTMLDivElement>(null);
 
-	const ollama = createOllama({ baseURL: BASE_URL });
-
 	useEffect(() => {
-		const fetchModels = async () => {
-			try {
-				const response = await fetch(`${BASE_URL}/tags`);
-				if (!response.ok) throw new Error('Failed to fetch models');
-				const data = await response.json();
-				const modelList = data.models.map((model: { name: string; model: string }) => ({
-					name: model.name,
-					model: model.model,
-				}));
-				setModels(modelList);
-
-				if (modelList.length > 0) {
-					setSelectedModel(modelList[0].name);
-				}
-			} catch (error) {
-				console.error('Error fetching models:', error);
-			}
+		const fetchModelsAsync = async () => {
+			const modelList = await fetchAllModels();
+			setModels(modelList);
+			if (modelList.length > 0) setSelectedModel(modelList[0].name);
 		};
-
-		fetchModels();
+		fetchModelsAsync();
 	}, []);
 
 	const handleSubmit = async () => {
@@ -101,8 +88,7 @@ export function Summarizer({
 
 		const systemPrompt = {
 			role: MessageRole.SYSTEM,
-			content:
-				'You are a helpful assistant that summarizes articles. You will be provided with an article and you need to summarize it extensively. Do not add any personal opinions or interpretations, just describe the article as if it is true. ALWAYS capture the tone, perspective and POV of the author. NEVER come up with additional information. Do not output any markdown outside of commonmark. Follow-up questions may be asked later, answer them as best as you can.',
+			content: `You are a helpful assistant that summarizes articles. You will be provided with an article, and your task is to provide a comprehensive summary of the contents of that article. Ensure that you capture the author's tone, perspective, and point of view accurately. Do not include personal opinions or interpretations, and refrain from adding any additional information. Output should be in plain text without any markdown formatting. You may be asked follow-up questions later, so respond to those as thoroughly as possible, but do not ever answer something unrelated to the article.`,
 		};
 
 		const userPrompt = {
@@ -114,8 +100,11 @@ export function Summarizer({
 		setMessages(initialMessages);
 
 		try {
+			const selected = models.find((m) => m.name === selectedModel);
+			if (!selected) return;
+
 			const response = streamText({
-				model: ollama(selectedModel),
+				model: getModel(selected.provider, selected.model),
 				messages: initialMessages,
 				temperature: 0.5,
 			});
@@ -143,8 +132,11 @@ export function Summarizer({
 		setIsStreaming(true);
 
 		try {
+			const selected = models.find((m) => m.name === selectedModel);
+			if (!selected) return;
+
 			const response = streamText({
-				model: ollama(selectedModel || models[0]?.model),
+				model: getModel(selected.provider, selected.model),
 				messages: newMessageHistory,
 				temperature: 0.5,
 			});
