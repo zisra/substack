@@ -66,7 +66,7 @@ export function ArticleSaver({ openCommand }: { openCommand: () => void }) {
 		<>
 			<div className='container mx-auto max-w-3xl p-4'>
 				{offline ? null : (
-					<Card className='mb-8 py-6 shadow-xs dark:bg-input/30'>
+					<Card className='mb-8 py-6 shadow-xs'>
 						<CardHeader>
 							<CardTitle>Save Substack Articles Offline</CardTitle>
 							<CardDescription>Enter a URL to save an article for offline reading</CardDescription>

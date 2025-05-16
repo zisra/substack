@@ -7,7 +7,7 @@ export function LinkCard({
 	children: ReactNode;
 }) {
 	return (
-		<Card className='mb-6 p-0 py-0 shadow-xs transition-all duration-200 hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:hover:bg-input/50'>
+		<Card className='mb-6 p-0 py-0 shadow-xs transition-all duration-200 hover:bg-card-hover hover:text-accent-foreground'>
 			{children}
 		</Card>
 	);
