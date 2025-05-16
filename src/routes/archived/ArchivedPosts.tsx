@@ -33,12 +33,23 @@ export function ArchivedPosts() {
 					<h2 className='font-bold text-2xl'>Archived Articles</h2>
 					<DeleteArchivedPosts db={db} articles={articles} setArticles={setArticles} />
 				</div>
-				<LinkCard>
-					<Link to='/' className='flex items-center gap-2 p-4'>
-						<ChevronLeftIcon className='size-4 text-muted-foreground' />
-						<span>View All Articles</span>
-					</Link>
-				</LinkCard>
+				<div
+					onDragOver={(e: React.DragEvent<HTMLDivElement>) => e.preventDefault()}
+					onDrop={async (e: React.DragEvent<HTMLDivElement>) => {
+						e.preventDefault();
+						const url = e.dataTransfer.getData('text/plain');
+						if (!articles) return;
+						setArticles(articles.filter((i) => i.url !== url));
+						await db.unArchiveArticle(url);
+					}}
+				>
+					<LinkCard>
+						<Link to='/' className='flex items-center gap-2 p-4'>
+							<ChevronLeftIcon className='size-4 text-muted-foreground' />
+							<span>View All Articles</span>
+						</Link>
+					</LinkCard>
+				</div>
 
 				<div className='grid gap-4'>
 					<ArticleList
@@ -47,8 +58,8 @@ export function ArchivedPosts() {
 							navigator.clipboard.writeText(url);
 						}}
 						onDelete={async (url) => {
-							await db.deleteArticle(url);
 							setArticles(articles.filter((i) => i.url !== url));
+							await db.deleteArticle(url);
 						}}
 						onUnArchive={async (url) => {
 							setArticles(articles.filter((i) => i.url !== url));

@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/select';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { fetchAllModels } from '@/lib/fetchModels';
-import { getModel } from '@/lib/models';
+import { getDefaultModel, getModel } from '@/lib/models';
 import { cn, sanitizeDom } from '@/lib/utils';
 import { streamText } from 'ai';
 import { HtmlRenderer, Parser } from 'commonmark';
@@ -40,7 +40,6 @@ type Message = { role: MessageRole; content: string };
 function Message({ message }: { message: Message }) {
 	return (
 		<div
-			key={'x'}
 			className={cn(message.role === MessageRole.ASSISTANT ? 'bg-muted' : 'bg-background', 'p-4')}
 		>
 			<div className='mb-2 font-bold'>{message.role === MessageRole.ASSISTANT ? 'AI' : 'User'}</div>
@@ -74,7 +73,7 @@ export function Summarizer({
 		const fetchModelsAsync = async () => {
 			const modelList = await fetchAllModels();
 			setModels(modelList);
-			if (modelList.length > 0) setSelectedModel(modelList[0].name);
+			if (modelList.length > 0) setSelectedModel(getDefaultModel());
 		};
 		fetchModelsAsync();
 	}, []);
@@ -174,7 +173,7 @@ export function Summarizer({
 								<SelectValue placeholder='Select LLM' />
 							</SelectTrigger>
 							<SelectContent>
-								<SelectGroup>
+								<SelectGroup defaultValue={selectedModel}>
 									{models.map((model) => (
 										<SelectItem key={model.name} value={model.name}>
 											{model.name}
@@ -199,7 +198,7 @@ export function Summarizer({
 
 							.filter((msg) => msg.role !== MessageRole.SYSTEM)
 							.slice(1) // Skip the first message
-							.map((message) => <Message key='x' message={message} />)
+							.map((message) => <Message key={message.role} message={message} />)
 					)}
 				</div>
 

@@ -120,12 +120,23 @@ export function ArticleSaver({ openCommand }: { openCommand: () => void }) {
 						<SearchIcon />
 					</Button>
 				</div>
-				<LinkCard>
-					<Link to='/archived' className='flex items-center justify-between p-4'>
-						<span>View Archived Articles</span>
-						<ChevronRightIcon className='size-4 text-muted-foreground' />
-					</Link>
-				</LinkCard>
+				<div
+					onDragOver={(e: React.DragEvent<HTMLDivElement>) => e.preventDefault()}
+					onDrop={async (e: React.DragEvent<HTMLDivElement>) => {
+						e.preventDefault();
+						const url = e.dataTransfer.getData('text/plain');
+						if (!articles) return;
+						setArticles(articles.filter((i) => i.url !== url));
+						await db.archiveArticle(url);
+					}}
+				>
+					<LinkCard>
+						<Link to='/archived' className='flex items-center justify-between p-4'>
+							<span>View Archived Articles</span>
+							<ChevronRightIcon className='size-4 text-muted-foreground' />
+						</Link>
+					</LinkCard>
+				</div>
 
 				<div className='grid gap-4'>
 					<ArticleList
@@ -135,13 +146,13 @@ export function ArticleSaver({ openCommand }: { openCommand: () => void }) {
 						}}
 						onDelete={async (url) => {
 							if (!articles) return;
-							await db.deleteArticle(url);
 							setArticles(articles.filter((i) => i.url !== url));
+							await db.deleteArticle(url);
 						}}
 						onArchive={async (url) => {
 							if (!articles) return;
-							await db.archiveArticle(url);
 							setArticles(articles.filter((i) => i.url !== url));
+							await db.archiveArticle(url);
 						}}
 					/>
 				</div>

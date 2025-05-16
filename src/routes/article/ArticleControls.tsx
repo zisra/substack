@@ -52,7 +52,12 @@ export function ArticleControls({
 					</Button>
 
 					{article.title && article.subtitle && (
-						<Summarizer title={article.title} subtitle={article.subtitle} content={markdown} />
+						<Summarizer
+							key={`${article.title}-${article.subtitle}`}
+							title={article.title}
+							subtitle={article.subtitle}
+							content={markdown}
+						/>
 					)}
 
 					<a

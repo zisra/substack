@@ -59,13 +59,26 @@ export function ArticleList({
 
 	return articles.map((article) => {
 		return (
-			<Card
+			<Link
+				to={`/article/?url=${encodeURIComponent(article.url)}`}
+				className='grow'
+				draggable='true'
 				key={article.url}
-				className='shadow-xs transition-all duration-200 hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:hover:bg-input/50'
+				onDragStart={(e) => {
+					e.dataTransfer.setData('text/plain', article.url);
+					e.dataTransfer.effectAllowed = 'copy';
+				}}
+				onDragEnd={(e) => {
+					e.preventDefault();
+					e.stopPropagation();
+				}}
 			>
-				<CardContent className='py-4 pr-2 pl-4'>
-					<div className='flex items-start justify-between'>
-						<Link to={`/article/?url=${encodeURIComponent(article.url)}`} className='grow'>
+				<Card
+					key={article.url}
+					className='shadow-xs transition-all duration-200 hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:hover:bg-input/50'
+				>
+					<CardContent className='py-4 pr-2 pl-4'>
+						<div className='flex items-start justify-between'>
 							<div className='flex grow pr-2'>
 								<div className='grow'>
 									<div className='mb-2 flex items-center'>
@@ -88,19 +101,20 @@ export function ArticleList({
 									</div>
 								)}
 							</div>
-						</Link>
-						<ArticleListDropdown
-							onCopyLink={onCopyLink}
-							archivedView={archivedView}
-							onUnArchive={onUnArchive}
-							offline={offline}
-							onArchive={onArchive}
-							onDelete={onDelete}
-							article={article}
-						/>
-					</div>
-				</CardContent>
-			</Card>
+
+							<ArticleListDropdown
+								onCopyLink={onCopyLink}
+								archivedView={archivedView}
+								onUnArchive={onUnArchive}
+								offline={offline}
+								onArchive={onArchive}
+								onDelete={onDelete}
+								article={article}
+							/>
+						</div>
+					</CardContent>
+				</Card>
+			</Link>
 		);
 	});
 }
@@ -122,15 +136,19 @@ function ArticleListDropdown({
 	onDelete: (url: string) => void;
 	article: ArticleSaved;
 }) {
+	const handleDropdownClick = (e: React.MouseEvent) => {
+		e.stopPropagation();
+	};
+
 	return (
 		<DropdownMenu>
-			<DropdownMenuTrigger asChild>
+			<DropdownMenuTrigger asChild onClick={handleDropdownClick}>
 				<Button variant='ghost' className='size-8 p-0'>
 					<span className='sr-only'>Open menu</span>
 					<MoreVerticalIcon className='size-4 text-muted-foreground' />
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent align='end' className='w-40'>
+			<DropdownMenuContent align='end' className='w-40' onClick={handleDropdownClick}>
 				<DropdownMenuItem onClick={() => onCopyLink(article.url)} className='cursor-pointer'>
 					<LinkIcon className='mr-2 size-4' />
 					<span>Copy link</span>

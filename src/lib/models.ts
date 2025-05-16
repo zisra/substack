@@ -14,3 +14,7 @@ export function getModel(provider: string, modelName: string) {
 	}
 	return openai(modelName);
 }
+
+export function getDefaultModel() {
+	return 'gpt-4.1-mini';
+}
