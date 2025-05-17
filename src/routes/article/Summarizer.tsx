@@ -105,7 +105,6 @@ export function Summarizer({
 			const response = streamText({
 				model: getModel(selected.provider, selected.model),
 				messages: initialMessages,
-				temperature: 0.5,
 			});
 
 			let summary = '';
@@ -137,7 +136,6 @@ export function Summarizer({
 			const response = streamText({
 				model: getModel(selected.provider, selected.model),
 				messages: newMessageHistory,
-				temperature: 0.5,
 			});
 
 			let reply = '';
