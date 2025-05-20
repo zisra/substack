@@ -7,7 +7,7 @@ const selectorsToRemove = [
 	'.subscription-widget',
 	'[data-component-name="ButtonCreateButton"]',
 	'[data-component-name="AudioEmbedPlayer"]',
-	'[data-component-name="SubscribeWidget"]',	
+	'[data-component-name="SubscribeWidget"]',
 	'[data-component-name="DigestPostEmbed"]',
 	'[data-component-name="EmbeddedPublicationToDOMWithSubscribe"]',
 	'.embedded-post-wrap',
@@ -120,12 +120,12 @@ export async function scrapeSubstack(html: string) {
 	});
 
 	// Replace element with it's child
-	dom('.available-content .profile-hover-card-target').each(
-		(_index, element) => {
-			const innerHtml = dom(element).html();
-			dom(element).replaceWith(`<span>${innerHtml}</span>`);
-		}
-	);
+	dom(
+		'.available-content .profile-hover-card-target, .available-content [class*="publicationHoverCardTarget-"]'
+	).each((_index, element) => {
+		const innerHtml = dom(element).html();
+		dom(element).replaceWith(`<span>${innerHtml}</span>`);
+	});
 
 	// Unescape HTML entities
 	dom('img').each((_index, element) => {

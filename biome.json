@@ -16,7 +16,8 @@
 				"noForEach": "off"
 			},
 			"correctness": {
-				"useExhaustiveDependencies": "off"
+				"useExhaustiveDependencies": "off",
+				"noUnusedImports": "error"
 			},
 			"nursery": {
 				"useSortedClasses": {

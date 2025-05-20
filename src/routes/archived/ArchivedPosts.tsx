@@ -1,5 +1,6 @@
 import { LinkCard } from '@/components/LinkCard';
 import { DeleteArchivedPosts } from '@/components/modals/DeleteArchivedPosts';
+import { useIsOffline } from '@/hooks/useIsOffline';
 import { useDatabase } from '@/lib/DatabaseContext';
 import type { ArticleSaved } from '@/lib/types';
 import { ArticleList } from '@/routes/index/ArticleList';
@@ -8,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 
 export function ArchivedPosts() {
+	const offline = useIsOffline();
 	const [articles, setArticles] = useState<ArticleSaved[]>([]);
 
 	const db = useDatabase();
@@ -34,13 +36,19 @@ export function ArchivedPosts() {
 					<DeleteArchivedPosts db={db} articles={articles} setArticles={setArticles} />
 				</div>
 				<div
-					onDragOver={(e: React.DragEvent<HTMLDivElement>) => e.preventDefault()}
+					onDragOver={(e: React.DragEvent<HTMLDivElement>) => {
+						if (!offline) {
+							e.preventDefault();
+						}
+					}}
 					onDrop={async (e: React.DragEvent<HTMLDivElement>) => {
-						e.preventDefault();
-						const url = e.dataTransfer.getData('text/plain');
-						if (!articles) return;
-						setArticles(articles.filter((i) => i.url !== url));
-						await db.unArchiveArticle(url);
+						if (!offline) {
+							e.preventDefault();
+							const url = e.dataTransfer.getData('text/plain');
+							if (!articles) return;
+							setArticles(articles.filter((i) => i.url !== url));
+							await db.unArchiveArticle(url);
+						}
 					}}
 				>
 					<LinkCard>
