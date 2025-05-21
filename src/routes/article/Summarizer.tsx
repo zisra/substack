@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import {
 	Select,
 	SelectContent,
@@ -186,7 +187,7 @@ export function Summarizer({
 					</Button>
 				</div>
 
-				<div ref={chatContainerRef} className='flex-1 overflow-y-auto'>
+				<ScrollArea ref={chatContainerRef} className='flex-1 overflow-y-auto'>
 					{messages.length <= 1 ? (
 						<div className='py-8 text-center text-muted-foreground'>
 							Click "Summarize" to generate a summary
@@ -198,7 +199,7 @@ export function Summarizer({
 							.slice(1) // Skip the first message
 							.map((message) => <Message key={message.role} message={message} />)
 					)}
-				</div>
+				</ScrollArea>
 
 				<div className='mt-auto border-t p-4'>
 					<div className='relative'>

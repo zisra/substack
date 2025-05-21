@@ -113,7 +113,8 @@ export function Preferences({
 					<CredenzaHeader>
 						<CredenzaTitle>Preferences</CredenzaTitle>
 					</CredenzaHeader>
-					<ScrollArea className='overflow-auto'>
+
+					<div className='overflow-y-auto'>
 						<CredenzaBody>
 							<div className='space-y-4'>
 								<div className='flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center'>
@@ -213,7 +214,8 @@ export function Preferences({
 								</div>
 							</div>
 						</CredenzaBody>
-					</ScrollArea>
+					</div>
+
 					<CredenzaFooter className='gap-x-2'>
 						<Button onClick={resetSettings} variant='secondary'>
 							Reset
