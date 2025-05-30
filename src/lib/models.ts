@@ -16,5 +16,5 @@ export function getModel(provider: string, modelName: string) {
 }
 
 export function getDefaultModel() {
-	return 'gpt-4.1-mini';
+	return 'gpt-4.1-nano';
 }

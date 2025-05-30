@@ -10,7 +10,6 @@ import {
 	CredenzaTitle,
 } from '@/components/ui/credenza';
 import { Label } from '@/components/ui/label';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import {
 	Select,
 	SelectContent,

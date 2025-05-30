@@ -83,6 +83,9 @@ importers:
       workbox-routing:
         specifier: ^7.3.0
         version: 7.3.0
+      workbox-window:
+        specifier: ^7.3.0
+        version: 7.3.0
     devDependencies:
       '@biomejs/biome':
         specifier: 1.9.4

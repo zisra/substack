@@ -22,13 +22,13 @@ export function ArticleHeader({
 		<header className='mb-4'>
 			<h1
 				className={cn(
-					fontFormatting(settings),
+					fontFormatting(settings, true),
 					'mb-2 font-bold text-4xl text-slate-950 dark:text-slate-50',
 				)}
 			>
 				{article.title}
 			</h1>
-			<p className={cn(fontFormatting(settings), 'mb-4 text-muted-foreground text-xl')}>
+			<p className={cn(fontFormatting(settings, true), 'mb-4 text-muted-foreground text-xl')}>
 				{article.subtitle}
 			</p>
 			<div className='flex items-center space-x-2'>
@@ -39,7 +39,7 @@ export function ArticleHeader({
 					</Avatar>
 				</a>
 				<div>
-					<p className={cn(fontFormatting(settings), 'text-md text-muted-foreground')}>
+					<p className={cn(fontFormatting(settings, true), 'text-md text-muted-foreground')}>
 						<a
 							target='_blank'
 							href={article.authorUrl}

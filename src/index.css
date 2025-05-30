@@ -57,11 +57,11 @@
 	--card-foreground: oklch(0.985 0 0);
 }
 
-.theme-mono {
-	--font-sans: var(--font-mono);
-	--primary: var(--color-neutral-600);
-	--primary-foreground: var(--color-neutral-50);
-	--radius: 0.2rem;
+.dark.theme-dark-gray {
+	--background: oklch(0.2 0 0);
+	--foreground: oklch(0.85 0 0);
+	--card: oklch(0.2 0 0);
+	--card-foreground: oklch(0.95 0 0);
 }
 
 @theme inline {

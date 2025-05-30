@@ -7,7 +7,10 @@ export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
 }
 
-export function fontFormatting(settings: Settings | null) {
+export function fontFormatting(settings: Settings | null, excludeSerifs?: boolean) {
+	if (settings?.formatting.fontFamily === 'serif' && excludeSerifs === true) {
+		return '';
+	}
 	return cn(
 		settings?.formatting.fontFamily === 'sans' && 'font-sans',
 		settings?.formatting.fontFamily === 'serif' && 'font-serif',

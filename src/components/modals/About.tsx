@@ -1,3 +1,4 @@
+import { useRegisterSW } from 'virtual:pwa-register/react';
 import { Button } from '@/components/ui/button';
 import {
 	Credenza,
@@ -16,6 +17,7 @@ import { useState } from 'react';
 
 export function About() {
 	const [dataStored, setDataStored] = useState<string | null>(null);
+	const { updateServiceWorker } = useRegisterSW();
 
 	const db = useDatabase();
 
@@ -83,6 +85,7 @@ export function About() {
 									className='mb-2 sm:mb-0'
 									onClick={async () => {
 										await db.clearAll();
+										updateServiceWorker();
 
 										window.location.href = '/';
 									}}
