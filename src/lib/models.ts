@@ -16,5 +16,7 @@ export function getModel(provider: string, modelName: string) {
 }
 
 export function getDefaultModel() {
-	return 'gpt-4.1-nano';
+	if (navigator.onLine) {
+		return 'gpt-4.1-nano';
+	}
 }

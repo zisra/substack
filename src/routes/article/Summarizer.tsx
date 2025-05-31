@@ -74,7 +74,7 @@ export function Summarizer({
 		const fetchModelsAsync = async () => {
 			const modelList = await fetchAllModels();
 			setModels(modelList);
-			if (modelList.length > 0) setSelectedModel(getDefaultModel());
+			if (modelList.length > 0) setSelectedModel(getDefaultModel() || modelList[0].name);
 		};
 		fetchModelsAsync();
 	}, []);

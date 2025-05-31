@@ -8,6 +8,7 @@ import type { Database } from '@/lib/database';
 import type { Article, ArticleSaved, Settings } from '@/lib/types';
 import { articleFormatting, sanitizeDom } from '@/lib/utils';
 import { ArticleHeader } from '@/routes/article/ArticleHeader';
+import { TableOfContents } from '@/routes/article/TableOfContents';
 import { HtmlRenderer, Parser } from 'commonmark';
 import { ArchiveIcon } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
@@ -187,6 +188,8 @@ export function ArticleViewer() {
 					settings={settings}
 				/>
 				<Separator className='my-2' />
+
+				<TableOfContents content={html} />
 
 				{failed ? (
 					<AlertCard
