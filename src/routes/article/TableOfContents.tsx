@@ -1,8 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import GithubSlugger from 'github-slugger';
 
 type Stack = {
 	index: number;
 	name: string | null;
+	slug: string;
 	children: StackRecursive;
 };
 
@@ -13,7 +15,7 @@ export function TableOfContents({
 }: {
 	content: string | null;
 }) {
-	const tagNames = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'];
+	const tagNames = ['H1', 'H2', 'H3', 'H4'];
 
 	if (content) {
 		const parser = new DOMParser();
@@ -26,9 +28,11 @@ export function TableOfContents({
 
 		const tableOfContents: StackRecursive = [];
 		const stack: StackRecursive = [];
+		const slugger = new GithubSlugger();
 
 		headers.forEach((header, index) => {
 			const node = {
+				slug: slugger.slug(header.textContent ?? ''),
 				index: index,
 				name: header.textContent,
 				children: [],
@@ -60,7 +64,7 @@ export function TableOfContents({
 				<ul style={{ paddingLeft: depth * 16 }}>
 					{nodes.map((node) => (
 						<li key={node.index} style={{ marginBottom: 4 }}>
-							<a href={`#${node.index}`}>{node.name}</a>
+							<a href={`#${node.slug}`}>{node.name}</a>
 							{node.children.length > 0 && renderToc(node.children, depth + 1)}
 						</li>
 					))}
@@ -69,11 +73,14 @@ export function TableOfContents({
 		}
 
 		return (
-			<Card className='container mx-auto max-w-3xl p-4 shadow-none'>
+			<Card className='mb-8 py-6 shadow-xs'>
 				<CardHeader>
 					<CardTitle>Table of contents</CardTitle>
 				</CardHeader>
-				<CardContent>{renderToc(tableOfContents)}</CardContent>
+
+				<CardContent>
+					<div className='flex space-x-2'>{renderToc(tableOfContents)}</div>
+				</CardContent>
 			</Card>
 		);
 	}

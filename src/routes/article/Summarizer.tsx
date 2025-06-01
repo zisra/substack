@@ -14,8 +14,8 @@ import { fetchAllModels } from '@/lib/fetchModels';
 import { getDefaultModel, getModel } from '@/lib/models';
 import { cn, sanitizeDom } from '@/lib/utils';
 import { streamText } from 'ai';
-import { HtmlRenderer, Parser } from 'commonmark';
 import { Send, TextIcon } from 'lucide-react';
+import { parse } from 'marked';
 import { useEffect, useRef, useState } from 'react';
 
 type ModelInfo = {
@@ -24,12 +24,6 @@ type ModelInfo = {
 	provider: string;
 };
 
-function markdownToHtml(markdown: string) {
-	const reader = new Parser();
-	const writer = new HtmlRenderer();
-	const parsed = reader.parse(markdown);
-	return writer.render(parsed);
-}
 
 enum MessageRole {
 	USER = 'user',
@@ -38,7 +32,7 @@ enum MessageRole {
 }
 type Message = { role: MessageRole; content: string };
 
-function Message({ message }: { message: Message }) {
+async function Message({ message }: { message: Message }) {
 	return (
 		<div
 			className={cn(message.role === MessageRole.ASSISTANT ? 'bg-muted' : 'bg-background', 'p-4')}
@@ -48,7 +42,7 @@ function Message({ message }: { message: Message }) {
 				className='prose prose-neutral prose-sm dark:prose-invert max-w-full break-words'
 				// biome-ignore lint/security/noDangerouslySetInnerHtml: Markdown content
 				dangerouslySetInnerHTML={{
-					__html: sanitizeDom(markdownToHtml(message.content)),
+					__html: sanitizeDom(await parse(message.content)),
 				}}
 			/>
 		</div>

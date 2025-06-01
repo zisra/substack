@@ -7,8 +7,8 @@ import type { Note, Settings } from '@/lib/types';
 import { articleFormatting, sanitizeDom } from '@/lib/utils';
 import { Embeds } from '@/routes/note/Embeds';
 import { NoteHeader } from '@/routes/note/NoteHeader';
-import { HtmlRenderer, Parser } from 'commonmark';
 import { ArchiveIcon } from 'lucide-react';
+import { parse } from 'marked';
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
 
@@ -51,10 +51,7 @@ export function NoteViewer() {
 				}
 
 				// Parse markdown to HTML
-				const reader = new Parser();
-				const writer = new HtmlRenderer();
-				const parsed = reader.parse(data.markdown ?? '');
-				const result = writer.render(parsed);
+				const result = await parse(data.markdown);
 
 				// Update document title if author is available
 				if (data?.author) {

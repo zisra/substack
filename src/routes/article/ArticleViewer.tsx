@@ -9,8 +9,9 @@ import type { Article, ArticleSaved, Settings } from '@/lib/types';
 import { articleFormatting, sanitizeDom } from '@/lib/utils';
 import { ArticleHeader } from '@/routes/article/ArticleHeader';
 import { TableOfContents } from '@/routes/article/TableOfContents';
-import { HtmlRenderer, Parser } from 'commonmark';
 import { ArchiveIcon } from 'lucide-react';
+import { parse, use } from 'marked';
+import { gfmHeadingId } from 'marked-gfm-heading-id';
 import { useCallback, useEffect, useState } from 'react';
 import { useBlocker, useNavigate, useSearchParams } from 'react-router';
 
@@ -108,10 +109,9 @@ export function ArticleViewer() {
 			if (!article) return;
 
 			if (typeof article.markdown === 'string') {
-				const reader = new Parser();
-				const writer = new HtmlRenderer();
-				const parsed = reader.parse(article.markdown || '');
-				const result = writer.render(parsed);
+				use(gfmHeadingId());
+				const result = await parse(article.markdown);
+
 				setHtml(result);
 				setMarkdown(article.markdown);
 			} else if (url && article.markdown === false) {
