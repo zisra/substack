@@ -13,7 +13,7 @@ export function fontFormatting(settings: Settings | null, excludeSerifs?: boolea
 	}
 	return cn(
 		settings?.formatting.fontFamily === 'sans' && 'font-sans',
-		settings?.formatting.fontFamily === 'serif' && 'font-serif',
+		settings?.formatting.fontFamily === 'serif' && 'font-serif prose-headings:font-sans',
 		settings?.formatting.fontFamily === 'mono' && 'font-mono',
 	);
 }

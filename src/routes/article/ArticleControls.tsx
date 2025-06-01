@@ -60,6 +60,12 @@ export function ArticleControls({
 						/>
 					)}
 
+					<Link
+						to={`/article/comments/?url=${encodeURIComponent(article.url)}`}
+						className={buttonVariants({ variant: 'outline', size: 'icon' })}
+					>
+						<MessageCircleIcon />
+					</Link>
 					<a
 						href={article.url}
 						target='_blank'
@@ -68,12 +74,6 @@ export function ArticleControls({
 					>
 						<ExternalLinkIcon />
 					</a>
-					<Link
-						to={`/article/comments/?url=${encodeURIComponent(article.url)}`}
-						className={buttonVariants({ variant: 'outline', size: 'icon' })}
-					>
-						<MessageCircleIcon />
-					</Link>
 				</div>
 
 				<DropdownMenu>

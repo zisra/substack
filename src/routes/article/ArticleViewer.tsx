@@ -189,7 +189,6 @@ export function ArticleViewer() {
 				/>
 				<Separator className='my-2' />
 
-				{/* Floating Table of Contents button */}
 				<div className='-translate-y-1/2 fixed top-1/2 left-2 z-30 hidden sm:block'>
 					<TableOfContents content={html} />
 				</div>

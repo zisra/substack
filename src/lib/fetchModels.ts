@@ -17,13 +17,11 @@ export async function fetchAllModels(): Promise<
 		const res = await fetch(`${OLLAMA_BASE_URL}/tags`);
 		if (!res.ok) throw new Error('Failed to fetch Ollama models');
 		const data = await res.json();
-		const ollamaModels = data.models.map(
-			(m: { name: string; model: string }) => ({
-				name: m.name.replace(':latest', ''),
-				model: m.name,
-				provider: 'ollama',
-			})
-		);
+		const ollamaModels = data.models.map((m: { name: string; model: string }) => ({
+			name: m.name.replace(':latest', ''),
+			model: m.name,
+			provider: 'ollama',
+		}));
 
 		return [...ollamaModels, ...openaiModels];
 	} catch (err) {

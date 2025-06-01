@@ -148,6 +148,10 @@ export async function scrapeSubstack(html: string) {
 		p.replaceWith(pContent);
 	});
 
+	dom('h1').each((_index, element) => {
+		dom(element).replaceWith(`<h2>${dom(element).html()}</h2>`);
+	});
+
 	// Markdown to HTML
 	let markdown = '';
 	if (loadedThroughApi) {

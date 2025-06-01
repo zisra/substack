@@ -56,10 +56,15 @@ export function scrapeWikipedia(html: string) {
 	const dom = load(html);
 
 	const article = dom('#mw-content-text');
-	let subtitle = article
+	const subtitleElement = article
 		.find('#mw-content-text > div > p:not(.mw-empty-elt)')
-		.first()
-		.text();
+		.first();
+
+	subtitleElement.find('style[data-mw-deduplicate]').each((_index, element) => {
+		dom(element).remove();
+	});
+
+	let subtitle = subtitleElement.text();
 
 	// Remove all citations
 	subtitle = subtitle
