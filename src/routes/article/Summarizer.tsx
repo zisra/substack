@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import {
 	Select,
 	SelectContent,
@@ -16,14 +15,13 @@ import { cn, sanitizeDom } from '@/lib/utils';
 import { streamText } from 'ai';
 import { Send, TextIcon } from 'lucide-react';
 import { parse } from 'marked';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type ModelInfo = {
 	name: string;
 	model: string;
 	provider: string;
 };
-
 
 enum MessageRole {
 	USER = 'user',
@@ -32,7 +30,17 @@ enum MessageRole {
 }
 type Message = { role: MessageRole; content: string };
 
-async function Message({ message }: { message: Message }) {
+function Message({ message }: { message: Message }) {
+	const [parsedContent, setParsedContent] = useState<string>('');
+
+	useEffect(() => {
+		const processContent = async () => {
+			const parsed = await parse(message.content);
+			setParsedContent(sanitizeDom(parsed));
+		};
+		processContent();
+	}, [message.content]);
+
 	return (
 		<div
 			className={cn(message.role === MessageRole.ASSISTANT ? 'bg-muted' : 'bg-background', 'p-4')}
@@ -42,7 +50,7 @@ async function Message({ message }: { message: Message }) {
 				className='prose prose-neutral prose-sm dark:prose-invert max-w-full break-words'
 				// biome-ignore lint/security/noDangerouslySetInnerHtml: Markdown content
 				dangerouslySetInnerHTML={{
-					__html: sanitizeDom(await parse(message.content)),
+					__html: parsedContent,
 				}}
 			/>
 		</div>
@@ -62,7 +70,6 @@ export function Summarizer({
 	const [isOpen, setIsOpen] = useState(false);
 	const [followUpQuestion, setFollowUpQuestion] = useState('');
 	const [messages, setMessages] = useState<Message[]>([]);
-	const chatContainerRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
 		const fetchModelsAsync = async () => {
@@ -181,7 +188,7 @@ export function Summarizer({
 					</Button>
 				</div>
 
-				<ScrollArea ref={chatContainerRef} className='flex-1 overflow-y-auto'>
+				<div className='flex-1 overflow-y-auto'>
 					{messages.length <= 1 ? (
 						<div className='py-8 text-center text-muted-foreground'>
 							Click "Summarize" to generate a summary
@@ -193,7 +200,7 @@ export function Summarizer({
 							.slice(1) // Skip the first message
 							.map((message) => <Message key={message.role} message={message} />)
 					)}
-				</ScrollArea>
+				</div>
 
 				<div className='mt-auto border-t p-4'>
 					<div className='relative'>
