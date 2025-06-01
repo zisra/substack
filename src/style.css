@@ -2,18 +2,6 @@ html {
 	scroll-behavior: smooth;
 }
 
-.footnote-content {
-	margin-top: -15px;
-}
-
-.footnote-number {
-	scroll-margin-top: 60px;
-}
-
-.footnote-link {
-	scroll-margin-top: 60px;
-}
-
 .center {
 	text-align: center;
 }
@@ -22,8 +10,8 @@ html {
 	display: inline-block;
 }
 
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
 	-webkit-appearance: none;
 	margin: 0;
 }
@@ -65,13 +53,21 @@ figcaption {
 }
 
 @media (min-width: 768px) {
-	[id^="footnote-"] {
+	[id^='footnote-'],
+	h1,
+	h2,
+	h3,
+	h4 {
 		scroll-margin-top: 53px; /* Adjusted to the header's height */
 	}
 }
 
 @media (max-width: 767px) {
-	[id^="footnote-"] {
+	[id^='footnote-'],
+	h1,
+	h2,
+	h3,
+	h4 {
 		scroll-margin-top: 0;
 	}
 }

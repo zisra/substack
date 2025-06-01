@@ -1,5 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import GithubSlugger from 'github-slugger';
+import { TableOfContentsIcon } from 'lucide-react';
 
 type Stack = {
 	index: number;
@@ -9,6 +11,37 @@ type Stack = {
 };
 
 type StackRecursive = Stack[];
+
+function renderToc(nodes: StackRecursive, depth = 0) {
+	return (
+		<ul style={{ paddingLeft: depth * 20, marginTop: 6 }}>
+			{nodes.map((node) => (
+				<li key={node.index} style={{ marginBottom: 6 }}>
+					<span
+						className='block text-base text-muted-foreground transition duration-100 hover:cursor-pointer hover:text-black dark:hover:text-white'
+						onClick={() => {
+							const element = document.getElementById(node.slug);
+							if (element) {
+								element.scrollIntoView({ behavior: 'smooth' });
+							}
+						}}
+						onKeyDown={(e) => {
+							if (e.key === 'Enter' || e.key === ' ') {
+								const element = document.getElementById(node.slug);
+								if (element) {
+									element.scrollIntoView({ behavior: 'smooth' });
+								}
+							}
+						}}
+					>
+						{node.name}
+					</span>
+					{node.children.length > 0 && renderToc(node.children, depth + 1)}
+				</li>
+			))}
+		</ul>
+	);
+}
 
 export function TableOfContents({
 	content,
@@ -59,29 +92,18 @@ export function TableOfContents({
 			return null;
 		}
 
-		function renderToc(nodes: StackRecursive, depth = 0) {
-			return (
-				<ul style={{ paddingLeft: depth * 16 }}>
-					{nodes.map((node) => (
-						<li key={node.index} style={{ marginBottom: 4 }}>
-							<a href={`#${node.slug}`}>{node.name}</a>
-							{node.children.length > 0 && renderToc(node.children, depth + 1)}
-						</li>
-					))}
-				</ul>
-			);
-		}
-
 		return (
-			<Card className='mb-8 py-6 shadow-xs'>
-				<CardHeader>
-					<CardTitle>Table of contents</CardTitle>
-				</CardHeader>
-
-				<CardContent>
+			<Popover>
+				<PopoverTrigger>
+					<Button variant='secondary' size='icon' className='size-8'>
+						<TableOfContentsIcon />
+					</Button>
+				</PopoverTrigger>
+				<PopoverContent align='center' side='right' className='w-64'>
+					<h4 className='pb-2 text-xs uppercase'>Contents</h4>
 					<div className='flex space-x-2'>{renderToc(tableOfContents)}</div>
-				</CardContent>
-			</Card>
+				</PopoverContent>
+			</Popover>
 		);
 	}
 }
