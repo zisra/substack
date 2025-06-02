@@ -64,41 +64,61 @@ export function TableOfContents({
 	const tagNames = ['H1', 'H2', 'H3', 'H4'];
 	const [activeSlug, setActiveSlug] = useState<string | null>(null);
 
+	const HEADER_OFFSET = 53;
+	const OBSERVER_MARGIN_TOP = -HEADER_OFFSET; // exclude header space
+	const OBSERVER_MARGIN_BOTTOM = -((window.innerHeight - HEADER_OFFSET) * 0.5); // bottom padding
+
 	useEffect(() => {
 		if (!content) return;
-		const headings = Array.from(
-			document.querySelectorAll(tagNames.map((t) => t.toLowerCase()).join(', ')),
-		) as HTMLElement[];
+
+		const headings = Array.from(document.querySelectorAll('h1, h2, h3, h4')) as HTMLElement[];
 		if (!headings.length) return;
 
-		const handleIntersect = (entries: IntersectionObserverEntry[]) => {
-			const visible = entries.filter((e) => e.isIntersecting);
-			if (visible.length > 0) {
-				const topMost = visible.reduce((a, b) =>
-					a.boundingClientRect.top < b.boundingClientRect.top ? a : b,
+		// Store currently visible headings
+		let visibleHeadings: IntersectionObserverEntry[] = [];
+
+		const setActiveFromVisible = () => {
+			if (!visibleHeadings.length) return;
+
+			// Sort by vertical position in DOM
+			const sorted = visibleHeadings
+				.filter((e) => e.isIntersecting)
+				.sort(
+					(a, b) => a.target.getBoundingClientRect().top - b.target.getBoundingClientRect().top,
 				);
-				setActiveSlug((topMost.target as HTMLElement).id);
-			} else {
-				const above = entries.filter((e) => e.boundingClientRect.top < 80);
-				if (above.length > 0) {
-					const lastAbove = above.reduce((a, b) =>
-						a.boundingClientRect.top > b.boundingClientRect.top ? a : b,
-					);
-					setActiveSlug((lastAbove.target as HTMLElement).id);
-				}
+
+			if (sorted.length > 0) {
+				setActiveSlug((sorted[0].target as HTMLElement).id);
 			}
 		};
 
-		const observer = new window.IntersectionObserver(handleIntersect, {
-			root: null,
-			rootMargin: '0px 0px -90% 0px',
-			threshold: 0.5,
-		});
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					const i = visibleHeadings.findIndex((e) => e.target === entry.target);
+					if (entry.isIntersecting) {
+						if (i === -1) visibleHeadings.push(entry);
+						else visibleHeadings[i] = entry;
+					} else if (i !== -1) {
+						visibleHeadings.splice(i, 1);
+					}
+				}
+				setActiveFromVisible();
+			},
+			{
+				root: null,
+				threshold: 0,
+				rootMargin: `${OBSERVER_MARGIN_TOP}px 0px ${OBSERVER_MARGIN_BOTTOM}px 0px`,
+			},
+		);
 
-		headings.forEach((el) => {
-			if (el.id) observer.observe(el);
-		});
-		return () => observer.disconnect();
+		headings.forEach((el) => observer.observe(el));
+
+		// Cleanup
+		return () => {
+			observer.disconnect();
+			visibleHeadings = [];
+		};
 	}, [content]);
 
 	if (content) {

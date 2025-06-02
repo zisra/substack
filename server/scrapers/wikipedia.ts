@@ -50,6 +50,7 @@ const selectorsToRemove = [
 	'.legend',
 	'span[typeof="mw:File"]',
 	'.geo-inline-hidden',
+	'.mw-valign-text-top',
 ];
 
 export function scrapeWikipedia(html: string) {
@@ -71,7 +72,7 @@ export function scrapeWikipedia(html: string) {
 		.replace(RegExp(/\[[^\]]*\]/, 'g'), '')
 		.replaceAll('ⓘ', '');
 	if (subtitle.length > 180) {
-		subtitle = `${subtitle.substring(0, 180)}...`;
+		subtitle = `${subtitle.substring(0, 180)}…`;
 	}
 
 	selectorsToRemove.forEach((selector) => {
