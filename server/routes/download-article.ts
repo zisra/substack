@@ -1,5 +1,5 @@
 import type { Context } from 'hono';
-import { scrapeUniversal } from '../scrapers/scrapeUniversal';
+import { scrapeUniversal } from '../scrapers/universal';
 import { scrapeSubstack } from '../scrapers/substack';
 import { scrapeWikipedia } from '../scrapers/wikipedia';
 

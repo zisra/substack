@@ -17,6 +17,15 @@ const selectorsToRemove = [
 	'.hide-text',
 ];
 
+function decreaseThumbnailSize(url: string) {
+	const urlObj = new URL(url);
+	const paths = urlObj.pathname.split('/');
+	const originalUrl = decodeURIComponent(paths[paths.length - 1]);
+
+	const thumbnailUrl = `https://substackcdn.com/image/fetch/w_256,h_256,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/${originalUrl}`;
+	return thumbnailUrl;
+}
+
 export function scrapeSubstackMeta(html: string) {
 	const dom = load(html, {
 		xml: {
@@ -27,7 +36,7 @@ export function scrapeSubstackMeta(html: string) {
 	const url = getOGTag('url', dom);
 	const title = getOGTag('title', dom);
 	const subtitle = getOGTag('description', dom);
-	const image = getOGTag('image', dom);
+	const image = decreaseThumbnailSize(getOGTag('image', dom));
 	const author = he.decode(dom('meta[name="author"]').attr('content') ?? '');
 
 	return {
@@ -73,7 +82,7 @@ export async function scrapeSubstack(html: string) {
 	const url = getOGTag('url', dom);
 	const title = getOGTag('title', dom);
 	const subtitle = getOGTag('description', dom);
-	const image = getOGTag('image', dom);
+	const image = decreaseThumbnailSize(getOGTag('image', dom));
 	let author = he.decode(dom('meta[name="author"]').attr('content') ?? '');
 	let authorImg = he.decode(authorImgRaw ?? '');
 
