@@ -5,6 +5,9 @@ export function Wiki() {
 	const title = location.pathname.split('/wiki/')[1];
 
 	return (
-		<Navigate to={`/article/?url=https://en.wikipedia.org/wiki/${encodeURIComponent(title)}`} />
+		<Navigate
+			replace={true}
+			to={`/article/?url=https://en.wikipedia.org/wiki/${encodeURIComponent(title)}`}
+		/>
 	);
 }

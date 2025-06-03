@@ -89,7 +89,9 @@ export function ArticleViewer() {
 					const articleResponse = await saveArticle(db, url);
 
 					if (articleResponse) {
-						navigate(`/article/?url=${encodeURIComponent(articleResponse.url)}`);
+						navigate(`/article/?url=${encodeURIComponent(articleResponse.url)}`, {
+							replace: true,
+						});
 						setArticle(articleResponse);
 						scrollTo(0);
 					}
