@@ -196,7 +196,13 @@ export class Database {
 				}
 
 				const data: Article = await response.json();
-				this.saveArticle(data);
+				article.markdown = data.markdown;
+				article.archived = false;
+
+				const tx = this.db.transaction('articles', 'readwrite');
+				const store = tx.objectStore('articles');
+
+				await store.put(article);
 			} else {
 				article.archived = false;
 				await store.put(article);

@@ -56,11 +56,7 @@ function renderToc(
 	);
 }
 
-export function TableOfContents({
-	content,
-}: {
-	content: string | null;
-}) {
+export function TableOfContents({ content }: { content: string | null }) {
 	const tagNames = ['H1', 'H2', 'H3', 'H4'];
 	const [activeSlug, setActiveSlug] = useState<string | null>(null);
 
