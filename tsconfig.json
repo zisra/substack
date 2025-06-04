@@ -25,5 +25,5 @@
 
 		"types": ["vite-plugin-pwa/client"]
 	},
-	"include": ["src", "src/components/IncrementalButton.tsx"]
+	"include": ["src", "server"]
 }
