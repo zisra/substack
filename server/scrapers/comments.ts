@@ -1,6 +1,26 @@
 import { load } from 'cheerio';
 import { getOGTag } from '../utils';
 
+interface CommentInput {
+	id: string;
+	name: string;
+	photo_url: string;
+	handle?: string;
+	user_slug?: string;
+	body?: string;
+	children?: CommentInput[];
+}
+
+interface CommentProfile {
+	id: string;
+	name: string;
+	photo_url: string;
+	handle?: string;
+	body?: string;
+	children: CommentProfile[];
+	incompleteProfile?: boolean;
+}
+
 export async function scrapeComments(url: string) {
 	const apiUrl = `${url}/comments`;
 
@@ -35,9 +55,9 @@ export async function scrapeComments(url: string) {
 		'href'
 	);
 
-	function parseComments(comments) {
-		return comments.map((c) => {
-			const profile = {
+	function parseComments(comments: CommentInput[]) {
+		return comments.map((c: CommentInput): CommentProfile => {
+			const profile: CommentProfile = {
 				id: c.id,
 				name: c.name,
 				photo_url: c.photo_url,
