@@ -1,6 +1,49 @@
 import { load } from 'cheerio';
 import { htmlToMarkdown } from '../turndown';
 
+interface ImageAttachment {
+	type: 'image';
+	imageUrl: string;
+	imageWidth: number;
+	imageHeight: number;
+	explicit: boolean;
+}
+
+interface PostSelection {
+	text: string;
+}
+
+interface PostAttachment {
+	type: 'post';
+	post: {
+		title: string;
+		canonical_url: string;
+		cover_image: string;
+	};
+	postSelection: PostSelection | null;
+	publication: {
+		author_name: string;
+		logo_url: string;
+		author_photo_url: string;
+	};
+}
+
+interface CommentAttachment {
+	type: 'comment';
+	trackingParameters: {
+		item_entity_key: string;
+	};
+	comment: {
+		user: {
+			name: string;
+			handle: string;
+			photo_url: string;
+		};
+	};
+}
+
+type Attachment = ImageAttachment | PostAttachment | CommentAttachment;
+
 export async function scrapeSubstackNote(url: string) {
 	const id = url.split('/').pop()?.replace('c-', '');
 	const apiUrl = `https://substack.com/api/v1/reader/comment/${id}`;
@@ -50,7 +93,7 @@ export async function scrapeSubstackNote(url: string) {
 		};
 	}
 
-	item.comment.attachments.forEach((a) => {
+	(item.comment.attachments as Attachment[]).forEach((a) => {
 		if (a.type === 'image') {
 			attachments.push({
 				type: 'image',

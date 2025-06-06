@@ -33,7 +33,7 @@ export type Settings = {
 	};
 };
 
-type Embed =
+export type Embed =
 	| {
 			type: 'image';
 			imageUrl: string;
