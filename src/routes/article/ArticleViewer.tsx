@@ -94,24 +94,22 @@ export function ArticleViewer() {
 				if (offline) return;
 				const articleResponse = await saveArticle(db, url);
 
-				setTimeout(() => {
-					if (articleResponse) {
-						setArticle(articleResponse);
+				if (articleResponse) {
+					setArticle(articleResponse);
 
+					requestAnimationFrame(() => {
 						const scrollElement = location.hash && document.querySelector(location.hash);
-
-						console.log(scrollElement);
 
 						if (scrollElement) {
 							scrollElement.scrollIntoView({
 								behavior: 'smooth',
 								block: 'start',
 							});
+						} else {
+							scrollTo(0);
 						}
-
-						scrollTo(0);
-					}
-				}, 50);
+					});
+				}
 			}
 		} catch (err) {
 			navigate('/');

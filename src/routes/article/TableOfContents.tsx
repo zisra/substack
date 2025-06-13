@@ -72,8 +72,8 @@ export function TableOfContents({ content }: { content: string | null }) {
 	const [activeSlug, setActiveSlug] = useState<string | null>(null);
 
 	const HEADER_OFFSET = 53;
-	const OBSERVER_MARGIN_TOP = -HEADER_OFFSET; // exclude header space
-	const OBSERVER_MARGIN_BOTTOM = -((window.innerHeight - HEADER_OFFSET) * 0.5); // bottom padding
+	const OBSERVER_MARGIN_TOP = -HEADER_OFFSET; // Exclude header space
+	const OBSERVER_MARGIN_BOTTOM = -((window.innerHeight - HEADER_OFFSET) * 0.5); // Bottom padding
 
 	useEffect(() => {
 		const onNav = () => {
@@ -82,12 +82,11 @@ export function TableOfContents({ content }: { content: string | null }) {
 				setActiveSlug(hash);
 			}
 		};
+
 		window.addEventListener('popstate', onNav);
-		window.addEventListener('hashchange', onNav);
 		onNav();
 		return () => {
 			window.removeEventListener('popstate', onNav);
-			window.removeEventListener('hashchange', onNav);
 		};
 	}, []);
 
