@@ -161,6 +161,22 @@ export async function scrapeSubstack(html: string) {
 		dom(element).replaceWith(`<h2>${dom(element).html()}</h2>`);
 	});
 
+	const footnotes: string[] = [];
+	let footnoteText = '';
+
+	dom('.footnote').each((_index, element) => {
+		const innerHTML = dom(element).find('.footnote-content').html();
+		const number = dom(element).find('.footnote-number').text();
+
+		footnotes.push(`<li id="footnote-${number}">${innerHTML}</li>`);
+
+		dom(element).remove();
+	});
+
+	if (footnotes.length > 0) {
+		footnoteText = `<hr /><ol>${footnotes.join('\n')}</ol>`;
+	}
+
 	// Markdown to HTML
 	let markdown = '';
 	if (loadedThroughApi) {
@@ -179,6 +195,6 @@ export async function scrapeSubstack(html: string) {
 		authorUrl,
 		authorImg,
 		image,
-		markdown,
+		markdown: markdown + footnoteText,
 	};
 }

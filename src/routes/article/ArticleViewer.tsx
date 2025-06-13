@@ -14,7 +14,7 @@ import { ArchiveIcon } from 'lucide-react';
 import { parse, use } from 'marked';
 import { gfmHeadingId } from 'marked-gfm-heading-id';
 import { useCallback, useEffect, useState } from 'react';
-import { useBlocker, useNavigate, useSearchParams } from 'react-router';
+import { useBlocker, useLocation, useNavigate, useSearchParams } from 'react-router';
 
 async function saveArticle(db: Database, url: string) {
 	try {
@@ -41,18 +41,17 @@ export function ArticleViewer() {
 	const [failed, setFailed] = useState(false);
 
 	const [searchParams] = useSearchParams();
+	const location = useLocation();
 	const navigate = useNavigate();
 	const url = searchParams.get('url');
 	const db = useDatabase();
 	const offline = useIsOffline();
 
 	const scrollTo = (top: number) => {
-		setTimeout(() => {
-			window.scrollTo({
-				top,
-				behavior: 'smooth',
-			});
-		}, 25);
+		window.scrollTo({
+			top,
+			behavior: 'smooth',
+		});
 	};
 
 	const saveScrollPosition = useCallback(() => {
@@ -76,18 +75,43 @@ export function ArticleViewer() {
 
 			if (existingArticle) {
 				setArticle(existingArticle);
-				if (!existingArticle.archived && settings?.scrollArticles !== false) {
-					scrollTo(existingArticle.scrollLocation);
-				} else {
-					scrollTo(0);
-				}
+
+				setTimeout(() => {
+					const scrollElement = location.hash && document.querySelector(location.hash);
+
+					if (scrollElement) {
+						scrollElement.scrollIntoView({
+							behavior: 'smooth',
+							block: 'start',
+						});
+					} else if (!existingArticle.archived && settings?.scrollArticles !== false) {
+						scrollTo(existingArticle.scrollLocation);
+					} else {
+						scrollTo(0);
+					}
+				}, 50);
 			} else {
 				if (offline) return;
 				const articleResponse = await saveArticle(db, url);
-				if (articleResponse) {
-					setArticle(articleResponse);
-					scrollTo(0);
-				}
+
+				setTimeout(() => {
+					if (articleResponse) {
+						setArticle(articleResponse);
+
+						const scrollElement = location.hash && document.querySelector(location.hash);
+
+						console.log(scrollElement);
+
+						if (scrollElement) {
+							scrollElement.scrollIntoView({
+								behavior: 'smooth',
+								block: 'start',
+							});
+						}
+
+						scrollTo(0);
+					}
+				}, 50);
 			}
 		} catch (err) {
 			navigate('/');

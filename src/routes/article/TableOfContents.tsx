@@ -36,6 +36,8 @@ function renderToc(
 							if (element) {
 								element.scrollIntoView();
 
+								history.pushState(null, '', `#${node.slug}`);
+
 								const rect = element.getBoundingClientRect();
 								if (
 									rect.top >= 0 &&
@@ -72,6 +74,22 @@ export function TableOfContents({ content }: { content: string | null }) {
 	const HEADER_OFFSET = 53;
 	const OBSERVER_MARGIN_TOP = -HEADER_OFFSET; // exclude header space
 	const OBSERVER_MARGIN_BOTTOM = -((window.innerHeight - HEADER_OFFSET) * 0.5); // bottom padding
+
+	useEffect(() => {
+		const onNav = () => {
+			const hash = decodeURIComponent(window.location.hash.replace(/^#/, ''));
+			if (hash) {
+				setActiveSlug(hash);
+			}
+		};
+		window.addEventListener('popstate', onNav);
+		window.addEventListener('hashchange', onNav);
+		onNav();
+		return () => {
+			window.removeEventListener('popstate', onNav);
+			window.removeEventListener('hashchange', onNav);
+		};
+	}, []);
 
 	useEffect(() => {
 		if (!content) return;
