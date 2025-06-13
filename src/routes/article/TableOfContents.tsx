@@ -36,6 +36,15 @@ function renderToc(
 							if (element) {
 								element.scrollIntoView();
 
+								const rect = element.getBoundingClientRect();
+								if (
+									rect.top >= 0 &&
+									rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
+								) {
+									setActiveSlug(node.slug);
+									return;
+								}
+
 								document.addEventListener(
 									'scrollend',
 									() => {
@@ -67,7 +76,7 @@ export function TableOfContents({ content }: { content: string | null }) {
 	useEffect(() => {
 		if (!content) return;
 
-		const headings = Array.from(document.querySelectorAll('h1, h2, h3, h4')) as HTMLElement[];
+		const headings = Array.from(document.querySelectorAll(tagNames.join(', '))) as HTMLElement[];
 		if (!headings.length) return;
 
 		// Store currently visible headings
