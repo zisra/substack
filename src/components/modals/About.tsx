@@ -40,7 +40,7 @@ export function About() {
 						<a className='underline' href='https://substack.com' target='_blank' rel='noreferrer'>
 							Substack
 						</a>{' '}
-						articles offline.
+						articles offline. Wikipedia is also supported.
 					</CredenzaDescription>
 				</CredenzaHeader>
 				<CredenzaBody>
