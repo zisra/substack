@@ -98,3 +98,17 @@ iframe {
 		}
 	}
 }
+
+th,
+td {
+	border: 1px solid #525252 !important;
+	padding: 0.4em 0.8em !important;
+	text-align: left !important;
+	vertical-align: top !important;
+}
+
+table {
+	margin-left: auto !important;
+	margin-right: auto !important;
+	overflow-x: scroll !important;
+}

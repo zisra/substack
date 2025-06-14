@@ -61,7 +61,11 @@ export function Summarizer({
 	content,
 	title,
 	subtitle,
-}: { content: string | null; title: string; subtitle: string }) {
+}: {
+	content: string | null;
+	title: string;
+	subtitle: string;
+}) {
 	const [isLoading, setIsLoading] = useState(false);
 	const [isStreaming, setIsStreaming] = useState(false);
 	const [hasSummarized, setHasSummarized] = useState(false);
@@ -89,7 +93,7 @@ export function Summarizer({
 
 		const systemPrompt = {
 			role: MessageRole.SYSTEM,
-			content: `You are a helpful assistant that summarizes articles. You will be provided with an article, and your task is to provide a comprehensive summary of the contents of that article. Ensure that you capture the author's tone, perspective, and point of view accurately. Do not include personal opinions or interpretations, and refrain from adding any additional information. Output should be in plain text without any markdown formatting. You may be asked follow-up questions later, so respond to those as thoroughly as possible, but do not ever answer something unrelated to the article.`,
+			content: `You are a helpful assistant that summarizes articles. You will be provided with an article, and your task is to provide a comprehensive summary of the contents of that article. Ensure that you capture the author's tone, perspective, and point of view accurately. Do not include personal opinions or interpretations, and refrain from adding any additional information. Output should be in plain text with markdown formatting. You may be asked follow-up questions later, so respond to those as thoroughly as possible, but do not ever answer something unrelated to the article.`,
 		};
 
 		const userPrompt = {

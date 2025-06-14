@@ -174,7 +174,7 @@ export async function scrapeSubstack(html: string) {
 	});
 
 	if (footnotes.length > 0) {
-		footnoteText = `<hr /><ol>${footnotes.join('\n')}</ol>`;
+		footnoteText = `\n\n<hr /><ol>${footnotes.join('\n')}</ol>`;
 	}
 
 	// Markdown to HTML

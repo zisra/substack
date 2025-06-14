@@ -12,7 +12,7 @@ type Stack = {
 	children: StackRecursive;
 };
 
-type StackRecursive = Stack[];
+export type StackRecursive = Stack[];
 
 function renderToc(
 	nodes: StackRecursive,

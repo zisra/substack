@@ -95,9 +95,17 @@ export function ArticleViewer() {
 				const articleResponse = await saveArticle(db, url);
 
 				if (articleResponse) {
+					navigate(
+						`/article/?url=${encodeURIComponent(articleResponse.url)}${
+							location.hash ? location.hash : ''
+						}`,
+						{
+							replace: true,
+						},
+					);
 					setArticle(articleResponse);
 
-					requestAnimationFrame(() => {
+					setTimeout(() => {
 						const scrollElement = location.hash && document.querySelector(location.hash);
 
 						if (scrollElement) {
@@ -108,7 +116,7 @@ export function ArticleViewer() {
 						} else {
 							scrollTo(0);
 						}
-					});
+					}, 150);
 				}
 			}
 		} catch (err) {

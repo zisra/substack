@@ -17,19 +17,53 @@ export function fontFormatting(settings: Settings | null, excludeSerifs?: boolea
 		settings?.formatting.fontFamily === 'mono' && 'font-mono',
 	);
 }
-
 export function articleFormatting(settings: Settings | null) {
 	return cn(
+		// Apply custom font family and weight
 		fontFormatting(settings),
-		settings?.formatting.fontSize === 'sm' && 'prose-sm',
-		settings?.formatting.fontSize === 'base' && 'prose-base',
-		settings?.formatting.fontSize === 'dynamic' && 'prose-base lg:prose-lg',
-		settings?.formatting.fontSize === null && 'prose-base lg:prose-lg',
-		settings?.formatting.fontSize === 'lg' && 'prose-lg',
-		settings?.formatting.fontSize === 'xl' && 'prose-xl',
+
+		// Apply font size based on user setting
+		{
+			'prose-sm': settings?.formatting.fontSize === 'sm',
+			'prose-base': settings?.formatting.fontSize === 'base',
+			'prose-base lg:prose-lg':
+				settings?.formatting.fontSize === 'dynamic' || settings?.formatting.fontSize === null,
+			'prose-lg': settings?.formatting.fontSize === 'lg',
+			'prose-xl': settings?.formatting.fontSize === 'xl',
+		},
+
+		// Hide images and captions when printing, if user disabled print images
 		settings?.formatting.printImages === false &&
 			'print:prose-figcaption:hidden print:prose-img:hidden',
-		'print:prose-sm! prose-neutral prose dark:prose-invert prose-img:mx-auto prose-figcaption:mt-[-20px]! prose-img:max-h-[650px] max-w-none space-y-4 break-words prose-hr:border-input prose-figcaption:text-center prose-blockquote:font-normal prose-blockquote:not-italic print:prose-figcaption:mt-[-20px]!',
+
+		// Force smaller prose on print
+		'print:prose-sm!',
+
+		// Base prose styling
+		'prose',
+		'prose-neutral',
+		'dark:prose-invert',
+
+		// Image styling
+		'prose-img:mx-auto',
+		'prose-img:max-h-[650px]',
+		'max-w-none',
+
+		// Layout and spacing
+		'space-y-4',
+		'break-words',
+
+		// HR styling
+		'prose-hr:border-input',
+
+		// Figcaption styling
+		'prose-figcaption:mt-[-20px]!',
+		'print:prose-figcaption:mt-[-20px]!',
+		'prose-figcaption:text-center',
+
+		// Blockquote styling
+		'prose-blockquote:font-normal',
+		'prose-blockquote:not-italic',
 	);
 }
 

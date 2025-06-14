@@ -44,7 +44,6 @@ const selectorsToRemove = [
 	'.side-box',
 	'.sidebar',
 	'.infobox',
-	'table',
 	'.ext-phonos',
 	'.floatright',
 	'.legend',

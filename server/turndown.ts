@@ -1,10 +1,13 @@
 import TurndownService from 'turndown';
+import TurndownPluginGfm from 'turndown-plugin-gfm';
 
 const turndownService = new TurndownService({
 	headingStyle: 'atx',
 	codeBlockStyle: 'fenced',
 	emDelimiter: '*',
 });
+
+turndownService.use(TurndownPluginGfm.gfm);
 
 // Display figcaption as HTML
 turndownService.addRule('figcaption', {
@@ -28,21 +31,7 @@ turndownService.addRule('footnote-anchor-substack', {
 	},
 	replacement: (_content, node) => {
 		const number = node.textContent;
-		return `<sup><a class="footnote-link" id="footnote-reference-${number}" href="#footnote-${number}">${number}</a></sup>`;
-	},
-});
-
-// Display footnotes correctly
-turndownService.addRule('footnote-content-substack', {
-	filter(node) {
-		return node.nodeName === 'DIV' && node.classList.contains('footnote');
-	},
-	replacement: (_content, node) => {
-		const number = node.querySelector('.footnote-number')?.textContent;
-		const innerHTML = node.querySelector('.footnote-content')?.innerHTML;
-		const footnoteContent = turndownService.turndown(innerHTML ?? '');
-
-		return `<div><a href="#footnote-reference-${number}" class="footnote-number" id="footnote-${number}">${number}</a><p class="footnote-content">\n\n${footnoteContent}\n\n</p></div>`;
+		return `<sup><a class="footnote-link" href="#footnote-${number}">${number}</a></sup>`;
 	},
 });
 
