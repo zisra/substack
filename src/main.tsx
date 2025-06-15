@@ -1,5 +1,6 @@
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { DatabaseProvider } from '@/lib/DatabaseContext';
+import { Database } from '@/lib/database';
 import { Archived } from '@/routes/archived';
 import { Article } from '@/routes/article';
 import { Comment } from '@/routes/article/comments';
@@ -17,10 +18,21 @@ if (!root) {
 	throw new Error('Root element not found');
 }
 
+async function articleListLoader() {
+	try {
+		const db = new Database();
+		const articles = await db.getArticles();
+		return { articles };
+	} catch (e) {
+		return { articles: null };
+	}
+}
+
 const router = createBrowserRouter([
 	{
 		path: '/',
 		element: <Index />,
+		loader: articleListLoader,
 	},
 	{
 		path: '/article',

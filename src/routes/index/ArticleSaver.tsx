@@ -12,9 +12,15 @@ import { ChevronRightIcon, Loader2Icon, SearchIcon, WifiOffIcon } from 'lucide-r
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 
-export function ArticleSaver({ openCommand }: { openCommand: () => void }) {
+export function ArticleSaver({
+	openCommand,
+	articles: initialArticles,
+}: {
+	openCommand: () => void;
+	articles: ArticleSaved[] | null;
+}) {
 	const [url, setUrl] = useState('');
-	const [articles, setArticles] = useState<ArticleSaved[] | null>(null);
+	const [articles, setArticles] = useState<ArticleSaved[] | null>(initialArticles);
 	const [isSaving, setIsSaving] = useState(false);
 	const offline = useIsOffline();
 
