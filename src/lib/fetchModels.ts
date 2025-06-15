@@ -1,4 +1,4 @@
-const OLLAMA_BASE_URL = 'http://localhost:11434/api';
+export const OLLAMA_BASE_URL = 'http://localhost:11434/api';
 
 let openaiModels = ['gpt-4.1-mini', 'gpt-4.1-nano'].map((name) => ({
 	name: name,
@@ -25,7 +25,7 @@ export async function fetchAllModels(): Promise<
 
 		return [...ollamaModels, ...openaiModels];
 	} catch (err) {
-		console.error('Error fetching models:', err);
+		console.warn('Error fetching models:', err);
 		return [...openaiModels]; // Fallback to OpenAI only
 	}
 }

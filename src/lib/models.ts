@@ -1,7 +1,8 @@
 import { createOpenAI } from '@ai-sdk/openai';
 import { createOllama } from 'ollama-ai-provider';
+import { OLLAMA_BASE_URL } from './fetchModels';
 
-export const ollama = createOllama({ baseURL: 'http://localhost:11434/api' });
+export const ollama = createOllama({ baseURL: OLLAMA_BASE_URL });
 
 export const openai = createOpenAI({
 	apiKey: import.meta.env.VITE_OPENAI_KEY || '',
