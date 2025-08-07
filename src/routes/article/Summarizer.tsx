@@ -1,5 +1,8 @@
 import { Button } from '@/components/ui/button';
+import { ChatContainerRoot } from '@/components/ui/chat-container';
 import { Input } from '@/components/ui/input';
+import { Message, MessageContent } from '@/components/ui/message';
+import { ScrollButton } from '@/components/ui/scroll-button';
 import {
 	Select,
 	SelectContent,
@@ -11,10 +14,9 @@ import {
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { fetchAllModels } from '@/lib/fetchModels';
 import { getDefaultModel, getModel } from '@/lib/models';
-import { cn, sanitizeDom } from '@/lib/utils';
-import { streamText } from 'ai';
-import { Send, TextIcon } from 'lucide-react';
-import { parse } from 'marked';
+import { cn } from '@/lib/utils';
+import { smoothStream, streamText } from 'ai';
+import { Send } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 type ModelInfo = {
@@ -28,32 +30,25 @@ enum MessageRole {
 	ASSISTANT = 'assistant',
 	SYSTEM = 'system',
 }
-type Message = { role: MessageRole; content: string };
+type WrappedMessage = { role: MessageRole; content: string };
 
-function Message({ message }: { message: Message }) {
-	const [parsedContent, setParsedContent] = useState<string>('');
-
-	useEffect(() => {
-		const processContent = async () => {
-			const parsed = await parse(message.content);
-			setParsedContent(sanitizeDom(parsed));
-		};
-		processContent();
-	}, [message.content]);
-
+function WrappedMessage({ message }: { message: WrappedMessage }) {
 	return (
-		<div
-			className={cn(message.role === MessageRole.ASSISTANT ? 'bg-muted' : 'bg-background', 'p-4')}
+		<Message
+			className={cn(
+				message.role === MessageRole.ASSISTANT ? 'bg-muted' : 'bg-background',
+				'p-2 pl-4',
+				// TODO: pl-4 not visible
+			)}
 		>
 			<div className='mb-2 font-bold'>{message.role === MessageRole.ASSISTANT ? 'AI' : 'User'}</div>
-			<div
+			<MessageContent
+				markdown
 				className='prose prose-neutral prose-sm dark:prose-invert max-w-full break-words'
-				// biome-ignore lint/security/noDangerouslySetInnerHtml: Markdown content
-				dangerouslySetInnerHTML={{
-					__html: parsedContent,
-				}}
-			/>
-		</div>
+			>
+				{message.content}
+			</MessageContent>
+		</Message>
 	);
 }
 
@@ -73,7 +68,7 @@ export function Summarizer({
 	const [selectedModel, setSelectedModel] = useState<string>('');
 	const [isOpen, setIsOpen] = useState(false);
 	const [followUpQuestion, setFollowUpQuestion] = useState('');
-	const [messages, setMessages] = useState<Message[]>([]);
+	const [messages, setMessages] = useState<WrappedMessage[]>([]);
 
 	useEffect(() => {
 		const fetchModelsAsync = async () => {
@@ -111,6 +106,10 @@ export function Summarizer({
 			const response = streamText({
 				model: getModel(selected.provider, selected.model),
 				messages: initialMessages,
+				experimental_transform: smoothStream({
+					delayInMs: 20,
+					chunking: 'word',
+				}),
 			});
 
 			let summary = '';
@@ -142,6 +141,7 @@ export function Summarizer({
 			const response = streamText({
 				model: getModel(selected.provider, selected.model),
 				messages: newMessageHistory,
+				temperature: 0.2,
 			});
 
 			let reply = '';
@@ -160,7 +160,23 @@ export function Summarizer({
 		<Sheet open={isOpen} onOpenChange={setIsOpen}>
 			<SheetTrigger asChild>
 				<Button variant='outline' size='icon'>
-					<TextIcon />
+					<svg
+						xmlns='http://www.w3.org/2000/svg'
+						width='24'
+						height='24'
+						viewBox='0 0 24 24'
+						fill='none'
+						stroke='currentColor'
+						stroke-width='2'
+						stroke-linecap='round'
+						stroke-linejoin='round'
+					>
+						<title>Summarize</title>
+						<path d='m17 16 3 3-3 3' />
+						<path d='M19 5H7' />
+						<path d='M3 4.5V17a2 2 0 0 0 2 2h15' />
+						<path d='M7 10h9' />
+					</svg>
 				</Button>
 			</SheetTrigger>
 			<SheetContent className='flex w-full flex-col p-0 md:w-2xl' side='right'>
@@ -192,19 +208,24 @@ export function Summarizer({
 					</Button>
 				</div>
 
-				<div className='flex-1 overflow-y-auto'>
-					{messages.length <= 1 ? (
-						<div className='py-8 text-center text-muted-foreground'>
-							Click "Summarize" to generate a summary
-						</div>
-					) : (
-						messages
+				<ChatContainerRoot>
+					<div className='flex-1 overflow-y-auto'>
+						{messages.length <= 1 ? (
+							<div className='py-8 text-center text-muted-foreground'>
+								Click "Summarize" to generate a summary
+							</div>
+						) : (
+							messages
 
-							.filter((msg) => msg.role !== MessageRole.SYSTEM)
-							.slice(1) // Skip the first message
-							.map((message) => <Message key={message.role} message={message} />)
-					)}
-				</div>
+								.filter((msg) => msg.role !== MessageRole.SYSTEM)
+								.slice(1) // Skip the first message
+								.map((message) => <WrappedMessage key={message.role} message={message} />)
+						)}
+					</div>
+					<div className='absolute right-4 bottom-20 z-1000'>
+						<ScrollButton />
+					</div>
+				</ChatContainerRoot>
 
 				<div className='mt-auto border-t p-4'>
 					<div className='relative'>

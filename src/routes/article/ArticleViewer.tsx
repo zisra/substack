@@ -3,9 +3,7 @@ import { ArticleSkeleton, ArticleTextSkeleton } from '@/components/ArticleSkelet
 import { FinishedReadingButton } from '@/components/FinishedReadingButton';
 import { Header } from '@/components/Header';
 import { Separator } from '@/components/ui/separator';
-import { useIsOffline } from '@/hooks/useIsOffline';
 import { useDatabase } from '@/lib/DatabaseContext';
-import type { Database } from '@/lib/database';
 import type { Article, ArticleSaved, Settings } from '@/lib/types';
 import { articleFormatting, sanitizeDom } from '@/lib/utils';
 import { ArticleHeader } from '@/routes/article/ArticleHeader';
@@ -14,27 +12,15 @@ import { ArchiveIcon } from 'lucide-react';
 import { parse, use } from 'marked';
 import { gfmHeadingId } from 'marked-gfm-heading-id';
 import { useCallback, useEffect, useState } from 'react';
-import { useBlocker, useLocation, useNavigate, useSearchParams } from 'react-router';
-
-async function saveArticle(db: Database, url: string) {
-	try {
-		const response = await fetch(`/download-article/?url=${encodeURIComponent(url)}`);
-
-		if (!response.ok) {
-			throw new Error('Failed to download article');
-		}
-
-		const data: Article = await response.json();
-		return await db.saveArticle(data);
-	} catch (error) {
-		console.error('Error saving article:', error);
-		return undefined;
-	}
-}
+import { useBlocker, useLoaderData, useLocation, useNavigate, useSearchParams } from 'react-router';
 
 export function ArticleViewer() {
-	const [article, setArticle] = useState<ArticleSaved | null>(null);
-	const [settings, setSettings] = useState<Settings | null>(null);
+	const { article: loaderArticle, settings: loaderSettings } = useLoaderData() as {
+		article: ArticleSaved | null;
+		settings: Settings | null;
+	};
+	const [article, setArticle] = useState<ArticleSaved | null>(loaderArticle);
+	const [settings, setSettings] = useState<Settings | null>(loaderSettings);
 	const [title, setTitle] = useState<string>('');
 	const [html, setHtml] = useState<string | null>(null);
 	const [markdown, setMarkdown] = useState<string | null>(null);
@@ -45,7 +31,6 @@ export function ArticleViewer() {
 	const navigate = useNavigate();
 	const url = searchParams.get('url');
 	const db = useDatabase();
-	const offline = useIsOffline();
 
 	const scrollTo = (top: number) => {
 		window.scrollTo({
@@ -60,76 +45,35 @@ export function ArticleViewer() {
 		}
 	}, [article]);
 
-	const loadArticle = useCallback(async () => {
-		try {
-			const settings = await db.getSettings();
-			if (settings) setSettings(settings);
-
-			if (!url) {
-				navigate('/');
-				console.error('No URL provided');
-				return;
-			}
-
-			const existingArticle = await db.getArticle(url);
-
-			if (existingArticle) {
-				setArticle(existingArticle);
+	useEffect(() => {
+		(async () => {
+			if (loaderArticle) {
+				navigate(
+					`/article/?url=${encodeURIComponent(loaderArticle.url)}${
+						location.hash ? location.hash : ''
+					}`,
+					{
+						replace: true,
+					},
+				);
 
 				setTimeout(() => {
 					const scrollElement = location.hash && document.querySelector(location.hash);
-
 					if (scrollElement) {
 						scrollElement.scrollIntoView({
 							behavior: 'smooth',
 							block: 'start',
 						});
-					} else if (!existingArticle.archived && settings?.scrollArticles !== false) {
-						scrollTo(existingArticle.scrollLocation);
+					} else if (!loaderArticle.archived && settings?.scrollArticles !== false) {
+						scrollTo(loaderArticle.scrollLocation);
 					} else {
 						scrollTo(0);
 					}
-				}, 50);
-			} else {
-				if (offline) return;
-				const articleResponse = await saveArticle(db, url);
-
-				if (articleResponse) {
-					navigate(
-						`/article/?url=${encodeURIComponent(articleResponse.url)}${
-							location.hash ? location.hash : ''
-						}`,
-						{
-							replace: true,
-						},
-					);
-					setArticle(articleResponse);
-
-					setTimeout(() => {
-						const scrollElement = location.hash && document.querySelector(location.hash);
-
-						if (scrollElement) {
-							scrollElement.scrollIntoView({
-								behavior: 'smooth',
-								block: 'start',
-							});
-						} else {
-							scrollTo(0);
-						}
-					}, 150);
-				}
+				}, 100);
 			}
-		} catch (err) {
-			navigate('/');
-			console.error(err);
-		}
-	}, [db, url, offline, navigate]);
+		})();
+	}, []);
 
-	useEffect(() => {
-		loadArticle();
-	}, [loadArticle]);
-
-	// Process markdown and fetch article content
 	useEffect(() => {
 		const fetchData = async () => {
 			if (!article) return;

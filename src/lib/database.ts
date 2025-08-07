@@ -24,6 +24,7 @@ export class Database {
 	db?: IDBPDatabase<DatabaseType>;
 
 	async open() {
+		if (this.db) return;
 		this.db = await openDB<DatabaseType>('Articles', 1, {
 			upgrade(db) {
 				db.createObjectStore('articles', {
@@ -118,10 +119,7 @@ export class Database {
 	}
 
 	async getArchivedArticles() {
-		if (!this.db) {
-			await this.open();
-			if (!this.db) return;
-		}
+		await this.open();
 
 		const tx = this.db.transaction('articles', 'readonly');
 		const store = tx.objectStore('articles');

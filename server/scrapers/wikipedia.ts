@@ -50,6 +50,7 @@ const selectorsToRemove = [
 	'span[typeof="mw:File"]',
 	'.geo-inline-hidden',
 	'.mw-valign-text-top',
+	'noscript',
 ];
 
 export function scrapeWikipedia(html: string) {

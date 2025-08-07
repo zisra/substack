@@ -5,28 +5,18 @@ import { useDatabase } from '@/lib/DatabaseContext';
 import type { ArticleSaved } from '@/lib/types';
 import { ArticleList } from '@/routes/index/ArticleList';
 import { ChevronLeftIcon } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router';
+import { useState } from 'react';
+import { Link, useLoaderData } from 'react-router';
 
 export function ArchivedPosts() {
+	const { articles: articleLoader } = useLoaderData() as {
+		articles: ArticleSaved[];
+	};
+
 	const offline = useIsOffline();
-	const [articles, setArticles] = useState<ArticleSaved[]>([]);
+	const [articles, setArticles] = useState<ArticleSaved[]>(articleLoader);
 
 	const db = useDatabase();
-
-	useEffect(() => {
-		const loadArticles = async () => {
-			const articles = await db.getArchivedArticles();
-
-			if (articles) {
-				setArticles(articles);
-			} else {
-				setArticles([]);
-			}
-		};
-
-		loadArticles();
-	}, []);
 
 	return (
 		<>

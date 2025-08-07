@@ -10,17 +10,15 @@ import { checkUrlValid } from '@/lib/utils';
 import { ArticleList } from '@/routes/index/ArticleList';
 import { ChevronRightIcon, Loader2Icon, SearchIcon, WifiOffIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useLoaderData } from 'react-router';
 
-export function ArticleSaver({
-	openCommand,
-	articles: initialArticles,
-}: {
-	openCommand: () => void;
-	articles: ArticleSaved[] | null;
-}) {
+export function ArticleSaver({ openCommand }: { openCommand: () => void }) {
+	const { articles: articleLoader } = useLoaderData() as {
+		articles: ArticleSaved[];
+	};
+
 	const [url, setUrl] = useState('');
-	const [articles, setArticles] = useState<ArticleSaved[] | null>(initialArticles);
+	const [articles, setArticles] = useState<ArticleSaved[] | null>(articleLoader);
 	const [isSaving, setIsSaving] = useState(false);
 	const offline = useIsOffline();
 
