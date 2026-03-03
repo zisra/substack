@@ -7,13 +7,17 @@ export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
 }
 
-export function fontFormatting(settings: Settings | null, excludeSerifs?: boolean) {
+export function fontFormatting(
+	settings: Settings | null,
+	excludeSerifs?: boolean,
+) {
 	if (settings?.formatting.fontFamily === 'serif' && excludeSerifs === true) {
 		return '';
 	}
 	return cn(
 		settings?.formatting.fontFamily === 'sans' && 'font-sans',
-		settings?.formatting.fontFamily === 'serif' && 'font-serif prose-headings:font-sans',
+		settings?.formatting.fontFamily === 'serif' &&
+			'font-serif prose-headings:font-sans',
 		settings?.formatting.fontFamily === 'mono' && 'font-mono',
 	);
 }
@@ -27,7 +31,8 @@ export function articleFormatting(settings: Settings | null) {
 			'prose-sm': settings?.formatting.fontSize === 'sm',
 			'prose-base': settings?.formatting.fontSize === 'base',
 			'prose-base lg:prose-lg':
-				settings?.formatting.fontSize === 'dynamic' || settings?.formatting.fontSize === null,
+				settings?.formatting.fontSize === 'dynamic' ||
+				settings?.formatting.fontSize === null,
 			'prose-lg': settings?.formatting.fontSize === 'lg',
 			'prose-xl': settings?.formatting.fontSize === 'xl',
 		},
@@ -64,6 +69,8 @@ export function articleFormatting(settings: Settings | null) {
 		// Blockquote styling
 		'prose-blockquote:font-normal',
 		'prose-blockquote:not-italic',
+
+		'math-render',
 	);
 }
 

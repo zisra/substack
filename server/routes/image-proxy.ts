@@ -11,11 +11,12 @@ export const imageProxy = async (c: Context) => {
 
 	if (
 		urlObj.hostname !== 'substackcdn.com' &&
+		urlObj.hostname !== 'plato.stanford.edu' &&
 		urlObj.hostname !== 'images.unsplash.com' &&
 		!urlObj.hostname.endsWith('wikimedia.org') &&
 		!urlObj.hostname.endsWith('wikipedia.org')
 	) {
-		return c.text('Only images from Substack are allowed', 400);
+		return c.text('Only images from whitelist are allowed', 400);
 	}
 
 	try {
@@ -24,7 +25,7 @@ export const imageProxy = async (c: Context) => {
 
 		c.header(
 			'Content-Type',
-			response.headers.get('content-type') ?? 'image/jpeg'
+			response.headers.get('content-type') ?? 'image/jpeg',
 		);
 
 		return c.body(buffer);

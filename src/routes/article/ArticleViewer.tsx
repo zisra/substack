@@ -1,5 +1,8 @@
 import { AlertCard } from '@/components/AlertCard';
-import { ArticleSkeleton, ArticleTextSkeleton } from '@/components/ArticleSkeleton';
+import {
+	ArticleSkeleton,
+	ArticleTextSkeleton,
+} from '@/components/ArticleSkeleton';
 import { FinishedReadingButton } from '@/components/FinishedReadingButton';
 import { Header } from '@/components/Header';
 import { Separator } from '@/components/ui/separator';
@@ -12,13 +15,22 @@ import { ArchiveIcon } from 'lucide-react';
 import { parse, use } from 'marked';
 import { gfmHeadingId } from 'marked-gfm-heading-id';
 import { useCallback, useEffect, useState } from 'react';
-import { useBlocker, useLoaderData, useLocation, useNavigate, useSearchParams } from 'react-router';
+import { katexExtension } from '../../lib/katexExtension';
+import {
+	useBlocker,
+	useLoaderData,
+	useLocation,
+	useNavigate,
+	useSearchParams,
+} from 'react-router';
+import { baseUrl } from 'marked-base-url';
 
 export function ArticleViewer() {
-	const { article: loaderArticle, settings: loaderSettings } = useLoaderData() as {
-		article: ArticleSaved | null;
-		settings: Settings | null;
-	};
+	const { article: loaderArticle, settings: loaderSettings } =
+		useLoaderData() as {
+			article: ArticleSaved | null;
+			settings: Settings | null;
+		};
 	const [article, setArticle] = useState<ArticleSaved | null>(loaderArticle);
 	const [settings, setSettings] = useState<Settings | null>(loaderSettings);
 	const [title, setTitle] = useState<string>('');
@@ -58,13 +70,17 @@ export function ArticleViewer() {
 				);
 
 				setTimeout(() => {
-					const scrollElement = location.hash && document.querySelector(location.hash);
+					const scrollElement =
+						location.hash && document.querySelector(location.hash);
 					if (scrollElement) {
 						scrollElement.scrollIntoView({
 							behavior: 'smooth',
 							block: 'start',
 						});
-					} else if (!loaderArticle.archived && settings?.scrollArticles !== false) {
+					} else if (
+						!loaderArticle.archived &&
+						settings?.scrollArticles !== false
+					) {
 						scrollTo(loaderArticle.scrollLocation);
 					} else {
 						scrollTo(0);
@@ -80,13 +96,39 @@ export function ArticleViewer() {
 
 			if (typeof article.markdown === 'string') {
 				use(gfmHeadingId());
+				use(
+					katexExtension({
+						throwOnError: true,
+						strict: false,
+						macros: {
+							'\\Cr': '\\operatorname{Cr}',
+							'\\Pr': '\\operatorname{Pr}',
+							'\\calA': '\\mathcal{A}',
+							'\\ovrightarrow': '\\overrightarrow',
+							'\\wcdot': '\\,\\cdot\\,',
+							'\\mcomplement': '^{\\mathsf{c}}',
+							'\\mbox': '\\text',
+							'\\Ch': '\\operatorname{Ch}',
+							'\\amp': '\\&',
+						},
+					}),
+				);
+
+				if (new URL(article.url).hostname === 'plato.stanford.edu') {
+					use(baseUrl(article.url));
+				}
+
+				console.log(article.markdown);
+
 				const result = await parse(article.markdown);
 
 				setHtml(result);
 				setMarkdown(article.markdown);
 			} else if (url && article.markdown === false) {
 				try {
-					const response = await fetch(`/download-article/?url=${encodeURIComponent(url)}`);
+					const response = await fetch(
+						`/download-article/?url=${encodeURIComponent(url)}`,
+					);
 
 					if (!response.ok) {
 						navigate('/');
@@ -147,7 +189,7 @@ export function ArticleViewer() {
 	return (
 		<>
 			<Header onSettingsChange={setSettings} />
-			<div className='mx-auto max-w-3xl px-4 py-8'>
+			<div className="mx-auto max-w-3xl px-4 py-8">
 				<title>{title}</title>
 
 				<ArticleHeader
@@ -157,20 +199,21 @@ export function ArticleViewer() {
 					setArticle={setArticle}
 					settings={settings}
 				/>
-				<Separator className='my-2' />
+				<Separator className="my-2" />
 
 				{html && (
-					<div className='-translate-y-1/2 fixed top-1/2 left-2 z-30 hidden sm:block'>
+					<div className="-translate-y-1/2 fixed top-1/2 left-2 z-30 hidden sm:block">
 						<TableOfContents content={html} />
 					</div>
 				)}
 
 				{failed ? (
 					<AlertCard
-						title='Archived article'
-						icon={<ArchiveIcon className='size-16' aria-hidden='true' />}
+						title="Archived article"
+						icon={<ArchiveIcon className="size-16" aria-hidden="true" />}
 					>
-						This article has been archived and is no longer available without an internet connection
+						This article has been archived and is no longer available without an
+						internet connection
 					</AlertCard>
 				) : html ? (
 					<article className={articleFormatting(settings)}>
@@ -185,7 +228,13 @@ export function ArticleViewer() {
 					<ArticleTextSkeleton />
 				)}
 
-				{html && <FinishedReadingButton db={db} setArticle={setArticle} article={article} />}
+				{html && (
+					<FinishedReadingButton
+						db={db}
+						setArticle={setArticle}
+						article={article}
+					/>
+				)}
 			</div>
 		</>
 	);

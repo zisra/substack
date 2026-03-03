@@ -1,3 +1,5 @@
+@import 'katex/dist/katex.min.css';
+
 html {
 	scroll-behavior: smooth;
 	overscroll-behavior: contain;
@@ -11,8 +13,8 @@ html {
 	display: inline-block;
 }
 
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
 	-webkit-appearance: none;
 	margin: 0;
 }
@@ -26,6 +28,10 @@ input[type="number"]::-webkit-outer-spin-button {
 	.twitter-tweet {
 		display: none !important;
 	}
+
+	.katex {
+		color: black !important;
+	}
 }
 
 hr,
@@ -38,6 +44,10 @@ hr:print {
 	border-top: solid 1.2px var(--input);
 }
 
+.katex {
+	color: black;
+}
+
 .dark {
 	hr {
 		display: block;
@@ -47,6 +57,10 @@ hr:print {
 		border: none;
 		border-top: solid 1.2px var(--input);
 	}
+
+	.katex {
+		color: white;
+	}
 }
 
 figcaption {
@@ -54,7 +68,7 @@ figcaption {
 }
 
 @media (min-width: 768px) {
-	[id^="footnote-"],
+	[id^='footnote-'],
 	h1,
 	h2,
 	h3,
@@ -64,7 +78,7 @@ figcaption {
 }
 
 @media (max-width: 767px) {
-	[id^="footnote-"],
+	[id^='footnote-'],
 	h1,
 	h2,
 	h3,

@@ -29,7 +29,7 @@ registerRoute(
 			});
 		}
 		return fetch(request);
-	},
+	}
 );
 
 const handler = createHandlerBoundToURL('/index.html');

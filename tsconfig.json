@@ -5,7 +5,6 @@
 		"lib": ["ESNext", "DOM", "DOM.Iterable", "WebWorker"],
 		"module": "ESNext",
 		"skipLibCheck": true,
-		"baseUrl": ".",
 		"paths": {
 			"@/*": ["./src/*"]
 		},

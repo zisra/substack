@@ -9,11 +9,27 @@ const turndownService = new TurndownService({
 
 turndownService.use(TurndownPluginGfm.gfm);
 
+// Preserve <sup></sup>
+turndownService.addRule('sup', {
+	filter(node) {
+		return node.nodeName === 'SUP';
+	},
+	replacement: (_content, node) => {
+		const innerHTML = (node as HTMLElement).innerHTML;
+
+		const supContent = turndownService.turndown(innerHTML);
+
+		return `<sup>${supContent}</sup>`;
+	},
+});
+
 // Display figcaption as HTML
 turndownService.addRule('figcaption', {
 	filter(node) {
 		return (
-			node.nodeName === 'FIGCAPTION' || node.classList.contains('image-caption')
+			node.nodeName === 'FIGCAPTION' ||
+			node.classList.contains('image-caption') ||
+			node.classList.contains('figlabel')
 		);
 	},
 	replacement: (_content, node) => {
@@ -75,7 +91,7 @@ turndownService.addRule('wikipedia-image', {
 		const captionContent = turndownService.turndown(innerHTML);
 
 		const link = `https://en.wikipedia.org/${(node as HTMLElement).getAttribute(
-			'href'
+			'href',
 		)}`;
 
 		return `<a target="_blank" rel="noreferrer" href=${link}>\n\n${captionContent}\n\n</figure>`;

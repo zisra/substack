@@ -2,6 +2,7 @@ import type { Context } from 'hono';
 import { scrapeUniversal } from '../scrapers/universal';
 import { scrapeSubstack } from '../scrapers/substack';
 import { scrapeWikipedia } from '../scrapers/wikipedia';
+import { scrapeStanfordphilosophy } from './download-stanfordphilosophy';
 
 export const downloadArticle = async (c: Context) => {
 	const url = c.req.query('url');
@@ -27,6 +28,12 @@ export const downloadArticle = async (c: Context) => {
 			const output = scrapeWikipedia(html);
 			return c.json(output);
 		}
+
+		if (urlObj.hostname === 'plato.stanford.edu') {
+			const output = scrapeStanfordphilosophy(html, url);
+			return c.json(output);
+		}
+
 		const output = await scrapeSubstack(html);
 		return c.json(output);
 	} catch (error) {
