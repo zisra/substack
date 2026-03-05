@@ -15,12 +15,6 @@ const app = new Hono();
 // Compress responses
 app.use(compress());
 
-// Send index.html for all other routes
-app.notFound(async (c) => {
-	const file = await readFile('./dist/index.html');
-	return c.html(file.toString());
-});
-
 // Serve static files
 app.get('*', serveStatic({ root: './dist' }));
 
@@ -53,11 +47,17 @@ app.get('/article/*', async (c) => {
 					siteName: 'Substack Offline',
 					description: output.subtitle,
 					image: output.image,
-				})
+				}),
 			);
 		}
 	}
 
+	const file = await readFile('./dist/index.html');
+	return c.html(file.toString());
+});
+
+// Send index.html for all other routes
+app.notFound(async (c) => {
 	const file = await readFile('./dist/index.html');
 	return c.html(file.toString());
 });
@@ -71,5 +71,5 @@ serve(
 	},
 	() => {
 		console.log('Server started on port', port);
-	}
+	},
 );

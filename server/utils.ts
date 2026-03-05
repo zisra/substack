@@ -9,4 +9,4 @@ export function getOGTag(tag: string, cheerioDOM: CheerioAPI) {
 export function extractStatusId(twitterUrl: string) {
 	const match = twitterUrl.match(/status\/(\d+)/);
 	return match ? match[1] : null;
-  }
+}

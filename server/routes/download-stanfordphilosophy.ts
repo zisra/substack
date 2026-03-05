@@ -41,7 +41,7 @@ export function scrapeStanfordphilosophy(html: string, url: string) {
 		subtitle,
 		author: 'Stanford Encyclopedia of Philosophy',
 		authorUrl: 'https://plato.stanford.edu/',
-		authorImg: 'https://plato.stanford.edu/symbols/sepman-icon.jpg',
+		authorImg: 'https://philosophy.stanford.edu/sites/philosophy/files/styles/hs_small_scaled_200px/public/media/image/sep-man-red_1.png.webp?itok=tW4bQzDp',
 		image: '',
 		markdown: markdown,
 	};

@@ -28,7 +28,7 @@ export default defineConfig({
 				orientation: 'portrait',
 			},
 			devOptions: {
-				enabled: false,
+				enabled: true,
 			},
 		}),
 	],
